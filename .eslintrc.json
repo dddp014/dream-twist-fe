@@ -27,6 +27,7 @@
         "no-useless-catch": "off",
         "no-duplicate-imports": "warn",
         "no-unused-vars": "warn",
-        "quotes": ["warn", "single", { "avoidEscape": true }]
+        "quotes": ["warn", "single", { "avoidEscape": true }],
+        "import/extensions": "off"
     }
 }
