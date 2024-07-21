@@ -61,7 +61,7 @@ export default function BookViewer() {
         return (
             <div
                 key={currentBook.id}
-                className={`flex felx-row justify-center items-center ${width} h-[110%] ml-14 hover:perspective-1600`}
+                className={`flex felx-row justify-center items-center ${width} h-[110%] ml-3 hover:perspective-1600`}
             >
                 <div
                     className="border-solid border border-gray-100 bg-[length:100%_100%] w-full h-full bg-cover bg-center bg-no-repeat shadow-lg"
@@ -79,19 +79,15 @@ export default function BookViewer() {
     };
 
     return (
-        <div className="flex flex-row w-full h-3/6 justify-center items-center mb-10">
+        <div className="flex flex-row w-full h-3/6 justify-center items-center mb-10 mt-24">
             {currentPage > 1 && (
-                <button type="button" onClick={handlePrevPage}>
+                <button type="button" onClick={handlePrevPage} className="mr-6">
                     <Image src={PrevArrow} alt="prev-arrow" />
                 </button>
             )}
             {renderBooks()}
             {currentPage < pageCount && (
-                <button
-                    type="button"
-                    onClick={handleNextPage}
-                    className="ml-12"
-                >
+                <button type="button" onClick={handleNextPage} className="ml-7">
                     <Image src={NextArrow} alt="next-arrow" />
                 </button>
             )}
