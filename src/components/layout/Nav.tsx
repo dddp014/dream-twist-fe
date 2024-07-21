@@ -15,8 +15,13 @@ import Logo from '../../assets/images/logo.svg';
 export default function Nav() {
     return (
         <nav className="flex flex-row items-center justify-around py-3 text-lg shadow-md shadow-neutral-100">
-            <Image src={Logo} alt="logo" width={90} />
-            <div className="space-x-14 pt-1 ml-64 mr-60">
+            <Image
+                src={Logo}
+                alt="logo"
+                width={90}
+                className="mr-[16rem] -ml-4"
+            />
+            <div className="space-x-14 pt-1">
                 <Link href="/" className="hover:text-main cursor-pointer">
                     동화 보러가기
                 </Link>
@@ -30,8 +35,11 @@ export default function Nav() {
                     서비스 소개
                 </Link>
             </div>
-            <div className="pt-1 space-x-4">
-                <Link href="/" className="hover:text-main cursor-pointer">
+            <div className="pt-1 space-x-4 pl-[13%] -mr-4">
+                <Link
+                    href="/"
+                    className="hover:text-main cursor-pointer text-base"
+                >
                     회원가입
                 </Link>
                 <Link
