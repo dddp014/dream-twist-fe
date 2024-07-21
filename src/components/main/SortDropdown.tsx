@@ -37,7 +37,7 @@ export default function SortDropdown() {
     }, []);
 
     return (
-        <div ref={dropdownRef}>
+        <div ref={dropdownRef} className="relative z-10">
             <button
                 type="button"
                 className="flex items-center justify-between w-[10rem] h-[3.2rem] px-6 text-left border border-gray-200 rounded-lg"
@@ -51,7 +51,7 @@ export default function SortDropdown() {
                 />
             </button>
             {isDropDown && (
-                <ul className="w-[10rem] h-fit text-left border border-gray-200 rounded text-base">
+                <ul className="absolute bg-white w-[10rem] h-fit text-left border border-gray-200 rounded text-base">
                     <div>
                         <li className="hover:bg-gray-100 cursor-pointer">
                             <button

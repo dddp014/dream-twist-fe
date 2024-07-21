@@ -27,7 +27,7 @@ export default function Home() {
                     <SortDropdown />
                 </div>
             </div>
-            <div className="grid grid-cols-5 gap-8 gap-y-9 my-10">
+            <div className="grid grid-cols-5 gap-8 gap-y-9 my-10 z-0">
                 {Array.from({ length: bookCount }).map((_, index) => (
                     <div key={index} className="relative">
                         <div className="absolute bottom-2 left-4">
@@ -39,7 +39,7 @@ export default function Home() {
                         <Image
                             src={Sample1}
                             alt="book-image"
-                            className="w-[18rem] h-[25rem] border border-gray-200 rounded-xl"
+                            className="w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white"
                         />
                     </div>
                 ))}
