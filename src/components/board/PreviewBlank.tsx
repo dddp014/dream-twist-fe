@@ -5,11 +5,11 @@ Author : 나경윤
 
 History
 Date        Author   Status    Description
-2024.07.19  나경윤   Created
+2024.07.19  나경윤    Created
 */
 
 export default function PreviewBlank() {
-    const pageCount: number = 8;
+    const pageCount: number = 6;
 
     const createPreviewLabel = (index: number): string => {
         if (index === 0 || index === pageCount - 1) return '커버';
@@ -30,7 +30,7 @@ export default function PreviewBlank() {
                     <button type="button">
                         <div
                             key={index}
-                            className={`border-solid border border-gray-200 ${width} h-32 mb-3 hover:border-emerald-400 hover:border-4`}
+                            className={`border-solid border border-gray-200 shadow-md shadow-neutral-100 ${width} h-32 mb-3 hover:border-emerald-400 hover:border-4`}
                         >
                             {' '}
                         </div>
