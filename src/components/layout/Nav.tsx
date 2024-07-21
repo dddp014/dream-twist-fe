@@ -35,7 +35,7 @@ export default function Nav() {
                     서비스 소개
                 </Link>
             </div>
-            <div className="pt-1 space-x-4 pl-[13%] -mr-4">
+            <div className="pt-1 space-x-4 pl-[13%] -mr-2">
                 <Link
                     href="/"
                     className="hover:text-main cursor-pointer text-base"
@@ -44,7 +44,7 @@ export default function Nav() {
                 </Link>
                 <Link
                     href="/"
-                    className="bg-main py-1.5 px-4 rounded-[5px] text-white cursor-pointer text-base"
+                    className="bg-main py-2 px-4 rounded-[7px] text-white cursor-pointer text-base"
                 >
                     로그인
                 </Link>
