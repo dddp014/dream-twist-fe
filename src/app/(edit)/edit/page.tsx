@@ -11,7 +11,7 @@ Date        Author   Status    Description
 import FairytailInfo from '@/components/edit/fairytail-info';
 import FairytailStory from '@/components/edit/fairytail-story';
 
-export default function editPage() {
+export default function EditPage() {
     return (
         <div className="flex w-full">
             <FairytailInfo />
