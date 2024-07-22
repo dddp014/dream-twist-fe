@@ -21,7 +21,7 @@ export default function RootLayout({
         <html lang="kr">
             <body className={inconsolata.className}>
                 <Navbar />
-                <main className="max-w-full mx-8 py-10">{children}</main>
+                <main className="max-w-full py-10">{children}</main>
             </body>
         </html>
     );

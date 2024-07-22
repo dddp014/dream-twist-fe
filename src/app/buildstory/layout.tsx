@@ -13,9 +13,9 @@ import Image from 'next/image';
 function BuildStoryLayout({ children }: { children: React.ReactNode }) {
     return (
         <div>
-            <header className="py-2 bg-green-400 text-white text-center rounded mb-4">
+            <header className="-my-10 py-2 bg-green-200 text-white text-center rounded mb-4">
                 <div className="container mx-auto flex items-center justify-center">
-                    <span className="px-2 bg-green-300 rounded ">
+                    <span className="px-2 bg-green-400 rounded ">
                         AI 스토리 추천
                     </span>
                     <Image
