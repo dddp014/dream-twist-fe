@@ -12,7 +12,7 @@ import Image from 'next/image';
 import TagList from '@/components/main/TagList';
 import SearchInput from '@/components/main/SearchInput';
 import SortDropdown from '@/components/main/SortDropdown';
-import Sample1 from '../assets/images/sample1.svg';
+import Sample1 from '../images/sample1.svg';
 
 export default function Home() {
     const bookCount: number = 10;

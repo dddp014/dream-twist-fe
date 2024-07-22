@@ -13,10 +13,10 @@ Date        Author   Status    Description
 
 import { useState } from 'react';
 import Image from 'next/image';
-import NextArrow from '../../assets/images/next-arrow.svg';
-import PrevArrow from '../../assets/images/prev-arrow.svg';
-import Sample1 from '../../assets/images/sample1.svg';
-import Sample2 from '../../assets/images/sample2.svg';
+import NextArrow from '../../images/next-arrow.svg';
+import PrevArrow from '../../images/prev-arrow.svg';
+import Sample1 from '../../images/sample1.svg';
+import Sample2 from '../../images/sample2.svg';
 
 export default function BookViewer() {
     const sampleImages = [Sample1, Sample2, Sample1, Sample2, Sample1, Sample2];

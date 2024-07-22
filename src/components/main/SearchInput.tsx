@@ -9,7 +9,7 @@ Date        Author   Status    Description
 */
 
 import Image from 'next/image';
-import Search from '../../assets/images/search.svg';
+import Search from '../../images/search.svg';
 
 export default function SearchInput() {
     return (

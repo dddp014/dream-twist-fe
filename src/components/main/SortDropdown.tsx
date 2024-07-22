@@ -12,8 +12,8 @@ Date        Author   Status    Description
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import DropDown from '../../assets/images/dropdown.svg';
-import DropUp from '../../assets/images/dropup.svg';
+import DropDown from '../../images/dropdown.svg';
+import DropUp from '../../images/dropup.svg';
 
 export default function SortDropdown() {
     const [isDropDown, setIsDropDown] = useState(false);

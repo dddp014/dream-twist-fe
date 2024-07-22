@@ -10,17 +10,12 @@ Date        Author   Status    Description
 
 import Link from 'next/link';
 import Image from 'next/image';
-import Logo from '../../assets/images/logo.svg';
+import Logo from '../../../public/logo.svg';
 
 export default function Nav() {
     return (
         <nav className="flex flex-row items-center justify-around py-3 text-lg shadow-md shadow-neutral-100">
-            <Image
-                src={Logo}
-                alt="logo"
-                width={90}
-                className="mr-[16rem] -ml-4"
-            />
+            <Image src={Logo} alt="logo" width={90} className="mr-[13rem]" />
             <div className="space-x-14 pt-1">
                 <Link href="/" className="hover:text-main cursor-pointer">
                     동화 보러가기
@@ -35,7 +30,7 @@ export default function Nav() {
                     서비스 소개
                 </Link>
             </div>
-            <div className="pt-1 space-x-4 pl-[13%] -mr-2">
+            <div className="pt-1 space-x-4 pl-[11%] -mr-2">
                 <Link
                     href="/"
                     className="hover:text-main cursor-pointer text-base"
