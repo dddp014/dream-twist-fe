@@ -1,16 +1,16 @@
 import Link from 'next/link';
 
-function HomePage() {
+function ContactPage() {
     return (
         <div>
-            <h1 className="text-7xl">홈 페이지</h1>
+            <h1 className="text-7xl">Contact Page</h1>
             <Link
-                href="/buildstory"
+                href="/"
                 className="text-xl text-green-custom inline-block mt-8"
             >
-                Build Story
+                Back Home
             </Link>
         </div>
     );
 }
-export default HomePage;
+export default ContactPage;
