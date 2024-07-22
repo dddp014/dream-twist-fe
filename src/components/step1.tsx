@@ -23,12 +23,12 @@ function Step1({ nextStep }: Step1Props) {
             <p className="text-center mb-8">
                 꿈틀이 적은 내용을 토대로 줄거리를 만들어드려요.
             </p>
-            <div className="bg-green-100 p-6 rounded-lg shadow-md mx-auto w-2/3">
+            <div className="bg-white p-6 mx-auto w-2/3">
                 <textarea
-                    className="w-full h-48 p-4 border rounded-md"
+                    className="w-full h-72 p-4 rounded-md bg-main-100 resize-none mb-2 focus:outline-none"
                     placeholder="동화책의 내용을 적어주세요."
                 ></textarea>
-                <p className="mt-4 text-gray-600">
+                <p className="mt-4 text-gray-700">
                     예시1) 소피아가 신비로운 마법의 숲을 탐험하며 친구들과 함께
                     숲을 지켜내는 이야기
                     <br />
@@ -41,7 +41,7 @@ function Step1({ nextStep }: Step1Props) {
                 <div className="flex justify-center">
                     <button
                         onClick={nextStep}
-                        className="mt-4 bg-yellow-500 text-white py-2 px-4 rounded"
+                        className="mt-10 bg-main text-white py-2.5 px-6 rounded-md"
                     >
                         줄거리 생성하기
                     </button>

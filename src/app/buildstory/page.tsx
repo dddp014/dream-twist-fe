@@ -32,18 +32,18 @@ function BuildStoryPage() {
     return (
         <div>
             <div className="py-10">
-                <div className="container mx-auto">
+                <div className="container mx-auto mt-10 text-neutral-900">
                     {step === 0 ? (
                         <>
                             <h1 className="text-2xl font-bold text-center mb-4">
                                 이야기를 어떻게 쓸까요?
                             </h1>
-                            <div className="text-center mb-10">
+                            <div className="text-center mb-12">
                                 AI를 활용해서 글을 쓰거나 도움없이 직접 쓸 수
                                 있어요.
                             </div>
-                            <div className="flex justify-center gap-8">
-                                <div className="bg-white p-6 rounded-lg shadow-md w-1/3 text-center border-2 border-green-500 relative">
+                            <div className="flex justify-center gap-8 mb-15">
+                                <div className="bg-white p-6 rounded-lg shadow-md shadow-neutral-200 w-[27rem] h-[30rem] text-center border border-gray-200 relative">
                                     <div className="flex justify-center items-center text-green-500 text-4xl my-10">
                                         <Image
                                             src={ToEdit}
@@ -60,12 +60,12 @@ function BuildStoryPage() {
                                         <br />
                                         글쓰기 능력이 쑥쑥 올라요.
                                     </p>
-                                    <button className="bg-main text-white py-2 px-4 rounded my-8">
-                                        글 편집 단계로
+                                    <button className="bg-main text-white w-32 py-2 px-4 rounded-md my-9">
+                                        편집하기
                                     </button>
                                 </div>
-                                <div className="bg-white p-6 rounded-lg shadow-md w-1/3 text-center border-2 border-green-500 relative">
-                                    <div className="absolute top-0 right-0 m-4 bg-green-500 text-white py-1 px-2 rounded-full">
+                                <div className="bg-white p-6 rounded-lg shadow-md shadow-neutral-200 w-[27rem] h-[30rem] text-center border border-gray-200 relative">
+                                    <div className="absolute top-0 right-4 bg-green-500 text-white pt-3 pb-2 px-2 rounded-b-lg">
                                         추천
                                     </div>
                                     <div className="flex justify-center items-center text-pink-300 text-4xl my-10">
@@ -85,7 +85,7 @@ function BuildStoryPage() {
                                         AI 기술을 활용해서 글을 쓸 수 있어요.
                                     </p>
                                     <button
-                                        className="bg-pink-400 text-white py-2 px-4 rounded my-8"
+                                        className="bg-main text-white w-32 py-2 px-4 rounded-md my-9"
                                         onClick={handleStartClick}
                                     >
                                         시작하기
