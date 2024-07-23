@@ -20,13 +20,17 @@
         "next/core-web-vitals",
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended",
-        "prettier"
+        "prettier",
+        "@typescript-eslint/parser"
     ],
     "rules": {
         "react/jsx-props-no-spreading": 0,
         "no-useless-catch": "off",
         "no-duplicate-imports": "warn",
         "no-unused-vars": "warn",
-        "quotes": ["warn", "single", { "avoidEscape": true }]
+        "quotes": ["warn", "single", { "avoidEscape": true }],
+        "import/extensions": "off",
+        "import/no-extraneous-dependencies": ["off"],
+        "global-require": "off"
     }
 }
