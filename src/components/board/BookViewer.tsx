@@ -13,10 +13,8 @@ Date        Author   Status    Description
 
 import { useState } from 'react';
 import Image from 'next/image';
-import NextArrow from '../../images/next-arrow.svg';
-import PrevArrow from '../../images/prev-arrow.svg';
-import Sample1 from '../../images/sample1.svg';
-import Sample2 from '../../images/sample2.svg';
+import Sample1 from '../../../public/images/sample1.svg';
+import Sample2 from '../../../public/images/sample2.svg';
 
 export default function BookViewer() {
     const sampleImages = [Sample1, Sample2, Sample1, Sample2, Sample1, Sample2];
@@ -82,13 +80,23 @@ export default function BookViewer() {
         <div className="flex flex-row w-full h-3/6 justify-center items-center mb-10 mt-24">
             {currentPage > 1 && (
                 <button type="button" onClick={handlePrevPage} className="mr-4">
-                    <Image src={PrevArrow} alt="prev-arrow" />
+                    <Image
+                        src="/images/prev-arrow.svg"
+                        alt="prev-arrow"
+                        width={20}
+                        height={0}
+                    />
                 </button>
             )}
             {renderBooks()}
             {currentPage < pageCount && (
                 <button type="button" onClick={handleNextPage} className="ml-8">
-                    <Image src={NextArrow} alt="next-arrow" />
+                    <Image
+                        src="/images/next-arrow.svg"
+                        alt="next-arrow"
+                        width={20}
+                        height={0}
+                    />
                 </button>
             )}
         </div>
