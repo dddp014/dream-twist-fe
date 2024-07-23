@@ -4,8 +4,18 @@
 
 html,
 body {
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
     height: 100vh;
-    overflow-y: auto;
+}
+
+#main {
+    flex: 1;
 }
 
 .custom-scrollbar::-webkit-scrollbar {

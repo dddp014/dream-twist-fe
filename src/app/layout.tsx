@@ -16,9 +16,13 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <Nav />
-                {children}
-                <Footer />
+                <div id="wrapper">
+                    <div id="main">
+                        <Nav />
+                        {children}
+                    </div>
+                    <Footer />
+                </div>
             </body>
         </html>
     );

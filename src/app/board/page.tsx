@@ -15,7 +15,7 @@ export default function Board() {
     return (
         <div className="h-screen flex flex-col justify-center items-center mb-32">
             <BookViewer />
-            <div className="text-center mb-10 mt-7 -ml-8">
+            <div className="text-center mb-10 mt-7 ">
                 <p className="text-xl font-semibold">뽀로로와 지구온난화</p>
                 <p className="text-base pt-1">김민규 작가</p>
             </div>

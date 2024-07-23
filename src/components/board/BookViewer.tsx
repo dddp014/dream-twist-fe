@@ -53,15 +53,15 @@ export default function BookViewer() {
             currentPage === 1 || currentPage === pageCount
                 ? 'hidden'
                 : 'display';
-        const width =
+        const styles =
             currentPage === 1 || currentPage === pageCount
-                ? 'w-4/12'
-                : 'w-8/12';
+                ? 'w-4/12 ml-12'
+                : 'w-8/12 ml-6';
 
         return (
             <div
                 key={currentBook.id}
-                className={`flex felx-row justify-center items-center ${width} h-[110%] ml-7 hover:perspective-1600`}
+                className={`flex felx-row justify-center items-center ${styles} h-[110%] hover:perspective-1600`}
             >
                 <div
                     className="border-solid border border-gray-100 bg-[length:100%_100%] w-full h-full bg-cover bg-center bg-no-repeat shadow-lg"
@@ -81,7 +81,7 @@ export default function BookViewer() {
     return (
         <div className="flex flex-row w-full h-3/6 justify-center items-center mb-10 mt-24">
             {currentPage > 1 && (
-                <button type="button" onClick={handlePrevPage} className="mr-3">
+                <button type="button" onClick={handlePrevPage} className="mr-4">
                     <Image src={PrevArrow} alt="prev-arrow" />
                 </button>
             )}

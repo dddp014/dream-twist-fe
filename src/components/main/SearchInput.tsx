@@ -17,7 +17,7 @@ export default function SearchInput() {
             <input
                 type="text"
                 placeholder="동화 검색"
-                className="w-[26rem] h-[3.2rem] py-3 pl-4 border border-gray-200 rounded-lg placeholder:text-base"
+                className="w-[26rem] h-[3.2rem] py-3 pl-4 border border-gray-200 rounded-lg placeholder:text-base focus:outline-gray-200"
             />
             <button
                 type="button"

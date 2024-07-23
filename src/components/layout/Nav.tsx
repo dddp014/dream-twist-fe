@@ -14,11 +14,13 @@ import Logo from '../../../public/logo.svg';
 
 export default function Nav() {
     return (
-        <nav className="flex flex-row items-center justify-around py-3 text-lg shadow-md shadow-neutral-100">
-            <Image src={Logo} alt="logo" width={90} className="mr-[13rem]" />
+        <nav className="flex flex-row items-center justify-between px-24 py-3 text-lg shadow-md shadow-neutral-100">
+            <Link href="/" className="cursor-pointer">
+                <Image src={Logo} alt="logo" width={90} className="" />
+            </Link>
             <div className="space-x-14 pt-1">
                 <Link href="/" className="hover:text-main cursor-pointer">
-                    동화 보러가기
+                    동화 갤러리
                 </Link>
                 <Link href="/" className="hover:text-main cursor-pointer">
                     동화 만들기
@@ -26,17 +28,8 @@ export default function Nav() {
                 <Link href="/" className="hover:text-main cursor-pointer">
                     꿈틀 가이드
                 </Link>
-                <Link href="/" className="hover:text-main cursor-pointer">
-                    서비스 소개
-                </Link>
             </div>
-            <div className="pt-1 space-x-4 pl-[11%] -mr-2">
-                <Link
-                    href="/"
-                    className="hover:text-main cursor-pointer text-base"
-                >
-                    회원가입
-                </Link>
+            <div className="pt-1 space-x-4">
                 <Link
                     href="/"
                     className="bg-main py-2 px-4 rounded-[7px] text-white cursor-pointer text-base"
