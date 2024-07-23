@@ -11,7 +11,6 @@ Date        Author   Status    Description
 'use client';
 
 import Image from 'next/image';
-import UpAroow from '../../images/scroll-up.svg';
 
 export default function ScrollUpButton() {
     const handleScrollUp = () => {
@@ -24,7 +23,12 @@ export default function ScrollUpButton() {
                 onClick={handleScrollUp}
                 className="bg-main opacity-85 rounded-full py-1.5 px-1.5"
             >
-                <Image src={UpAroow} alt="up-arrow" width={22} height={22} />
+                <Image
+                    src="/images/scroll-up.svg"
+                    alt="up-arrow"
+                    width={22}
+                    height={22}
+                />
             </button>
         </div>
     );

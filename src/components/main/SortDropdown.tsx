@@ -12,8 +12,6 @@ Date        Author   Status    Description
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import DropDown from '../../images/dropdown.svg';
-import DropUp from '../../images/dropup.svg';
 
 export default function SortDropdown() {
     const [isDropDown, setIsDropDown] = useState(false);
@@ -45,9 +43,14 @@ export default function SortDropdown() {
             >
                 <p>{label}</p>
                 <Image
-                    src={isDropDown ? DropUp : DropDown}
+                    src={
+                        isDropDown
+                            ? '/images/dropup.svg'
+                            : '/images/dropdown.svg'
+                    }
                     alt="drop-icon"
                     width={13}
+                    height={0}
                 />
             </button>
             {isDropDown && (

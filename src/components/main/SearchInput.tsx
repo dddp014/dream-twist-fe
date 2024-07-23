@@ -9,8 +9,6 @@ Date        Author   Status    Description
 */
 
 import Image from 'next/image';
-import Search from '../../images/search.svg';
-
 export default function SearchInput() {
     return (
         <div className="relative">
@@ -23,7 +21,12 @@ export default function SearchInput() {
                 type="button"
                 className="flex justify-center items-center absolute right-2 top-[0.47rem] w-10 h-9 bg-main rounded-md"
             >
-                <Image src={Search} alt="search-icon" width={17} />
+                <Image
+                    src="/images/search.svg"
+                    alt="search-icon"
+                    width={17}
+                    height={0}
+                />
             </button>
         </div>
     );

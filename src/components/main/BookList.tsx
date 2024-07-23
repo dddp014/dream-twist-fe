@@ -16,7 +16,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Book, dummyBooks } from '../../utils/dummyBooks';
-import Sample1 from '../../images/sample1.svg';
 
 const itemsPerPage: number = 10;
 
@@ -66,7 +65,7 @@ export default function BookList() {
                             <p>{item.author}</p>
                         </div>
                         <Image
-                            src={Sample1}
+                            src="/images/sample1.svg"
                             alt="book-image"
                             onClick={() => router.push('/board')}
                             className="w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white cursor-pointer"
