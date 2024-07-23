@@ -1,19 +1,26 @@
 /**
-File Name : components/edit/fairytail-story
-Description : 동화 내용 컴포넌트
+File Name : book-preview/Book
+Description : 동화 편집 - 스토리를 책 모양으로 볼 수 있고 편집도 가능한 컴포넌트
 Author : 임도헌
 
 History
 Date        Author   Status    Description
-2024.07.22  임도헌    Created
+2024.07.23  임도헌    Created
 */
+
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
+import Image from 'next/image';
+import bookImage from '../../assets/images/book-image.svg';
+import NextArrow from '../../assets/images/next-arrow.svg';
+import PrevArrow from '../../assets/images/prev-arrow.svg';
+import selectImageIcon from '../../assets/images/BiImageAlt.svg';
+import Logo from '../../assets/images/logo.svg';
 
-export default function FairytailStory() {
-    const [isClick, setIsClick] = useState(0);
+export default function Book() {
+    const bookName: string = '용감한 고양이 미미의 모험';
+    const author: string = '도헌';
     const story: string[] = [
         "작은 마을의 고양이 마을에는 모두가 사랑하는 용감한 고양이 미미가 살고 있었어요. 미미는 하얀 털과 큰 파란 눈을 가진 아름다운 고양이였어요. 마을의 모든 고양이들은 미미를 좋아했어요. 왜냐하면 미미는 언제나 친절하고 용감했기 때문이에요. 어느 날, 마을에 나쁜 악당 쥐들이 나타나서 마을을 어지럽히기 시작했어요. 쥐들은 마을의 음식을 훔치고, 고양이들을 괴롭히며, 마을을 혼란에 빠뜨렸어요. 미미는 이 상황을 보고 마음이 아팠어요. '내가 마을을 지켜야 해요,' 미미는 결심했어요.",
         "미미는 친구들과 함께 악당 쥐들을 물리치기 위한 계획을 세우기로 했어요. 미미의 가장 친한 친구는 검은 털을 가진 고양이 루루였어요. 루루는 빠르고 민첩했어요. 그리고 회색 털을 가진 고양이 토토도 있었어요. 토토는 매우 똑똑해서 좋은 아이디어를 많이 냈어요. 미미는 친구들에게 말했어요, '우리 모두 힘을 합쳐서 마을을 지켜요!' 친구들은 미미의 용기에 감동했고, 함께 힘을 모으기로 했어요.",
@@ -27,122 +34,87 @@ export default function FairytailStory() {
         "미미와 친구들은 새로운 고양이 가족과 함께 마을을 돌아다니며, 마을의 규칙과 중요한 장소들을 소개했어요. 그들은 함께 시간을 보내며, 서로를 알아갔어요. 미미는 새로운 친구들과 함께 마을을 지키기 위한 계획을 세우며, 더 많은 친구들과 함께 할 수 있어서 기뻤어요. '우리는 모두 함께해요,' 미미는 말했어요. 새로운 고양이 가족도 미미와 친구들에게 감사하며, 함께 마을을 지키기로 했어요.",
         "미미와 친구들은 마을의 평화를 지키기 위해 항상 노력했어요. 그들은 서로를 믿고 의지하며, 함께 어려움을 극복했어요. 미미는 친구들과 함께 마을을 지키며, 정의는 반드시 승리한다는 것을 다시 한 번 깨달았어요. '우리는 언제나 함께 있어요,' 미미는 친구들에게 말했어요. 친구들은 미미의 말에 고개를 끄덕이며, 함께 웃었어요. 작은 마을의 고양이 마을은 미미와 친구들 덕분에 언제나 평화롭고 행복했답니다."
     ];
-    const value =
-        '내용 어쩌고 저쩌고 내용 어쩌고 저쩌고 내용 어쩌고 저쩌고 내용 어쩌고 저쩌고 내용 어쩌고 저쩌고 내용 어쩌고 저쩌고 내용 어쩌고 저쩌고 내용 어쩌고 저쩌고 내용 어쩌고 저쩌고 내용 어쩌고 저쩌고 내용 어쩌고 저쩌고 ';
+    const pageCount: number = story.length;
+    console.log(pageCount);
+    const [page, setPage] = useState<number>(0);
 
-    const handleClick = (idx: number) => {
-        setIsClick(idx);
+    /**
+     * handleNextPage: 다음 페이지
+     */
+    const handleNextPage = () => {
+        setPage((page) => page + 1);
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log(e);
+    /**
+     * handlePrevPage: 이전 페이지
+     */
+    const handlePrevPage = () => {
+        setPage((page) => page - 1);
     };
 
     return (
-        <form
-            action=""
-            onSubmit={handleSubmit}
-            className="w-8/12 m-4 mt-24 p-2 pl-1 border border-green-300 rounded-lg shadow"
-        >
-            <div className="flex justify-end">
-                <label className="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" value="" className="sr-only peer" />
-                    <div
-                        className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300
-                rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full
-                peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px]
-                after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all
-                peer-checked:bg-green-600"
-                    ></div>
-                    <span className="ms-3 text-sm font-medium">공개 여부</span>
-                </label>
-                <button className="bg-main py-2 px-4 ml-2 rounded-[7px] text-white cursor-pointer text-base">
-                    저장
+        <div className="flex justify-center items-center">
+            {page !== 0 && (
+                <button onClick={handlePrevPage} className="">
+                    <Image src={PrevArrow} alt="prev-arrow" />
                 </button>
-                <Link
-                    href={''}
-                    className="bg-main py-2 px-4 ml-2 rounded-[7px] text-white cursor-pointer text-base"
-                >
-                    다음 단계
-                </Link>
+            )}
+            <div className="w-[40px] h-[600px] flex items-end justify-end mr-2">
+                <div className="text-lg font-bold">
+                    {page === 0 ? '표지 뒷면' : page + page - 1}
+                </div>
             </div>
-            <div
-                key={0}
-                className={`m-4 rounded-lg p-4 hover:border hover:bg-green-100 hover:border-green-300 active:bg-green-200
-                    ${isClick === 0 ? 'bg-green-100 border border-green-200' : ''}`}
-                onClick={() => {
-                    handleClick(0);
-                }}
-            >
-                <p className="w-full text-3xl font-bold">01</p>
-                <div className="w-full my-[1%] border-[1px] border-lightGray-300 m"></div>
-                <textarea
-                    required
-                    name="story-0"
-                    className={`resize-none h-[200px] w-full overflow-auto focus:outline-none focus:border-none hover:bg-green-100 active:bg-green-200
-                    ${isClick === 0 ? 'bg-green-100 border-green-200' : ''}`}
-                >
-                    {value}
-                </textarea>
+            <div className="w-[600px] h-[600px] border-2 flex justify-center items-center">
+                {page === 0 ? (
+                    <Image
+                        src={bookImage}
+                        sizes="300px"
+                        style={{
+                            objectFit: 'cover'
+                        }}
+                        width={300}
+                        height={300}
+                        alt="bookImage"
+                    />
+                ) : (
+                    <button className="w-[300px] h-[300px] bg-[#D9D9D9] rounded-[2px] text-main font-bold ">
+                        <div className="flex flex-col justify-center items-center">
+                            <Image src={selectImageIcon} alt="selectImage" />
+                            클릭해서 이미지 생성
+                        </div>
+                    </button>
+                )}
             </div>
-            <div
-                key={1}
-                className={`m-4 rounded-lg p-4 hover:border hover:bg-green-100 hover:border-green-300 active:bg-green-200
-                    ${isClick === 1 ? 'bg-green-100 border border-green-200' : ''}`}
-                onClick={() => {
-                    handleClick(1);
-                }}
-            >
-                <p className="text-3xl font-bold">02</p>
-                <div className="w-full my-[1%] border-[1px] border-lightGray-300"></div>
-                <textarea
-                    required
-                    name="story-1"
-                    className={`resize-none h-[200px] w-full overflow-auto focus:outline-none focus:border-none hover:bg-green-100 active:bg-green-200
-                    ${isClick === 1 ? 'bg-green-100 border-green-200' : ''}`}
-                >
-                    {value}
-                </textarea>
+            <div className="w-[60px] h-[600px] border-2 flex flex-col justify-between items-center">
+                <p className="w-[20px] mt-10 text-lg font-bold">{bookName}</p>
+                <p className="w-[20px] text-lg">{author} 지음</p>
+                <Image src={Logo} alt="logo" width={50} className="mb-10" />
             </div>
-            <div
-                key={2}
-                className={`m-4 rounded-lg p-4 hover:border hover:bg-green-100 hover:border-green-300 active:bg-green-200
-                    ${isClick === 2 ? 'bg-green-100 border border-green-200' : ''}`}
-                onClick={() => {
-                    handleClick(2);
-                }}
-            >
-                <p className="text-3xl font-bold">03</p>
-                <div className="w-full my-[1%] border-[1px] border-lightGray-300"></div>
-                <textarea
-                    required
-                    name="story-2"
-                    className={`resize-none h-[200px] w-full overflow-auto focus:outline-none focus:border-none hover:bg-green-100 active:bg-green-200
-                    ${isClick === 2 ? 'bg-green-100 border-green-200' : ''}`}
-                >
-                    {value}
-                </textarea>
+            <div className="w-[600px] h-[600px] border-2 flex justify-center">
+                {page === 0 ? (
+                    <div className="flex flex-col items-center">
+                        <Image src={bookImage} alt="bookImage" />
+                        <div className="text-4xl font-bold mt-4">
+                            {bookName}
+                        </div>
+                        <div className="text-sm mt-6">{author} 지음</div>
+                    </div>
+                ) : (
+                    <div className="flex items-center w-[400px] text-lg font-bold">
+                        {story[page - 1]}
+                    </div>
+                )}
             </div>
-            <div
-                key={3}
-                className={`m-4 rounded-lg p-4 hover:border hover:bg-green-100 hover:border-green-300 active:bg-green-200
-                    ${isClick === 3 ? 'bg-green-100 border border-green-200' : ''}`}
-                onClick={() => {
-                    handleClick(3);
-                }}
-            >
-                <p className="text-3xl font-bold">04</p>
-                <div className="w-full my-[1%] border-[1px] border-lightGray-300"></div>
-                <textarea
-                    required
-                    name="story-3"
-                    className={`resize-none h-[200px] w-full overflow-auto focus:outline-none focus:border-none hover:bg-green-100 active:bg-green-200
-                    ${isClick === 3 ? 'bg-green-100 border-green-200' : ''}`}
-                >
-                    {value}
-                </textarea>
+            <div className="w-[40px] h-[600px] flex items-end justify-start ml-2">
+                <div className="text-lg font-bold">
+                    {page === 0 ? '표지 앞면' : page + page}
+                </div>
             </div>
-        </form>
+            {page !== pageCount && (
+                <button onClick={handleNextPage}>
+                    <Image src={NextArrow} alt="next-arrow" />
+                </button>
+            )}
+        </div>
     );
 }

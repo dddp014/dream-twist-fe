@@ -8,10 +8,12 @@ Date        Author   Status    Description
 2024.07.22  임도헌    Created
 */
 
+import Book from '@/components/book-preview/Book';
+
 export default function BookPreviewPage() {
     return (
-        <div className="flex w-full">
-            <div>동화책 커스텀 화면입니다.</div>
+        <div>
+            <Book />
         </div>
     );
 }
