@@ -10,13 +10,17 @@ Date        Author   Status    Description
 
 import Link from 'next/link';
 import Image from 'next/image';
-import Logo from '../../../public/logo.svg';
 
 export default function Nav() {
     return (
         <nav className="flex flex-row items-center justify-between px-24 py-3 text-lg shadow-md shadow-neutral-100">
             <Link href="/" className="cursor-pointer">
-                <Image src={Logo} alt="logo" width={90} className="" />
+                <Image
+                    src="/images/logo.svg"
+                    alt="logo"
+                    width={90}
+                    height={0}
+                />
             </Link>
             <div className="space-x-14 pt-1">
                 <Link href="/" className="hover:text-main cursor-pointer">

@@ -13,34 +13,27 @@ Date        Author   Status    Description
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useRef, useState } from 'react';
 import { Book, dummyBooks } from '../../utils/dummyBooks';
-import Sample1 from '../../images/sample1.svg';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
 const itemsPerPage: number = 10;
 
 export default function BookList() {
     const router = useRouter();
-
     const [items, setItems] = useState<Book[]>([]);
-    const [isPageEnd, setIsPageEnd] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
     const pageIndexRef = useRef<number>(1);
 
-    const { ref, inView } = useInView({
-        threshold: 0
-    });
-
+    // api 연동 예정
     const loadItems = () => {
         const newItems = dummyBooks.slice(
             (pageIndexRef.current - 1) * itemsPerPage,
             pageIndexRef.current * itemsPerPage
         );
 
-        // 페이지 끝 확인
         if (newItems.length < itemsPerPage) {
-            setIsPageEnd(true);
+            setEnd(true);
         }
 
         setItems((prev) => [...prev, ...newItems]);
@@ -48,11 +41,9 @@ export default function BookList() {
         setLoading(false);
     };
 
-    useEffect(() => {
-        if (inView && !isPageEnd) {
-            loadItems();
-        }
-    }, [inView]);
+    const { ref, isPageEnd, setEnd } = useInfiniteScroll({
+        onLoadMore: loadItems
+    });
 
     return (
         <div>
@@ -66,7 +57,7 @@ export default function BookList() {
                             <p>{item.author}</p>
                         </div>
                         <Image
-                            src={Sample1}
+                            src="/images/sample1.svg"
                             alt="book-image"
                             onClick={() => router.push('/board')}
                             className="w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white cursor-pointer"
