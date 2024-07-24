@@ -11,23 +11,14 @@ Date        Author   Status    Description
 'use client';
 
 import Link from 'next/link';
-import Step1 from '@/components/step1';
-import Step2 from '@/components/step2';
-import Step3 from '@/components/step3';
-import ToEdit from '@/images/to-edit.svg';
-import WithAI from '@/images/with-ai.svg';
+import Step1 from '@/components/bulidstory/step1';
+import Step2 from '@/components/bulidstory/step2';
+import Step3 from '@/components/bulidstory/step3';
 import Image from 'next/image';
-import { useState } from 'react';
+import useBuildStory from '@/hooks/useBuildStory';
 
 function BuildStoryPage() {
-    const [step, setStep] = useState(0); // 0은 초기 화면, 1은 Step1 화면
-
-    const handleStartClick = () => {
-        setStep(1);
-    };
-
-    const nextStep = () => setStep((prevStep) => prevStep + 1);
-    const prevStep = () => setStep((prev) => prev - 1);
+    const { step, handleStartClick, nextStep, prevStep } = useBuildStory();
 
     return (
         <div>
@@ -46,9 +37,10 @@ function BuildStoryPage() {
                                 <div className="bg-white p-6 rounded-lg shadow-md shadow-neutral-200 w-[27rem] h-[30rem] text-center border border-gray-200 relative">
                                     <div className="flex justify-center items-center text-green-500 text-4xl my-10">
                                         <Image
-                                            src={ToEdit}
+                                            src="/images/to-edit.svg"
                                             alt="toEdit"
                                             width={110}
+                                            height={0}
                                             className="justify-center"
                                         />
                                     </div>
@@ -70,9 +62,10 @@ function BuildStoryPage() {
                                     </div>
                                     <div className="flex justify-center items-center text-pink-300 text-4xl my-10">
                                         <Image
-                                            src={WithAI}
+                                            src="/images/with-ai.svg"
                                             alt="withAI"
                                             width={110}
+                                            height={0}
                                             className="justify-center"
                                         />
                                     </div>
