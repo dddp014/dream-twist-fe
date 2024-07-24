@@ -5,7 +5,8 @@ Author : 임도헌
 
 History
 Date        Author   Status    Description
-2024.07.22  임도헌    Created
+2024.07.22  임도헌   Created
+2024.07.24  임도헌   Modified  Toggle 컴포넌트 분리
 */
 'use client';
 
