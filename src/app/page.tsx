@@ -13,6 +13,7 @@ import SearchInput from '@/components/main/SearchInput';
 import SortDropdown from '@/components/main/SortDropdown';
 import BookList from '@/components/main/BookList';
 import ScrollUpButton from '@/components/main/ScrollUpButton';
+import Image from 'next/image';
 
 export default function Home() {
     return (
