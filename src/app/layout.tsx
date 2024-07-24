@@ -1,15 +1,14 @@
-import './globals.css';
-import Navbar from '@/components/navbar';
-import { Inter, Inconsolata } from 'next/font/google';
 import type { Metadata } from 'next';
-
-const inter = Inter({ subsets: ['latin'] });
-const inconsolata = Inconsolata({ subsets: ['vietnamese'] });
+import '../styles/globals.css';
+import Nav from '@/components/layout/Nav';
+import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
     title: '꿈틀',
     description: 'Ai 동화 생성 꿈틀 프로젝트',
-    keywords: 'next.js, typescript, tailwinds'
+    icons: {
+        icon: '/favicon.ico'
+    }
 };
 
 export default function RootLayout({
@@ -18,10 +17,15 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="kr">
-            <body className={inconsolata.className}>
-                <Navbar />
-                <main className="max-w-full py-10">{children}</main>
+        <html lang="en">
+            <body>
+                <div id="wrapper">
+                    <div id="main">
+                        <Nav />
+                        {children}
+                    </div>
+                    <Footer />
+                </div>
             </body>
         </html>
     );
