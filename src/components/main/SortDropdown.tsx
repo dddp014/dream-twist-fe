@@ -10,36 +10,20 @@ Date        Author   Status    Description
 
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
+import { useDropdown } from '@/hooks/useDropdown';
 import Image from 'next/image';
 
 export default function SortDropdown() {
-    const [isDropDown, setIsDropDown] = useState(false);
     const [label, setLabel] = useState('최신순');
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
-    const handleClickOutside = (event: MouseEvent) => {
-        if (
-            dropdownRef.current &&
-            !dropdownRef.current.contains(event.target as Node)
-        ) {
-            setIsDropDown(false);
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
+    const { isDropDown, dropdownRef, handleDropdown } = useDropdown();
 
     return (
         <div ref={dropdownRef} className="relative z-10">
             <button
                 type="button"
                 className="flex items-center justify-between w-[10rem] h-[3.2rem] px-6 text-left border border-gray-200 rounded-lg"
-                onClick={() => setIsDropDown(!isDropDown)}
+                onClick={handleDropdown}
             >
                 <p>{label}</p>
                 <Image
@@ -61,7 +45,7 @@ export default function SortDropdown() {
                                 type="button"
                                 onClick={() => {
                                     setLabel('최신순');
-                                    setIsDropDown(false);
+                                    handleDropdown();
                                 }}
                                 className="w-full text-left px-6 py-2.5"
                             >
@@ -74,7 +58,7 @@ export default function SortDropdown() {
                                 type="button"
                                 onClick={() => {
                                     setLabel('인기순');
-                                    setIsDropDown(false);
+                                    handleDropdown();
                                 }}
                                 className="w-full text-left px-6 py-2.5"
                             >

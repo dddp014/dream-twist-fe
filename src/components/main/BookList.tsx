@@ -25,6 +25,7 @@ export default function BookList() {
     const [loading, setLoading] = useState<boolean>(true);
     const pageIndexRef = useRef<number>(1);
 
+    // api 연동 예정
     const loadItems = () => {
         const newItems = dummyBooks.slice(
             (pageIndexRef.current - 1) * itemsPerPage,
