@@ -6,17 +6,19 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.07.23  임도헌    Created
+2024.07.23  임도헌    Modified 모달기능 추가 및 코드 리팩토링
 */
 
 'use client';
 
 import { useState } from 'react';
 import Image from 'next/image';
-import bookImage from '../../assets/images/book-image.svg';
 import NextArrow from '../../assets/images/next-arrow.svg';
 import PrevArrow from '../../assets/images/prev-arrow.svg';
-import selectImageIcon from '../../assets/images/BiImageAlt.svg';
 import Logo from '../../assets/images/logo.svg';
+import ImageModal from './ImageModal';
+import StoryModal from './StoryModal';
+import Toggle from '../common/Toggle';
 
 export default function Book() {
     const bookName: string = '용감한 고양이 미미의 모험';
@@ -53,68 +55,70 @@ export default function Book() {
     };
 
     return (
-        <div className="flex justify-center items-center">
-            {page !== 0 && (
-                <button onClick={handlePrevPage} className="">
-                    <Image src={PrevArrow} alt="prev-arrow" />
+        <div className="flex flex-col items-center">
+            <div className="relative flex items-center">
+                <p className="my-4 font-bold text-2xl">{bookName}</p>
+                <button className="ml-4 w-[60px] h-[36px] text-base bg-main rounded-md font-bold text-white">
+                    저장
                 </button>
-            )}
-            <div className="w-[40px] h-[600px] flex items-end justify-end mr-2">
-                <div className="text-lg font-bold">
-                    {page === 0 ? '표지 뒷면' : page + page - 1}
+                <div className="absolute left-[700px] w-[48]">
+                    <Toggle />
                 </div>
             </div>
-            <div className="w-[600px] h-[600px] border-2 flex justify-center items-center">
-                {page === 0 ? (
-                    <Image
-                        src={bookImage}
-                        sizes="300px"
-                        style={{
-                            objectFit: 'cover'
-                        }}
-                        width={300}
-                        height={300}
-                        alt="bookImage"
-                    />
-                ) : (
-                    <button className="w-[300px] h-[300px] bg-[#D9D9D9] rounded-[2px] text-main font-bold ">
-                        <div className="flex flex-col justify-center items-center">
-                            <Image src={selectImageIcon} alt="selectImage" />
-                            클릭해서 이미지 생성
+
+            <div className="flex justify-center items-center">
+                {/* 첫페이지가 아닌 경우 화살표 안뜨게 */}
+                {page !== 0 && (
+                    <button onClick={handlePrevPage} className="">
+                        <Image src={PrevArrow} alt="prev-arrow" />
+                    </button>
+                )}
+                {/* 첫페이지면 표지임. 아니면 표지가 아니라 페이지를 보여준다. */}
+                <div className="w-[40px] h-[600px] flex items-end justify-end mr-2">
+                    <div className="text-lg font-bold">
+                        {page === 0 ? '표지 뒷면' : page + page - 1}
+                    </div>
+                </div>
+                <div className="w-[600px] h-[600px] border-2 flex justify-center items-center">
+                    {/* 만약 페이지가 0이면 북 커버를 보여줘야 함 API 호출은 나중에 */}
+                    <ImageModal page={page} width={300} />
+                </div>
+                {/* 책의 제목과 지은이 꿈틀 로고 들어감 */}
+                <div className="w-[60px] h-[600px] border-2 flex flex-col justify-between items-center">
+                    <p className="w-[20px] mt-10 text-lg font-bold">
+                        {bookName}
+                    </p>
+                    <p className="w-[20px] text-lg">{author} 지음</p>
+                    <Image src={Logo} alt="logo" width={50} className="mb-10" />
+                </div>
+                <div className="w-[600px] h-[600px] border-2 flex justify-center">
+                    {/* page가 0이면 표지이며 표지에 관련된 내용이 나와야 한다. */}
+                    {page === 0 ? (
+                        <div className="flex flex-col items-center">
+                            <ImageModal page={page} width={600} />
+                            <p className="text-3xl font-bold mt-4">
+                                {bookName}
+                            </p>
+                            <p className="text-sm mt-6">{author} 지음</p>
                         </div>
+                    ) : (
+                        // 아니라면 페이지에 해당하는 줄거리가 뜬다.
+                        <StoryModal page={page} story={story} />
+                    )}
+                </div>
+                {/* 첫페이지면 표지임. 아니면 표지가 아니라 페이지를 보여준다. */}
+                <div className="w-[40px] h-[600px] flex items-end justify-start ml-2">
+                    <div className="text-lg font-bold">
+                        {page === 0 ? '표지 앞면' : page + page}
+                    </div>
+                </div>
+                {/* 마지막 페이지 일 시 넘기는 버튼 뜨지 않는다. */}
+                {page !== pageCount && (
+                    <button onClick={handleNextPage}>
+                        <Image src={NextArrow} alt="next-arrow" />
                     </button>
                 )}
             </div>
-            <div className="w-[60px] h-[600px] border-2 flex flex-col justify-between items-center">
-                <p className="w-[20px] mt-10 text-lg font-bold">{bookName}</p>
-                <p className="w-[20px] text-lg">{author} 지음</p>
-                <Image src={Logo} alt="logo" width={50} className="mb-10" />
-            </div>
-            <div className="w-[600px] h-[600px] border-2 flex justify-center">
-                {page === 0 ? (
-                    <div className="flex flex-col items-center">
-                        <Image src={bookImage} alt="bookImage" />
-                        <div className="text-4xl font-bold mt-4">
-                            {bookName}
-                        </div>
-                        <div className="text-sm mt-6">{author} 지음</div>
-                    </div>
-                ) : (
-                    <div className="flex items-center w-[400px] text-lg font-bold">
-                        {story[page - 1]}
-                    </div>
-                )}
-            </div>
-            <div className="w-[40px] h-[600px] flex items-end justify-start ml-2">
-                <div className="text-lg font-bold">
-                    {page === 0 ? '표지 앞면' : page + page}
-                </div>
-            </div>
-            {page !== pageCount && (
-                <button onClick={handleNextPage}>
-                    <Image src={NextArrow} alt="next-arrow" />
-                </button>
-            )}
         </div>
     );
 }
