@@ -26,7 +26,10 @@ export default function Nav() {
                 <Link href="/" className="hover:text-main cursor-pointer">
                     동화 갤러리
                 </Link>
-                <Link href="/" className="hover:text-main cursor-pointer">
+                <Link
+                    href="/buildstory"
+                    className="hover:text-main cursor-pointer"
+                >
                     동화 만들기
                 </Link>
                 <Link href="/" className="hover:text-main cursor-pointer">

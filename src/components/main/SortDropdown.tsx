@@ -12,7 +12,7 @@ Date        Author   Status    Description
 
 import { useState } from 'react';
 import { useDropdown } from '@/hooks/useDropdown';
-import Image from 'next/image';
+import { DropIcon } from '../icons/DropIcon';
 
 export default function SortDropdown() {
     const [label, setLabel] = useState('최신순');
@@ -26,16 +26,11 @@ export default function SortDropdown() {
                 onClick={handleDropdown}
             >
                 <p>{label}</p>
-                <Image
-                    src={
-                        isDropDown
-                            ? '/images/dropup.svg'
-                            : '/images/dropdown.svg'
-                    }
-                    alt="drop-icon"
-                    width={13}
-                    height={0}
-                />
+                {isDropDown ? (
+                    <DropIcon rotate="0" />
+                ) : (
+                    <DropIcon rotate="180" />
+                )}
             </button>
             {isDropDown && (
                 <ul className="absolute bg-white w-[10rem] h-fit text-left border border-gray-200 rounded text-base">
