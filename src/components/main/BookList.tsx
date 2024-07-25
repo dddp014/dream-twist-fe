@@ -61,7 +61,7 @@ export default function BookList() {
                             src="/images/sample1.svg"
                             alt="book-image"
                             onClick={() => router.push('/board')}
-                            className="w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white cursor-pointer"
+                            className="w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white cursor-pointer transition-transform animate-scaleIn"
                             width={100}
                             height={300}
                         />
