@@ -21,6 +21,7 @@ export default function BookViewer() {
     const sampleImages = [Sample1, Sample2, Sample1, Sample2, Sample1, Sample2];
     const pageCount: number = 6;
 
+    // api 연동 예정
     const renderBookImages = () => {
         return sampleImages.map((img, index) => ({
             id: index,
@@ -36,12 +37,8 @@ export default function BookViewer() {
             return null;
         }
 
-        const view =
-            step === 0 || step === pageCount - 1 ? 'hidden' : 'display';
-        const styles =
-            step === 0 || step === pageCount - 1
-                ? 'w-4/12 ml-12'
-                : 'w-8/12 ml-6';
+        const view = step === 0 ? 'hidden' : 'display';
+        const styles = step === 0 ? 'w-4/12 ml-12' : 'w-8/12 ml-6';
 
         return (
             <div
