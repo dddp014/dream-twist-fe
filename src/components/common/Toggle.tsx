@@ -28,8 +28,8 @@ const Toggle = ({ register }: IToggleProps) => {
             <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center">
                 <input
                     type="checkbox"
-                    id="save"
-                    {...register('save', { required: true })}
+                    id="isPublic"
+                    {...register('isPublic')}
                     className="sr-only"
                     checked={isChecked}
                     onChange={handleCheckboxChange}

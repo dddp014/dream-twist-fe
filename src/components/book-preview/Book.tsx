@@ -59,7 +59,7 @@ export default function Book() {
                     저장
                 </button>
                 <div className="absolute left-[700px] w-[48]">
-                    <Toggle />
+                    {/* <Toggle register={register} /> */}
                 </div>
             </div>
 
