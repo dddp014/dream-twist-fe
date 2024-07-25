@@ -6,11 +6,17 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.07.23  임도헌    Created
+2024.07.25  임도헌   Modified  폼 형식 받아올 수 있게 수정
 */
 
 import { useState } from 'react';
+import { UseFormRegister } from 'react-hook-form';
 
-const Toggle = () => {
+interface IToggleProps {
+    register: UseFormRegister<any>;
+}
+
+const Toggle = ({ register }: IToggleProps) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
 
     const handleCheckboxChange = () => {
@@ -22,7 +28,8 @@ const Toggle = () => {
             <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center">
                 <input
                     type="checkbox"
-                    name="autoSaver"
+                    id="save"
+                    {...register('save', { required: true })}
                     className="sr-only"
                     checked={isChecked}
                     onChange={handleCheckboxChange}
