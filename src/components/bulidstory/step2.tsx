@@ -61,19 +61,19 @@ const Step2 = ({ nextStep, prevStep }: Step2Props) => {
                 <div>
                     <button
                         onClick={prevStep}
-                        className="bg-gray-500 text-white py-2 px-4 rounded mr-2"
+                        className="bg-yellow-500 text-white py-2 px-4 rounded mr-2"
                     >
                         이전 단계
                     </button>
                     <button
-                        className="bg-yellow-500 text-white py-2 px-4 rounded"
+                        className="bg-green-500 text-white py-2 px-4 rounded"
                         onClick={openModal}
                     >
                         줄거리 수정
                     </button>
                 </div>
                 <button
-                    className="bg-yellow-500 text-white py-2 px-4 rounded"
+                    className="bg-green-500 text-white py-2 px-4 rounded"
                     onClick={nextStep}
                 >
                     선택한 줄거리로 동화 생성

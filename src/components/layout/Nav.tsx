@@ -39,7 +39,7 @@ export default function Nav() {
             <div className="pt-1 space-x-4">
                 <Link
                     href="/"
-                    className="bg-main py-2 px-4 rounded-[7px] text-white cursor-pointer text-base"
+                    className="bg-green-500 py-2 px-4 rounded-[7px] text-white cursor-pointer text-base"
                 >
                     로그인
                 </Link>

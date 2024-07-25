@@ -41,7 +41,7 @@ function Step1({ nextStep }: Step1Props) {
                 <div className="flex justify-center">
                     <button
                         onClick={nextStep}
-                        className="mt-10 bg-main text-white py-2.5 px-6 rounded-md"
+                        className="mt-10 bg-green-500 text-white py-2.5 px-6 rounded-md"
                     >
                         줄거리 생성하기
                     </button>

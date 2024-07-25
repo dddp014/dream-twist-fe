@@ -65,16 +65,16 @@ function Step3({ prevStep }: Step3Props) {
             <div className="flex justify-between mt-8">
                 <div>
                     <button
-                        className="bg-gray-500 text-white py-2 px-4 rounded"
+                        className="bg-yellow-500 text-white py-2 px-4 rounded"
                         onClick={prevStep}
                     >
                         이전 단계
                     </button>
-                    <button className="bg-yellow-500 text-white py-2 px-4 rounded ml-2">
+                    <button className="bg-green-500 text-white py-2 px-4 rounded ml-2">
                         플롯 수정
                     </button>
                 </div>
-                <button className="bg-yellow-500 text-white py-2 px-4 rounded">
+                <button className="bg-green-500 text-white py-2 px-4 rounded">
                     이 플롯으로 완료
                 </button>
             </div>
