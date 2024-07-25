@@ -11,48 +11,35 @@ Date        Author   Status    Description
 
 'use client';
 
-import { useState } from 'react';
 import { ArrowIcon } from '../icons/ArrowIcon';
+import usePagination from '@/hooks/usePagination';
 import Sample1 from '../../../public/images/sample1.svg';
 import Sample2 from '../../../public/images/sample2.svg';
 
 export default function BookViewer() {
+    const { step, nextStep, prevStep } = usePagination();
     const sampleImages = [Sample1, Sample2, Sample1, Sample2, Sample1, Sample2];
     const pageCount: number = 6;
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const handleNextPage = () => {
-        if (currentPage < pageCount) {
-            setCurrentPage((prevPage) => prevPage + 1);
-        }
-    };
-    const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage((prevPage) => prevPage - 1);
-        }
-    };
 
     const renderBookImages = () => {
         return sampleImages.map((img, index) => ({
-            id: index + 1,
+            id: index,
             backgroundImage: `url(${img.src})`
         }));
     };
 
     const renderBooks = () => {
         const books = renderBookImages();
-        const currentBook = books.find((book) => book.id === currentPage);
+        const currentBook = books.find((book) => book.id === step);
 
         if (!currentBook) {
             return null;
         }
 
         const view =
-            currentPage === 1 || currentPage === pageCount
-                ? 'hidden'
-                : 'display';
+            step === 0 || step === pageCount - 1 ? 'hidden' : 'display';
         const styles =
-            currentPage === 1 || currentPage === pageCount
+            step === 0 || step === pageCount - 1
                 ? 'w-4/12 ml-12'
                 : 'w-8/12 ml-6';
 
@@ -78,14 +65,14 @@ export default function BookViewer() {
 
     return (
         <div className="flex flex-row w-full h-3/6 justify-center items-center mb-10 mt-24">
-            {currentPage > 1 && (
-                <button type="button" onClick={handlePrevPage} className="mr-4">
+            {step > 0 && (
+                <button type="button" onClick={prevStep} className="mr-4">
                     <ArrowIcon rotate="180" />
                 </button>
             )}
             {renderBooks()}
-            {currentPage < pageCount && (
-                <button type="button" onClick={handleNextPage} className="ml-8">
+            {step < pageCount - 1 && (
+                <button type="button" onClick={nextStep} className="ml-8">
                     <ArrowIcon rotate="0" />
                 </button>
             )}

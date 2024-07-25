@@ -14,7 +14,7 @@ interface DropIconProps {
     rotate: string;
 }
 
-export const DropIcon: React.FC<DropIconProps> = ({ rotate }) => {
+export const DropIcon = ({ rotate }: DropIconProps) => {
     return (
         <svg
             width="13"

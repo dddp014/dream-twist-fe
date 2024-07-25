@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useBuildStory = () => {
+const usePagination = () => {
     const [step, setStep] = useState(0); // 0은 초기 화면, 1은 Step1 화면
 
     const handleStartClick = () => {
@@ -18,4 +18,4 @@ const useBuildStory = () => {
     };
 };
 
-export default useBuildStory;
+export default usePagination;

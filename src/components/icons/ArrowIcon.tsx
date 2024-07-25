@@ -14,7 +14,7 @@ interface ArrowIconProps {
     rotate: string;
 }
 
-export const ArrowIcon: React.FC<ArrowIconProps> = ({ rotate }) => {
+export const ArrowIcon = ({ rotate }: ArrowIconProps) => {
     return (
         <svg
             width="23"
