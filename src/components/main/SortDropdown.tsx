@@ -14,9 +14,16 @@ import { useState } from 'react';
 import { useDropdown } from '@/hooks/useDropdown';
 import { DropIcon } from '../icons/DropIcon';
 
+const options = ['최신순', '인기순'];
+
 export default function SortDropdown() {
-    const [label, setLabel] = useState('최신순');
+    const [label, setLabel] = useState<string>(options[0]);
     const { isDropDown, dropdownRef, handleDropdown } = useDropdown();
+
+    const handleOptionClick = (value: string) => {
+        setLabel(value);
+        handleDropdown();
+    };
 
     return (
         <div ref={dropdownRef} className="relative z-10">
@@ -27,40 +34,30 @@ export default function SortDropdown() {
             >
                 <p>{label}</p>
                 {isDropDown ? (
-                    <DropIcon rotate="0" />
-                ) : (
                     <DropIcon rotate="180" />
+                ) : (
+                    <DropIcon rotate="0" />
                 )}
             </button>
             {isDropDown && (
                 <ul className="absolute bg-white w-[10rem] h-fit text-left border border-gray-200 rounded text-base">
-                    <div>
-                        <li className="hover:bg-gray-100 cursor-pointer">
+                    {options.map((option, index) => (
+                        <li
+                            key={option}
+                            className="hover:bg-gray-100 cursor-pointer"
+                        >
                             <button
                                 type="button"
-                                onClick={() => {
-                                    setLabel('최신순');
-                                    handleDropdown();
-                                }}
+                                onClick={() => handleOptionClick(option)}
                                 className="w-full text-left px-6 py-2.5"
                             >
-                                최신순
+                                {option}
                             </button>
+                            {index < options.length - 1 && (
+                                <hr className="border-gray-200 mx-2" />
+                            )}
                         </li>
-                        <hr className="border-gray-200 mx-2" />
-                        <li className="hover:bg-gray-100 cursor-pointer">
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setLabel('인기순');
-                                    handleDropdown();
-                                }}
-                                className="w-full text-left px-6 py-2.5"
-                            >
-                                인기순
-                            </button>
-                        </li>
-                    </div>
+                    ))}
                 </ul>
             )}
         </div>
