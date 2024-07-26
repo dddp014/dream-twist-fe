@@ -37,13 +37,15 @@ export default function BookViewer() {
             return null;
         }
 
-        const view = step === 0 ? 'hidden' : 'display';
-        const styles = step === 0 ? 'w-4/12 ml-12' : 'w-8/12 ml-6';
+        const view =
+            step === 0 || step === pageCount - 1 ? 'hidden' : 'display';
+        const width =
+            step === 0 || step === pageCount - 1 ? 'w-4/12' : 'w-8/12';
 
         return (
             <div
                 key={currentBook.id}
-                className={`flex felx-row justify-center items-center ${styles} h-[110%] hover:perspective-1600`}
+                className={`flex felx-row justify-center items-center ${width} h-[110%] mx-8`}
             >
                 <div
                     className="border-solid border border-gray-100 bg-[length:100%_100%] w-full h-full bg-cover bg-center bg-no-repeat shadow-lg"
@@ -63,16 +65,18 @@ export default function BookViewer() {
     return (
         <div className="flex flex-row w-full h-3/6 justify-center items-center mb-10 mt-24">
             {step > 0 && (
-                <button type="button" onClick={prevStep} className="mr-4">
+                <button type="button" onClick={prevStep}>
                     <ArrowIcon rotate="180" />
                 </button>
             )}
             {renderBooks()}
-            {step < pageCount - 1 && (
-                <button type="button" onClick={nextStep} className="ml-8">
-                    <ArrowIcon rotate="0" />
-                </button>
-            )}
+            <button
+                type="button"
+                onClick={nextStep}
+                className={`${step < pageCount - 1 ? '' : 'opacity-0 pointer-events-none'}`}
+            >
+                <ArrowIcon rotate="0" />
+            </button>
         </div>
     );
 }
