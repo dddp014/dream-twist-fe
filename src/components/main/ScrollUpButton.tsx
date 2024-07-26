@@ -21,7 +21,7 @@ export default function ScrollUpButton() {
         <div className="sticky bottom-4">
             <button
                 onClick={handleScrollUp}
-                className="bg-gray-300 opacity-80 rounded-full py-1.5 px-1.5 shadow"
+                className="bg-gray-300 opacity-80 rounded-full py-2 px-2 shadow"
             >
                 <Image
                     src="/images/scroll-up.svg"

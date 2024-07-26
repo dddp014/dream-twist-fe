@@ -8,10 +8,19 @@ Date        Author   Status    Description
 2024.07.21  나경윤    Created
 */
 
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 export default function Nav() {
+    const pathname = usePathname();
+
+    if (pathname === '/login') {
+        return null;
+    }
+
     return (
         <nav className="flex flex-row items-center justify-between px-24 py-3 text-lg shadow-md shadow-neutral-100">
             <Link href="/" className="cursor-pointer">
@@ -38,7 +47,7 @@ export default function Nav() {
             </div>
             <div className="pt-1 space-x-4">
                 <Link
-                    href="/"
+                    href="/login"
                     className="bg-main py-2 px-4 rounded-[7px] text-white cursor-pointer text-base"
                 >
                     로그인
