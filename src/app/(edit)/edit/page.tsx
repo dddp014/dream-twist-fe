@@ -6,16 +6,15 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.07.22  임도헌    Created
+2024.07.25  임도헌   Modified  FairytailInfo 컴포넌트 삭제
 */
 
-import FairytailInfo from '@/components/edit/fairytail-info';
-import FairytailStory from '@/components/edit/fairytail-story';
+import FairytailForm from '@/components/edit/FairytailForm';
 
 export default function EditPage() {
     return (
         <div className="flex w-full">
-            <FairytailInfo />
-            <FairytailStory />
+            <FairytailForm />
         </div>
     );
 }
