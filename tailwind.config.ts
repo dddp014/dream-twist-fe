@@ -18,6 +18,15 @@ const config: Config = {
                 main: '#35c16f',
                 'main-200': '#66CF92',
                 'main-100': '#EFFBEE'
+            },
+            animation: {
+                scaleIn: 'scaleIn 0.3s ease-out'
+            },
+            keyframes: {
+                scaleIn: {
+                    '0%': { transform: 'scale(0)' },
+                    '100%': { transform: 'scale(1)' }
+                }
             }
         }
     },

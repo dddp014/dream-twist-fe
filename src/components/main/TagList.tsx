@@ -15,12 +15,12 @@ import Tag from '../common/Tag';
 
 const tags: string[] = [
     '모든 주제',
-    '신화',
-    '전래동화',
-    '권선징악',
-    '예술',
+    '우화',
+    '환경',
+    '사랑',
+    '모험',
     '추리',
-    '사랑'
+    '기타'
 ];
 
 export default function TagList() {

@@ -16,6 +16,7 @@ import ImageModal from './ImageModal';
 import StoryModal from './StoryModal';
 import Toggle from '../common/Toggle';
 import Image from 'next/image';
+import { ArrowIcon } from '../icons/ArrowIcon';
 
 export default function Book() {
     const bookName: string = '용감한 고양이 미미의 모험';
@@ -67,12 +68,7 @@ export default function Book() {
                 {/* 첫페이지가 아닌 경우 화살표 안뜨게 */}
                 {page !== 0 && (
                     <button onClick={handlePrevPage} className="">
-                        <Image
-                            src={'/images/prev-arrow.svg'}
-                            width={20}
-                            height={20}
-                            alt="prev-arrow"
-                        />
+                        <ArrowIcon rotate="180" />
                     </button>
                 )}
                 {/* 첫페이지면 표지임. 아니면 표지가 아니라 페이지를 보여준다. */}
@@ -123,12 +119,7 @@ export default function Book() {
                 {/* 마지막 페이지 일 시 넘기는 버튼 뜨지 않는다. */}
                 {page !== pageCount && (
                     <button onClick={handleNextPage}>
-                        <Image
-                            src={'/images/next-arrow.svg'}
-                            width={20}
-                            height={20}
-                            alt="next-arrow"
-                        />
+                        <ArrowIcon rotate="0" />
                     </button>
                 )}
             </div>

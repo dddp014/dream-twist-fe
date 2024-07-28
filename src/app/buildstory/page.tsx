@@ -15,10 +15,10 @@ import Step1 from '@/components/bulidstory/step1';
 import Step2 from '@/components/bulidstory/step2';
 import Step3 from '@/components/bulidstory/step3';
 import Image from 'next/image';
-import useBuildStory from '@/hooks/useBuildStory';
+import usePagination from '@/hooks/usePagination';
 
 function BuildStoryPage() {
-    const { step, handleStartClick, nextStep, prevStep } = useBuildStory();
+    const { step, handleStartClick, nextStep, prevStep } = usePagination();
 
     return (
         <div>
