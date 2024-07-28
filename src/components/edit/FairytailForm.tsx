@@ -10,11 +10,13 @@ Date        Author   Status    Description
 2024.07.25  임도헌   Modified  StoryBlock 컴포넌트 분리
 2024.07.25  임도헌   Modified  FairytailInfo 컴포넌트와 병합
 2024.07.25  임도헌   Modified  컴포넌트 전체 수정
+2024.07.26  임도헌   Modified  select및 summary 코드 수정
 */
 
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import Toggle from '../common/Toggle';
 import StoryBlock from './StoryBlock';
@@ -23,20 +25,35 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 export interface IFairyTaleFormInputs {
     title: string;
     theme: string;
+    summary: string;
     storys: string[];
 }
 
+interface IthemesProps {
+    theme: string;
+    name: string;
+}
+
+const themes: IthemesProps[] = [
+    { theme: 'fable', name: '우화' },
+    { theme: 'environment', name: '환경' },
+    { theme: 'love', name: '사랑' },
+    { theme: 'adventure', name: '모험' },
+    { theme: 'Reasoning', name: '추리' },
+    { theme: 'etc', name: '기타' }
+];
+
 export default function FairytailForm() {
+    const [isClick, setIsClick] = useState(0);
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm<IFairyTaleFormInputs>();
-    const onSubmit: SubmitHandler<IFairyTaleFormInputs> = (data) => {
-        console.log(data);
-    };
 
-    const [isClick, setIsClick] = useState(0);
+    const onSubmit: SubmitHandler<IFairyTaleFormInputs> = (data) => {
+        console.log(data.storys);
+    };
 
     const handleClick = (idx: number) => {
         setIsClick(idx);
@@ -64,11 +81,38 @@ export default function FairytailForm() {
                         </span>
                     )}
                     <label htmlFor="theme" className="m-4 text-2xl">
-                        동화 주제 및 줄거리
+                        주제
+                    </label>
+                    <div className="relative">
+                        <Image
+                            className="absolute top-[34px] left-[270px]"
+                            src={'/images/dropdown.svg'}
+                            alt="drop-icon"
+                            width={16}
+                            height={0}
+                        />
+                        <select
+                            className="w-[280px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2 appearance-none"
+                            id="theme"
+                            {...register('theme', { required: true })}
+                        >
+                            <option selected defaultValue="">
+                                주제를 선택해주세요.
+                            </option>
+                            {themes.map(({ theme, name }) => (
+                                <option key={theme} value={theme}>
+                                    {name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <label htmlFor="summary" className="m-4 text-2xl">
+                        줄거리 요약
                     </label>
                     <textarea
-                        id="theme"
-                        {...register('theme', { required: true })}
+                        id="summary"
+                        {...register('summary', { required: true })}
                         className="w-[280px] h-[460px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2"
                         placeholder="주제 및 줄거리를 입력해주세요."
                     />
