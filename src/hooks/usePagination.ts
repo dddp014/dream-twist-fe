@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 
-const usePagination = (initialStep: number) => {
-    const [step, setStep] = useState(initialStep); // 0은 초기 화면, 1은 Step1 화면
+const usePagination = () => {
+    const [step, setStep] = useState(0);
 
     const handleStartClick = () => {
         setStep(1);
