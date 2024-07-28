@@ -21,6 +21,7 @@ import { useState } from 'react';
 import Toggle from '../common/Toggle';
 import StoryBlock from './StoryBlock';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { DropIcon } from '../icons/DropIcon';
 
 export interface IFairyTaleFormInputs {
     title: string;
@@ -84,13 +85,9 @@ export default function FairytailForm() {
                         주제
                     </label>
                     <div className="relative">
-                        <Image
-                            className="absolute top-[34px] left-[270px]"
-                            src={'/images/dropdown.svg'}
-                            alt="drop-icon"
-                            width={16}
-                            height={0}
-                        />
+                        <div className="absolute top-[34px] left-[270px]">
+                            <DropIcon rotate="" />
+                        </div>
                         <select
                             className="w-[280px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2 appearance-none"
                             id="theme"

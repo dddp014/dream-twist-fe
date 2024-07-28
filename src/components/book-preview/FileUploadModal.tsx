@@ -43,7 +43,7 @@ export default function FileUploadModal({
     }: ISecondModalProps = useEditModal();
 
     const fileRef = useRef<HTMLInputElement>(null);
-    const [image, setImage] = useState<string>('');
+    const [image, setImage] = useState<string>();
 
     const handleClick = () => {
         fileRef?.current?.click();
