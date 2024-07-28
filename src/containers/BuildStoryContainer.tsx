@@ -1,4 +1,13 @@
-// /containers/BuildStoryContainer.tsx
+/**
+File Name : containers/BuildStoryContainer
+Description : 동화 생성
+Author : 김민규
+
+History
+Date        Author   Status    Description
+2024.07.28  김민규    Created
+
+*/
 
 'use client';
 

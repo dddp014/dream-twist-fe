@@ -6,6 +6,7 @@ Author : 김민규
 History
 Date        Author   Status    Description
 2024.07.20  김민규    Created
+2024.07.28  김민규    Modified   container로 분리
 */
 
 import React from 'react';
