@@ -8,9 +8,6 @@ Date        Author   Status    Description
 2024.07.20  김민규    Created
 */
 
-import Image from 'next/image';
-import NextArrow from '@/images/next-arrow.svg';
-
 function BuildStoryLayout({ children }: { children: React.ReactNode }) {
     return (
         <div>
