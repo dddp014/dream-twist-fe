@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+const plugin = require('tailwindcss/plugin');
 
 const config: Config = {
     content: [
@@ -12,9 +13,23 @@ const config: Config = {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                 'gradient-conic':
                     'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+            },
+            colors: {
+                main: '#35c16f',
+                'main-200': '#66CF92',
+                'main-100': '#EFFBEE'
+            },
+            animation: {
+                scaleIn: 'scaleIn 0.3s ease-out'
+            },
+            keyframes: {
+                scaleIn: {
+                    '0%': { transform: 'scale(0)' },
+                    '100%': { transform: 'scale(1)' }
+                }
             }
         }
     },
-    plugins: []
+    plugins: [require('@xpd/tailwind-3dtransforms')]
 };
 export default config;
