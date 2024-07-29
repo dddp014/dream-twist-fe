@@ -1,20 +1,18 @@
 /**
-File Name : components/step1
-Description : 동화 생성 첫번째 단계
+File Name : buildstory/summery/page.tsx
+Description : 동화 생성
 Author : 김민규
 
 History
 Date        Author   Status    Description
-2024.07.21  김민규    Created
-*/
+2024.07.28  김민규    Created
 
-'use client';
+**/
 
-type Step1Props = {
-    nextStep: () => void;
-};
+import React from 'react';
+import Link from 'next/link';
 
-function Step1({ nextStep }: Step1Props) {
+const SummeryPage: React.FC = () => {
     return (
         <div className="container mx-auto py-8">
             <h1 className="text-2xl font-bold text-center mb-4">
@@ -39,16 +37,16 @@ function Step1({ nextStep }: Step1Props) {
                     인형의 무한모험의 줄거리
                 </p>
                 <div className="flex justify-center">
-                    <button
-                        onClick={nextStep}
+                    <Link
+                        href="/buildstory/summery-ai"
                         className="mt-10 bg-main text-white py-2.5 px-6 rounded-md"
                     >
                         줄거리 생성하기
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>
     );
-}
+};
 
-export default Step1;
+export default SummeryPage;

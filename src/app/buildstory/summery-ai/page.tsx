@@ -1,35 +1,26 @@
 /**
-File Name : components/step2
-Description : 동화 생성 두번째 단계
+File Name : buildstory/summery-ai/page.tsx
+Description : 동화 생성
 Author : 김민규
 
 History
 Date        Author   Status    Description
-2024.07.21  김민규    Created
-*/
+2024.07.28  김민규    Created
+
+**/
+
 
 'use client';
 
-import { useModal } from '@/hooks/useModal'; // useModal 훅을 불러옵니다.
+import React from 'react';
+import Link from 'next/link';
+import { useModal } from '@/hooks/useModal'; 
 import Modal from '@/components/bulidstory/modal';
 
-type Step2Props = {
-    nextStep: () => void;
-    prevStep: () => void;
-};
-
-const Step2 = ({ nextStep, prevStep }: Step2Props) => {
-    const { isModalOpen, plot, openModal, closeModal, savePlot } =
-        useModal(`오늘은 비가 많이 오는 날, 창밖을 바라보니 모두들 우산을
-        쓰고 있어요. 지우는 학교에 가는 길에 우산을 잃어버려
-        걱정이 많았어요. 하지만 비가 많이 오니 라다 보니,
-        평소에는 보지 못했던 작은 것들을 발견하게 돼요. 빗방울이
-        떨어지는 소리, 물방울이에서 뛰어오르는 물방울, 그리고
-        비에 젖은 나무와 꽃들. 그러던 중 지우는 놀이터에서
-        우산을 쓰지 않고 비를 맞으며 춤추는 아이를 발견해요. 그
-        아이는 바로 같은 반 친구인 민호였어요. 민호는 지우에게
-        비 오는 날의 특별한 비밀을 알려주겠다고 해요. 과연 그
-        비밀은 무엇일까요?`);
+const SummeryPage: React.FC = () => {
+    const { isModalOpen, plot, openModal, closeModal, savePlot } = useModal(
+        `오늘은 비가 많이 오는 날, 창밖을 바라보니 모두들 우산을 쓰고 있어요. 지우는 학교에 가는 길에 우산을 잃어버려 걱정이 많았어요. 하지만 비가 많이 오니 라다 보니, 평소에는 보지 못했던 작은 것들을 발견하게 돼요. 빗방울이 떨어지는 소리, 물방울이에서 뛰어오르는 물방울, 그리고 비에 젖은 나무와 꽃들. 그러던 중 지우는 놀이터에서 우산을 쓰지 않고 비를 맞으며 춤추는 아이를 발견해요. 그 아이는 바로 같은 반 친구인 민호였어요. 민호는 지우에게 비 오는 날의 특별한 비밀을 알려주겠다고 해요. 과연 그 비밀은 무엇일까요?`
+    );
 
     return (
         <div className="container mx-auto py-8">
@@ -59,10 +50,7 @@ const Step2 = ({ nextStep, prevStep }: Step2Props) => {
             </div>
             <div className="flex justify-between mt-8">
                 <div>
-                    <button
-                        onClick={prevStep}
-                        className="bg-gray-500 text-white py-2 px-4 rounded mr-2"
-                    >
+                    <button className="bg-gray-500 text-white py-2 px-4 rounded mr-2">
                         이전 단계
                     </button>
                     <button
@@ -72,12 +60,12 @@ const Step2 = ({ nextStep, prevStep }: Step2Props) => {
                         줄거리 수정
                     </button>
                 </div>
-                <button
+                <Link
+                    href="/buildstory/summery-ai"
                     className="bg-yellow-500 text-white py-2 px-4 rounded"
-                    onClick={nextStep}
                 >
                     선택한 줄거리로 동화 생성
-                </button>
+                </Link>
             </div>
             <Modal
                 isOpen={isModalOpen}
@@ -89,4 +77,4 @@ const Step2 = ({ nextStep, prevStep }: Step2Props) => {
     );
 };
 
-export default Step2;
+export default SummeryPage;
