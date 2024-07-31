@@ -14,21 +14,23 @@ Date        Author   Status    Description
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { Book, dummyBooks } from '../../utils/dummyBooks';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { LoadingIcon } from '../icons/LoadingIcon';
 
+interface BookListProps {
+    bookInfo: { bookId: number; theme: string; title: string }[];
+}
+
 const itemsPerPage: number = 10;
 
-export default function BookList() {
+export default function BookList({ bookInfo }: BookListProps) {
     const router = useRouter();
-    const [items, setItems] = useState<Book[]>([]);
+    const [items, setItems] = useState(bookInfo.slice(0, itemsPerPage));
     const [loading, setLoading] = useState<boolean>(true);
-    const pageIndexRef = useRef<number>(1);
+    const pageIndexRef = useRef<number>(2);
 
-    // api 연동 예정
     const loadItems = () => {
-        const newItems = dummyBooks.slice(
+        const newItems = bookInfo.slice(
             (pageIndexRef.current - 1) * itemsPerPage,
             pageIndexRef.current * itemsPerPage
         );
@@ -50,12 +52,12 @@ export default function BookList() {
         <div>
             <div className="grid grid-cols-5 gap-8 gap-y-9 my-10 z-0">
                 {items.map((item) => (
-                    <div key={item.id} className="relative">
+                    <div key={item.bookId} className="relative">
                         <div className="absolute bottom-2 left-4">
                             <p className="text-lg font-semibold -mb-1">
                                 {item.title}
                             </p>
-                            <p>{item.author}</p>
+                            <p>{item.bookId}</p>
                         </div>
                         <Image
                             src="/images/sample1.svg"

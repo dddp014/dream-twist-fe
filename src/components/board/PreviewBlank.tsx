@@ -15,11 +15,11 @@ import useTextToImage from '@/hooks/useTextToImage';
 interface PreviewProps {
     step: number;
     getTextForStep: (step: number) => string;
-    getCurrentImage: (step: number) => string;
+    getCurrentImage: (step: number) => [string, string];
     handlePreview: (index: number) => void;
 }
 
-const pageCount: number = 6;
+const pageCount: number = 8;
 
 export default function PreviewBlank({
     step,
@@ -37,7 +37,7 @@ export default function PreviewBlank({
     const renderPreview = () => {
         return Array.from({ length: pageCount }).map((_, index) => {
             const isSelected = step === index;
-            const currentImage = getCurrentImage(index);
+            const [backgroundImage, backgroundSize] = getCurrentImage(index);
             const text = getTextForStep(index);
             const canvasRef = useTextToImage(text);
             const label = createPreviewLabel(index);
@@ -63,9 +63,10 @@ export default function PreviewBlank({
                                 className={`flex flex-row ${width} h-32`}
                             >
                                 <div
-                                    className={`border-solid border border-gray-200 shadow-md w-32 h-full shadow-neutral-100 mb-3 bg-cover`}
+                                    className={`border-solid border border-gray-200 shadow-md w-32 h-full shadow-neutral-100 mb-3 bg-center bg-no-repeat bg-cover`}
                                     style={{
-                                        backgroundImage: currentImage
+                                        backgroundImage: backgroundImage,
+                                        backgroundSize: backgroundSize
                                     }}
                                 ></div>
 

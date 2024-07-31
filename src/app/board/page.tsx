@@ -15,8 +15,15 @@ import Sample2 from '../../../public/images/sample2.svg';
 import { contents } from '@/utils/dummyBooks';
 
 // api 연동 예정
-const coverImg = Sample1;
-const sampleImages = [Sample2, Sample1, Sample2, Sample1];
+const sampleImages = [
+    Sample1,
+    Sample2,
+    Sample1,
+    Sample2,
+    Sample1,
+    Sample2,
+    Sample2
+];
 
 export default function Board() {
     return (
@@ -31,11 +38,7 @@ export default function Board() {
                 <hr className="border border-zinc-200 opacity-70 mt-1" />
                 <div className="text-right mt-2">좋아요 넣을 곳</div>
             </div>
-            <RenderBook
-                bookImages={sampleImages}
-                coverImg={coverImg}
-                contents={contents}
-            />
+            <RenderBook bookImages={sampleImages} contents={contents} />
         </div>
     );
 }

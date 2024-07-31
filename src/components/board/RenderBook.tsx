@@ -14,20 +14,17 @@ import { StaticImageData } from 'next/image';
 import usePagination from '@/hooks/usePagination';
 import BookViewer from './BookViewer';
 import PreviewBlank from './PreviewBlank';
+import Logo from '../../../public/images/logo.svg';
 
 interface BookInfoProps {
     contents: string[];
-    coverImg: StaticImageData;
     bookImages: StaticImageData[];
 }
 
-const pageCount: number = 6;
+const pageCount: number = 8;
+const endImg = Logo;
 
-export default function RenderBook({
-    contents,
-    coverImg,
-    bookImages
-}: BookInfoProps) {
+export default function RenderBook({ contents, bookImages }: BookInfoProps) {
     const { step, setStep, nextStep, prevStep } = usePagination();
 
     const handlePreviewClick = (index: number) => {
@@ -39,11 +36,11 @@ export default function RenderBook({
         return contents[step - 1] || '';
     };
 
-    const getCurrentImage = (step: number) => {
-        if (step === 0 || step === pageCount - 1) {
-            return `url(${coverImg.src})`;
+    const getCurrentImage = (step: number): [string, string] => {
+        if (step === pageCount - 1) {
+            return [`url(${endImg.src})`, '30% 30%'];
         }
-        return `url(${bookImages[step - 1].src})`;
+        return [`url(${bookImages[step].src})`, '110% 110%'];
     };
 
     return (

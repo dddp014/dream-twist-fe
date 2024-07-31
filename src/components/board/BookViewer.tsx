@@ -20,10 +20,10 @@ interface ViewerProps {
     nextStep: () => void;
     prevStep: () => void;
     getTextForStep: (step: number) => string;
-    getCurrentImage: (step: number) => string;
+    getCurrentImage: (step: number) => [string, string];
 }
 
-const pageCount: number = 6;
+const pageCount: number = 8;
 
 export default function BookViewer({
     step,
@@ -36,7 +36,7 @@ export default function BookViewer({
     const canvasRef = useTextToImage(text);
 
     const renderBooks = () => {
-        const currentImage = getCurrentImage(step);
+        const [backgroundImage, backgroundSize] = getCurrentImage(step);
 
         const view =
             step === 0 || step === pageCount - 1 ? 'hidden' : 'display';
@@ -49,7 +49,10 @@ export default function BookViewer({
             >
                 <div
                     className="border-solid border border-gray-100 bg-[length:100%_100%] w-full h-full bg-cover bg-center bg-no-repeat shadow-lg"
-                    style={{ backgroundImage: currentImage }}
+                    style={{
+                        backgroundImage: backgroundImage,
+                        backgroundSize: backgroundSize
+                    }}
                 >
                     {' '}
                 </div>
