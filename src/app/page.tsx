@@ -15,6 +15,7 @@ import SortDropdown from '@/components/main/SortDropdown';
 import BookList from '@/components/main/BookList';
 import ScrollUpButton from '@/components/main/ScrollUpButton';
 import { getBookList } from '@/apis/Main';
+import { getBookDetail } from '@/apis/Board';
 
 interface BookInfo {
     id: number;
@@ -29,6 +30,11 @@ const Home = async () => {
         theme,
         title
     }));
+
+    // console.log(bookInfo[0].bookId);
+
+    const bookData = await getBookDetail(bookInfo[0].bookId);
+    console.log(bookData);
 
     return (
         <main className="flex flex-col justify-center items-center mx-24 mt-16">

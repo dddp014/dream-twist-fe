@@ -15,7 +15,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
-import { LoadingIcon } from '../icons/LoadingIcon';
 
 interface BookListProps {
     bookInfo: { bookId: number; theme: string; title: string }[];
@@ -23,10 +22,9 @@ interface BookListProps {
 
 const itemsPerPage: number = 10;
 
-export default function BookList({ bookInfo }: BookListProps) {
+const BookList = ({ bookInfo }: BookListProps) => {
     const router = useRouter();
     const [items, setItems] = useState(bookInfo.slice(0, itemsPerPage));
-    const [loading, setLoading] = useState<boolean>(true);
     const pageIndexRef = useRef<number>(2);
 
     const loadItems = () => {
@@ -41,7 +39,6 @@ export default function BookList({ bookInfo }: BookListProps) {
 
         setItems((prev) => [...prev, ...newItems]);
         pageIndexRef.current++;
-        setLoading(false);
     };
 
     const { ref, isPageEnd, setEnd } = useInfiniteScroll({
@@ -62,7 +59,7 @@ export default function BookList({ bookInfo }: BookListProps) {
                         <Image
                             src="/images/sample1.svg"
                             alt="book-image"
-                            onClick={() => router.push('/board')}
+                            onClick={() => router.push(`/board`)}
                             className="w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white cursor-pointer transition-transform animate-scaleIn"
                             width={100}
                             height={300}
@@ -70,8 +67,9 @@ export default function BookList({ bookInfo }: BookListProps) {
                     </div>
                 ))}
             </div>
-            {!isPageEnd && loading && <LoadingIcon />}
             {!isPageEnd && <div ref={ref} />}
         </div>
     );
-}
+};
+
+export default BookList;

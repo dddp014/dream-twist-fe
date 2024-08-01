@@ -13,6 +13,7 @@ import RenderBook from '@/components/board/RenderBook';
 import Sample1 from '../../../public/images/sample1.svg';
 import Sample2 from '../../../public/images/sample2.svg';
 import { contents } from '@/utils/dummyBooks';
+import { getBookDetail } from '@/apis/Board';
 
 // api 연동 예정
 const sampleImages = [
@@ -25,7 +26,17 @@ const sampleImages = [
     Sample2
 ];
 
-export default function Board() {
+interface Props {
+    params: {
+        id: number;
+    };
+}
+
+const Board = async () => {
+    // const { id } = params;
+    // const bookDetail = await getBookDetail();
+    // console.log(bookDetail);
+
     return (
         <div className="h-screen flex flex-col justify-center items-center mt-4 mx-24 mb-12 ">
             <div className="flex flex-col w-full mb-10">
@@ -41,4 +52,6 @@ export default function Board() {
             <RenderBook bookImages={sampleImages} contents={contents} />
         </div>
     );
-}
+};
+
+export default Board;

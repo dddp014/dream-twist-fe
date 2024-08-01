@@ -9,11 +9,12 @@ Date        Author   Status    Description
 */
 
 export const getBookList = async () => {
-    return fetch('http://localhost:4000/fairytale')
-        .then((res) => res.json())
-        .then((data) => data)
-        .catch((error) => {
-            console.error('error:', error);
-            return error;
-        });
+    try {
+        const response = await fetch('http://localhost:4000/fairytale');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('error:', error);
+        return error;
+    }
 };
