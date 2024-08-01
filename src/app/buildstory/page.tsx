@@ -6,52 +6,40 @@ Author : 김민규
 History
 Date        Author   Status    Description
 2024.07.20  김민규    Created
-2024.07.28  김민규    Modified   container로 분리
 */
 
-// import React from 'react';
-// import BuildStoryContainer from '@/containers/BuildStoryContainer';
-
-// const BuildStoryPage = () => {
-//   return <BuildStoryContainer />;
-// };
-
-// export default BuildStoryPage;
 
 import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image';
 
 const BuildStoryPage: React.FC = () => {
-    // const handleEditClick = () => {
-    //     // 직접 쓰기 클릭 시의 처리
-    //     // 여기서 setStep 또는 다른 state를 변경하여 다른 페이지로 이동 가능
-    //     console.log('직접 쓰기 클릭됨');
-    // };
-
-    // const handleStartClick = () => {
-    //     // AI와 함께 쓰기 클릭 시의 처리
-    //     // 여기서 setStep 또는 다른 state를 변경하여 다른 페이지로 이동 가능
-    //     console.log('AI와 함께 쓰기 클릭됨');
-    // };
-
     return (
         <div className="min-h-screen flex flex-col">
-            <div className="py-10 flex-1 overflow-y-auto">
-                <div className="container mx-auto mt-10 text-neutral-900">
-                    <>
-                        <h1 className="text-2xl font-bold text-center mb-4">
-                            이야기를 어떻게 쓸까요?
-                        </h1>
-                        <div className="text-center mb-12">
-                            AI를 활용해서 글을 쓰거나 도움없이 직접 쓸 수
-                            있어요.
-                        </div>
-                        <div className="flex justify-center gap-8 mb-15">
-                            <div className="bg-white p-6 rounded-lg shadow-md shadow-neutral-200 w-96 max-w-xs md:max-w-md lg:max-w-lg text-center border border-gray-200 relative flex flex-col items-center">
+            <div className="text-center py-10 w-full">
+                <h1 className="text-2xl font-bold mb-4">
+                    이야기를 어떻게 쓸까요?
+                </h1>
+                <p>AI를 활용해서 글을 쓰거나 도움없이 직접 쓸 수 있어요.</p>
+            </div>
+
+            <div className="flex flex-1">
+                <div
+                    className="w-1/2 bg-cover bg-left"
+                    style={{
+                        backgroundImage: 'url("/images/Wormis Outdoors.svg")',
+                        backgroundSize: '90%',
+                        backgroundRepeat: 'no-repeat'
+                    }}
+                ></div>
+
+                <div className="w-1/2 flex flex-col justify-center">
+                    <div className="container mx-auto text-neutral-900">
+                        <div className="flex flex-col">
+                            <div className="bg-white p-6 rounded-lg shadow-md shadow-neutral-200 w-full h-64 text-center border border-gray-200 flex items-center">
                                 <div className="flex justify-center items-center text-green-500 text-4xl my-10">
                                     <Image
-                                        src="/images/to-edit.svg"
+                                        src="/images/note.svg"
                                         alt="toEdit"
                                         width={110}
                                         height={0}
@@ -66,20 +54,20 @@ const BuildStoryPage: React.FC = () => {
                                     <br />
                                     글쓰기 능력이 쑥쑥 올라요.
                                 </p>
-                                <button
-                                    className="bg-main text-white w-32 py-2 px-4 rounded-md my-9"
-                                    // onClick={handleEditClick}
+                                <Link
+                                    href="/buildstory/edit"
+                                    className="bg-main text-white w-32 py-2 px-4 rounded-md my-9 block text-center"
                                 >
                                     편집하기
-                                </button>
+                                </Link>
                             </div>
-                            <div className="bg-white p-6 rounded-lg shadow-md shadow-neutral-200 w-96 max-w-xs md:max-w-md lg:max-w-lg text-center border border-gray-200 relative flex flex-col items-center">
-                                <div className="absolute top-0 right-4 bg-green-500 text-white pt-3 pb-2 px-2 rounded-b-lg">
+                            <div className="bg-white p-6 rounded-lg shadow-md shadow-neutral-200 w-full h-64 text-center border border-gray-200 flex items-center">
+                                <div className="absolute top-0 right-4 bg-green-500 text-white pt-3 pb-2 rounded-b-lg">
                                     추천
                                 </div>
                                 <div className="flex justify-center items-center text-pink-300 text-4xl my-10">
                                     <Image
-                                        src="/images/with-ai.svg"
+                                        src="/images/icon.svg"
                                         alt="withAI"
                                         width={110}
                                         height={0}
@@ -102,7 +90,7 @@ const BuildStoryPage: React.FC = () => {
                                 </Link>
                             </div>
                         </div>
-                    </>
+                    </div>
                 </div>
             </div>
         </div>

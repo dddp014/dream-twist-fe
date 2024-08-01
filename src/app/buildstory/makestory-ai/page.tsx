@@ -11,25 +11,32 @@ Date        Author   Status    Description
 
 'use client';
 
-import React from 'react';
-import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
 const MakestoryAiPage: React.FC = () => {
-    const router = useRouter();
-    const { plots } = router.query;
+    const [plots, setPlots] = useState<string[]>([]);
 
-    const parsedPlots = plots ? JSON.parse(plots as string) : [];
+    useEffect(() => {
+        // 로컬 스토리지에서 데이터 읽기
+        const storyData = localStorage.getItem('storyData');
+        if (storyData) {
+            const parsedData = JSON.parse(storyData);
+            setPlots(parsedData.story || []);
+        } else {
+            console.error('스토리 데이터가 없습니다.');
+        }
+    }, []);
 
     return (
         <div className="container mx-auto py-8">
             <h1 className="text-2xl font-bold text-center mb-4">
-                줄거리를 토대로 11p 플롯을 생성했어요.
+                줄거리를 토대로 6p 플롯을 생성했어요.
             </h1>
             <p className="text-center mb-8">
                 동화책 각 페이지에 들어갈 이야기를 수정할 수 있어요.
             </p>
             <div className="flex overflow-x-auto w-full space-x-4">
-                {parsedPlots.map((plot: string, index: number) => (
+                {plots.map((plot: string, index: number) => (
                     <div
                         key={index}
                         className={`flex-shrink-0 w-full max-w-xs bg-white p-6 rounded-lg shadow-md`}
