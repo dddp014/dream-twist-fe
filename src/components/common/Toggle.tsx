@@ -5,53 +5,45 @@ Author : 임도헌
 
 History
 Date        Author   Status    Description
-2024.07.23  임도헌    Created
+2024.07.23  임도헌   Created
 2024.07.25  임도헌   Modified  폼 형식 받아올 수 있게 수정
+2024.07.31  임도헌   Modified  FairytailForm과 Book컴포넌트 연동할 수 있도록 코드 변경
 */
 
-import { useState } from 'react';
-import { UseFormRegister } from 'react-hook-form';
+import React from 'react';
 
-interface IToggleProps {
-    register: UseFormRegister<any>;
+interface ToggleProps {
+    value: boolean;
+    onChange: (value: boolean) => void;
 }
 
-const Toggle = ({ register }: IToggleProps) => {
-    const [isChecked, setIsChecked] = useState<boolean>(false);
-
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-    };
-
+export default function Toggle({ value, onChange }: ToggleProps) {
     return (
-        <>
-            <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center">
-                <input
-                    type="checkbox"
-                    id="isPublic"
-                    {...register('isPublic')}
-                    className="sr-only"
-                    checked={isChecked}
-                    onChange={handleCheckboxChange}
-                />
+        <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center">
+            <input
+                type="checkbox"
+                className="sr-only"
+                checked={value}
+                onChange={(e) => onChange(e.target.checked)}
+            />
+            {/* Custom Slider */}
+            <span
+                className={`slider mr-3 flex h-[26px] w-[90px] items-center rounded-full p-1 duration-200 ${
+                    value ? 'bg-main' : 'bg-[#CCCCCE]'
+                }`}
+            >
                 <span
-                    className={`slider mr-3 flex h-[26px] w-[90px] items-center rounded-full p-1 duration-200 ${
-                        isChecked ? 'bg-main' : 'bg-[#CCCCCE]'
+                    className={`dot h-[18px] w-[18px] rounded-full bg-white duration-200 ${
+                        value ? 'translate-x-6' : ''
                     }`}
-                >
-                    <span
-                        className={`dot h-[18px] w-[18px] rounded-full bg-white duration-200 ${
-                            isChecked ? 'translate-x-6' : ''
-                        }`}
-                    ></span>
-                </span>
-                <span className="w-full label flex items-center text-sm font-medium text-black">
-                    <span className="pl-1"> {isChecked ? '' : '비'} </span>
-                    공개
-                </span>
-            </label>
-        </>
+                ></span>
+            </span>
+            {/* Label */}
+            <span className="w-full label flex items-center text-sm font-medium text-black">
+                <span className="pl-1">{value ? '' : '비'}</span>
+                공개
+            </span>
+            {/* Hidden Checkbox */}
+        </label>
     );
-};
-
-export default Toggle;
+}

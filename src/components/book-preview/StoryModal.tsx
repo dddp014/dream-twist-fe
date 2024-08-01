@@ -7,91 +7,62 @@ History
 Date        Author   Status    Description
 2024.07.24  임도헌   Created
 2024.07.27  임도헌   Modified   portal 적용
+2024.07.29  임도헌   Modified   필요없는 코드 삭제
+2024.07.31  임도헌   Modified   portal 수정 및 react-hook-form으로 코드 변경
 */
 
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useEditModal } from '@/hooks/useModal';
 import Image from 'next/image';
 import Portal from '../common/Portal';
 
-interface IStoryModalProps {
-    page: number;
-    story: string[];
-}
-interface IModalProps {
-    isOpenModal: boolean;
-    openModal: () => void;
-    closeModal: () => void;
+interface StoryModalProps {
+    initialText: string;
+    onClose: () => void;
+    onSave: (text: string) => void;
 }
 
-export default function StoryModal({ page, story }: IStoryModalProps) {
-    const trigger: MutableRefObject<null> = useRef(null);
-    const modal: MutableRefObject<null> = useRef(null);
+export default function StoryModal({
+    initialText,
+    onClose,
+    onSave
+}: StoryModalProps) {
+    const { isOpenModal, openModal, closeModal } = useEditModal();
+    const [story, setStory] = useState(initialText);
 
-    const { isOpenModal, openModal, closeModal }: IModalProps = useEditModal();
-    const [currentStroy, setCurrentStory] = useState<string>(story[page - 1]);
-
-    useEffect(() => {
-        setCurrentStory(story[page - 1]);
-    }, [page]);
+    const handleSave = () => {
+        onSave(story);
+    };
 
     return (
-        <div>
-            <button
-                ref={trigger}
-                onClick={() => openModal()}
-                className="group relative w-full h-full flex justify-center items-center font-bold hover:opacity-60"
-            >
-                <div className=" w-[400px] text-lg font-bold">
-                    {story[page - 1]}
-                </div>
-                <div className="p-2 ml-4 mt-2 invisible group-hover:visible absolute text-white bg-gray-600 rounded-md">
-                    클릭하면 내용 편집이 가능합니다.
-                </div>
-            </button>
-            <Portal>
-                <div
-                    className={`fixed left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-dark/90 z-10 ${
-                        isOpenModal ? 'block' : 'hidden'
-                    }`}
-                >
-                    <div
-                        ref={modal}
-                        onFocus={() => openModal()}
-                        onBlur={() => closeModal()}
-                        className="w-full max-w-[900px] rounded-lg bg-white text-center first-line: border-[1px] border-main px-8 "
-                    >
+        <Portal>
+            <div className="fixed left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-dark/90 z-10 bg-black bg-opacity-50">
+                <div className="w-full max-w-[900px] rounded-lg bg-white text-center first-line: border-[1px] border-main px-8">
+                    <button onClick={onClose} className="ml-[800px] mt-[20px]">
+                        <Image
+                            src={'/images/cancleIcon.svg'}
+                            width={40}
+                            height={40}
+                            alt="cancle"
+                        />
+                    </button>
+
+                    <p className="text-2xl font-bold mb-12">내용 편집</p>
+                    <textarea
+                        value={story}
+                        onChange={(e) => setStory(e.target.value)}
+                        className="flex bg-green-200 w-full h-[300px] rounded-xl justify-between items-center p-8 font-bold resize-none overflow-auto focus:outline-none focus:border-none"
+                    />
+                    <div className="flex justify-end">
                         <button
-                            onClick={() => closeModal()}
-                            className="ml-[800px] mt-[20px]"
+                            onClick={handleSave}
+                            className="bg-main text-white font-bold rounded-lg px-4 py-2 my-4"
                         >
-                            <Image
-                                src={'/images/cancleIcon.svg'}
-                                width={40}
-                                height={40}
-                                alt="cancle"
-                            />
+                            확인
                         </button>
-                        <form>
-                            <p className="text-2xl font-bold mb-12">
-                                내용 편집
-                            </p>
-                            <textarea
-                                value={currentStroy}
-                                className="flex bg-green-200 w-full h-[300px] rounded-xl justify-between items-center p-8 font-bold resize-none overflow-auto focus:outline-none focus:border-none"
-                                onChange={(e) => {
-                                    setCurrentStory(e.target.value);
-                                }}
-                            ></textarea>
-                            <div className="flex justify-end">
-                                <button className="bg-main text-white font-bold rounded-lg px-4 py-2 my-4">
-                                    변경하기
-                                </button>
-                            </div>
-                        </form>
                     </div>
                 </div>
-            </Portal>
-        </div>
+            </div>
+        </Portal>
     );
 }
