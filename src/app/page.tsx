@@ -23,7 +23,7 @@ interface BookInfo {
     title: string;
 }
 
-const Home = async () => {
+export default async function Home() {
     const data = await getBookList();
     const bookInfo = data.map(({ id: bookId, theme, title }: BookInfo) => ({
         bookId,
@@ -31,10 +31,10 @@ const Home = async () => {
         title
     }));
 
-    // console.log(bookInfo[0].bookId);
+    // console.log(data);
 
-    const bookData = await getBookDetail(bookInfo[0].bookId);
-    console.log(bookData);
+    const bookData = await getBookDetail(1);
+    // console.log('북데이터', bookData);
 
     return (
         <main className="flex flex-col justify-center items-center mx-24 mt-16">
@@ -50,6 +50,4 @@ const Home = async () => {
             <ScrollUpButton />
         </main>
     );
-};
-
-export default Home;
+}
