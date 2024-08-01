@@ -6,6 +6,7 @@ Author : 김민규
 History
 Date        Author   Status    Description
 2024.07.28  김민규    Created
+2024.07.31  김민규    Created   Ai 모델 Api 연동
 
 **/
 
@@ -14,13 +15,13 @@ Date        Author   Status    Description
 import React, { useEffect, useState } from 'react';
 
 const MakestoryAiPage: React.FC = () => {
-    const [plots, setPlots] = useState<string[]>([]);
+    const [plots, setPlots] = useState<string[]>([]); // plots라는 상태 변수를 정의하고 빈 배열로 초기화합니다
 
     useEffect(() => {
-        // 로컬 스토리지에서 데이터 읽기
+        // 로컬 스토리지에서 데이터 읽어오는 코드
         const storyData = localStorage.getItem('storyData');
         if (storyData) {
-            const parsedData = JSON.parse(storyData);
+            const parsedData = JSON.parse(storyData); //데이터가 있으면 이를 JSON으로 파싱
             setPlots(parsedData.story || []);
         } else {
             console.error('스토리 데이터가 없습니다.');
@@ -50,9 +51,6 @@ const MakestoryAiPage: React.FC = () => {
             </div>
             <div className="flex justify-between mt-8">
                 <div>
-                    <button className="bg-gray-500 text-white py-2 px-4 rounded">
-                        이전 단계
-                    </button>
                     <button className="bg-yellow-500 text-white py-2 px-4 rounded ml-2">
                         플롯 수정
                     </button>

@@ -6,19 +6,29 @@ Author : 김민규
 History
 Date        Author   Status    Description
 2024.07.28  김민규    Created
+2024.07.31  김민규    Created   Ai 모델 Api 연동
+2024.08.01  김민규    Created   로딩창 연동
 
 **/
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // App Router 환경에서의 라우터 사용
+import { useRouter } from 'next/navigation'; // App Router 환경에서의 라우터를 사용했다
+import Loading from '@/components/bulidstory/Loading';
 
 const SummeryPage: React.FC = () => {
     const router = useRouter();
     const [storyInput, setStoryInput] = useState('');
     const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    // const checkLoading = (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     setIsLoading(true);
+    // };
 
     const generatePlot = async () => {
+        setIsLoading(true); // 로딩 시작
         try {
             const response = await fetch(
                 'http://localhost:4000/ai-fairytale/story',
@@ -37,8 +47,6 @@ const SummeryPage: React.FC = () => {
                 const result = await response.json();
                 console.log(result); // 서버 응답 확인
                 // const storyId = Math.random().toString(36).substring(2); // 고유한 ID 생성
-                // console.log(result);
-                // setGeneratedPlot(JSON.stringify(result.story)); // 받아온 줄거리가 객체형태로 오므로 다시 stringfy 해줘야함
 
                 // 서버에 스토리 저장
                 // await fetch('/api/saveStory', {
@@ -60,6 +68,8 @@ const SummeryPage: React.FC = () => {
         } catch (error: any) {
             console.error('네트워크 오류:', error.error);
             setError('네트워크 오류가 발생했어요. 다시 시도해주세요.');
+        } finally {
+            setIsLoading(false); // 로딩 종료되면 로딩창 꺼짐
         }
     };
 
@@ -70,6 +80,7 @@ const SummeryPage: React.FC = () => {
 
     return (
         <div className="container mx-auto py-8">
+            {isLoading && <Loading />} {/* 로딩 중일 때에는 로딩 컴포넌트를 표시 한다 */}
             <h1 className="text-2xl font-bold text-center mb-4">
                 떠오르는 스토리를 자유롭게 적어주세요.
             </h1>
@@ -77,7 +88,7 @@ const SummeryPage: React.FC = () => {
                 꿈틀이 적은 내용을 토대로 줄거리를 만들어드려요.
             </p>
             <div className="bg-white p-6 mx-auto w-2/3">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}> {/* 폼 제출시에 줄거리 생성 함수를 호출하게 됌 */}
                     <textarea
                         value={storyInput}
                         onChange={(e) => setStoryInput(e.target.value)}
@@ -100,6 +111,13 @@ const SummeryPage: React.FC = () => {
                         이야기나 인형의 무한모험의 줄거리
                     </p>
                     <div className="flex justify-center">
+                        {/* <button
+                            onClick={checkLoading}
+                            type="submit"
+                            className="mt-10 bg-main text-white py-2.5 px-6 rounded-md"
+                        >
+                            로딩창 확인
+                        </button> */}
                         <button
                             type="submit"
                             className="mt-10 bg-main text-white py-2.5 px-6 rounded-md"
