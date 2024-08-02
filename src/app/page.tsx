@@ -6,7 +6,7 @@ Author : 나경윤
 History
 Date        Author   Status    Description
 2024.07.21  나경윤    Modified  메인 화면 구현
-2024.07.31  나경윤    Modified  전체 동화 api 연결
+2024.08.02  나경윤    Modified  전체 동화 api 연결
 */
 
 import TagList from '@/components/main/TagList';
@@ -15,7 +15,6 @@ import SortDropdown from '@/components/main/SortDropdown';
 import BookList from '@/components/main/BookList';
 import ScrollUpButton from '@/components/main/ScrollUpButton';
 import { getBookList } from '@/apis/Main';
-import { getBookDetail } from '@/apis/Board';
 
 interface BookInfo {
     fairytaleId: number;
@@ -25,7 +24,7 @@ interface BookInfo {
     coverImage: string;
 }
 
-export default async function Home() {
+const Home = async () => {
     const data = await getBookList();
     const bookInfo = data.map(
         ({ fairytaleId, title, theme, nickname, coverImage }: BookInfo) => ({
@@ -37,10 +36,7 @@ export default async function Home() {
         })
     );
 
-    console.log(data);
-
-    // const bookData = await getBookDetail(1);
-    // console.log('북데이터', bookData);
+    // console.log(data);
 
     return (
         <main className="flex flex-col justify-center items-center mx-24 mt-16">
@@ -56,4 +52,6 @@ export default async function Home() {
             <ScrollUpButton />
         </main>
     );
-}
+};
+
+export default Home;

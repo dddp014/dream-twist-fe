@@ -8,7 +8,7 @@ Date        Author   Status    Description
 2024.08.01  나경윤    Created
 */
 
-export const getBookDetail = async (fairytaleId: number) => {
+export const getBookDetail = async (fairytaleId: string) => {
     try {
         const response = await fetch(
             `http://localhost:4000/fairytale/${fairytaleId}`,

@@ -56,16 +56,18 @@ const BookList = ({ bookInfo }: BookListProps) => {
             <div className="grid grid-cols-5 gap-8 gap-y-9 my-10 z-0">
                 {items.map((item) => (
                     <div key={item.fairytaleId} className="relative">
-                        <div className="absolute bottom-2 left-4">
+                        <div className="absolute bottom-3 left-5">
                             <p className="text-lg font-semibold -mb-1">
                                 {item.title}
                             </p>
-                            <p>{item.nickname}</p>
+                            <p>{item.nickname} 작가</p>
                         </div>
                         <Image
                             src="/images/sample1.svg"
                             alt="book-image"
-                            onClick={() => router.push(`/board`)}
+                            onClick={() =>
+                                router.push(`/board/${item.fairytaleId}`)
+                            }
                             className="w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white cursor-pointer transition-transform animate-scaleIn"
                             width={100}
                             height={300}
