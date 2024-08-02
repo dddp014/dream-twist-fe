@@ -24,7 +24,7 @@ interface BookInfo {
     coverImage: string;
 }
 
-const Home = async () => {
+export default async function Home() {
     const data = await getBookList();
     const bookInfo = data.map(
         ({ fairytaleId, title, theme, nickname, coverImage }: BookInfo) => ({
@@ -52,6 +52,4 @@ const Home = async () => {
             <ScrollUpButton />
         </main>
     );
-};
-
-export default Home;
+}
