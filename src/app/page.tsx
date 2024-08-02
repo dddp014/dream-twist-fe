@@ -25,16 +25,16 @@ interface BookInfo {
 
 export default async function Home() {
     const data = await getBookList();
-    const bookInfo = data.map(({ id: bookId, theme, title }: BookInfo) => ({
-        bookId,
-        theme,
-        title
-    }));
+    // const bookInfo = data.map(({ id: bookId, theme, title }: BookInfo) => ({
+    //     bookId,
+    //     theme,
+    //     title
+    // }));
 
-    // console.log(data);
+    console.log(data);
 
     const bookData = await getBookDetail(1);
-    // console.log('북데이터', bookData);
+    console.log('북데이터', bookData);
 
     return (
         <main className="flex flex-col justify-center items-center mx-24 mt-16">
@@ -46,7 +46,7 @@ export default async function Home() {
                     <SortDropdown />
                 </div>
             </div>
-            <BookList bookInfo={bookInfo} />
+            {/* <BookList bookInfo={bookInfo} /> */}
             <ScrollUpButton />
         </main>
     );

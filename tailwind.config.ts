@@ -18,7 +18,7 @@ const config: Config = {
                 main: '#35c16f',
                 'main-200': '#66CF92',
                 'main-100': '#EFFBEE',
-                like: '#FF191C'
+                like: '#ff3672'
             },
             animation: {
                 scaleIn: 'scaleIn 0.3s ease-out'

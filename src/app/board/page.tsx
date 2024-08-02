@@ -30,8 +30,8 @@ const sampleImages = [
 
 const Board = async () => {
     return (
-        <div className="h-screen flex flex-col justify-center items-center mt-8 mx-24 mb-10">
-            <div className="flex flex-col w-full mb-10">
+        <div className="h-screen flex flex-col justify-center items-center mt-8 mx-24 mb-12">
+            <div className="flex flex-col w-full mb-6">
                 <div className="flex flex-row justify-center mb-3">
                     <p className="text-2xl font-semibold flex-grow text-center ml-24">
                         뽀로로와 지구온난화

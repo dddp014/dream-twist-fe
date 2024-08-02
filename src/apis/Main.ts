@@ -10,7 +10,9 @@ Date        Author   Status    Description
 
 export const getBookList = async () => {
     try {
-        const response = await fetch('http://localhost:4000/fairytale');
+        const response = await fetch('http://localhost:4000/fairytale', {
+            cache: 'no-store'
+        });
         const data = await response.json();
         return data;
     } catch (error) {

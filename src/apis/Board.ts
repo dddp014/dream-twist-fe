@@ -11,7 +11,10 @@ Date        Author   Status    Description
 export const getBookDetail = async (fairytaleId: number) => {
     try {
         const response = await fetch(
-            `http://localhost:4000/fairytale/${fairytaleId}`
+            `http://localhost:4000/fairytale/${fairytaleId}`,
+            {
+                cache: 'no-store'
+            }
         );
         const data = await response.json();
         return data;

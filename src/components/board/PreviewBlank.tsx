@@ -10,6 +10,7 @@ Date        Author   Status    Description
 
 'use client';
 
+import { useRef, useEffect } from 'react';
 import useTextToImage from '@/hooks/useTextToImage';
 
 interface PreviewProps {
@@ -27,12 +28,26 @@ export default function PreviewBlank({
     getCurrentImage,
     handlePreview
 }: PreviewProps) {
+    const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
     const createPreviewLabel = (index: number): string => {
         if (index === 0 || index === pageCount - 1) return '커버';
         const startPage = index * 2 - 1;
 
         return `${startPage}-${startPage + 1}`;
     };
+
+    const handleButtonClick = (index: number) => {
+        handlePreview(index);
+    };
+
+    useEffect(() => {
+        buttonRefs.current[step]?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'center'
+        });
+    }, [step]);
 
     const renderPreview = () => {
         return Array.from({ length: pageCount }).map((_, index) => {
@@ -56,7 +71,13 @@ export default function PreviewBlank({
                         <button
                             type="button"
                             className={`hover:outline hover:outline-emerald-400 hover:outline-4 ${selectedStyle}`}
-                            onClick={() => handlePreview(index)}
+                            onClick={() => {
+                                handlePreview(index);
+                                handleButtonClick(index);
+                            }}
+                            ref={(el: HTMLButtonElement | null) => {
+                                buttonRefs.current[index] = el;
+                            }}
                         >
                             <div
                                 key={index}
@@ -88,7 +109,7 @@ export default function PreviewBlank({
     };
 
     return (
-        <div className="flex flex-row whitespace-nowrap space-x-4 px-1">
+        <div className="flex flex-row whitespace-nowrap space-x-6 px-1">
             {renderPreview()}
         </div>
     );
