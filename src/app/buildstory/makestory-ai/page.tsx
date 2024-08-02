@@ -20,6 +20,7 @@ const MakestoryAiPage: React.FC = () => {
     useEffect(() => {
         // 로컬 스토리지에서 데이터 읽어오는 코드
         const storyData = localStorage.getItem('storyData');
+        
         if (storyData) {
             const parsedData = JSON.parse(storyData); //데이터가 있으면 이를 JSON으로 파싱
             setPlots(parsedData.story || []);

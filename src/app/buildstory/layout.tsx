@@ -11,7 +11,7 @@ Date        Author   Status    Description
 function BuildStoryLayout({ children }: { children: React.ReactNode }) {
     return (
         <div>
-            <header className="py-4 bg-main-200 text-white text-center mb-4">
+            <header className="py-4 bg-main-200 text-white text-center">
                 <div className="container mx-auto flex items-center justify-center text-neutral-900">
                     <span className="px-3 py-1 bg-white rounded-md ">
                         AI 스토리 추천
