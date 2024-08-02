@@ -24,7 +24,7 @@ export default function BookLike() {
 
     return (
         <button onClick={handleLikeClick}>
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col items-center">
                 <LikeIcon fill={like ? true : false} />
                 <p className="text-like text-xs -mt-1 mr-[1px]">{likeCount}</p>
             </div>

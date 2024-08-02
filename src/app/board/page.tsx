@@ -32,24 +32,21 @@ const Board = async () => {
     return (
         <div className="h-screen flex flex-col justify-center items-center mt-8 mx-24 mb-12">
             <div className="flex flex-col w-full mb-6">
-                <div className="flex flex-row justify-center mb-3">
-                    <p className="text-2xl font-semibold flex-grow text-center ml-24">
+                <div className="flex flex-row justify-center items-center mb-3">
+                    <p className="text-2xl font-semibold">
                         뽀로로와 지구온난화
                     </p>
-                    <div className="flex flex-row items-center -mb-1">
-                        <Image
-                            src={'/images/default-profile.svg'}
-                            alt="profile"
-                            width={19}
-                            height={0}
-                            className="mt-[0.8rem] mr-1"
-                        />
-                        <p className="text-base self-end">김민규 작가</p>
-                    </div>
+                    <p className="text-[17px] ml-5">김민규 작가</p>
                 </div>
                 <hr className="border border-zinc-200 opacity-70" />
-                <div className="text-right mt-2">
-                    <BookLike />
+                <div className="flex flex-row mt-2 justify-between">
+                    <div className="flex flex-row">
+                        <p className="text-gray-500 text-[13px]">2024.08.01</p>
+                        <p className="text-gray-500 text-[13px] ml-2">조회 8</p>
+                    </div>
+                    <div className="self-end">
+                        <BookLike />
+                    </div>
                 </div>
             </div>
             <RenderBook bookImages={sampleImages} contents={contents} />

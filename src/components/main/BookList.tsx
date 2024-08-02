@@ -17,7 +17,13 @@ import { useRef, useState } from 'react';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
 interface BookListProps {
-    bookInfo: { bookId: number; theme: string; title: string }[];
+    bookInfo: {
+        fairytaleId: number;
+        title: string;
+        theme: string;
+        nickname: string;
+        coverImage: string;
+    }[];
 }
 
 const itemsPerPage: number = 10;
@@ -49,12 +55,12 @@ const BookList = ({ bookInfo }: BookListProps) => {
         <div>
             <div className="grid grid-cols-5 gap-8 gap-y-9 my-10 z-0">
                 {items.map((item) => (
-                    <div key={item.bookId} className="relative">
+                    <div key={item.fairytaleId} className="relative">
                         <div className="absolute bottom-2 left-4">
                             <p className="text-lg font-semibold -mb-1">
                                 {item.title}
                             </p>
-                            <p>{item.bookId}</p>
+                            <p>{item.nickname}</p>
                         </div>
                         <Image
                             src="/images/sample1.svg"

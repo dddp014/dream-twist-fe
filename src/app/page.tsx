@@ -18,23 +18,29 @@ import { getBookList } from '@/apis/Main';
 import { getBookDetail } from '@/apis/Board';
 
 interface BookInfo {
-    id: number;
-    theme: string;
+    fairytaleId: number;
     title: string;
+    theme: string;
+    nickname: string;
+    coverImage: string;
 }
 
 export default async function Home() {
     const data = await getBookList();
-    // const bookInfo = data.map(({ id: bookId, theme, title }: BookInfo) => ({
-    //     bookId,
-    //     theme,
-    //     title
-    // }));
+    const bookInfo = data.map(
+        ({ fairytaleId, title, theme, nickname, coverImage }: BookInfo) => ({
+            fairytaleId,
+            theme,
+            title,
+            nickname,
+            coverImage
+        })
+    );
 
     console.log(data);
 
-    const bookData = await getBookDetail(1);
-    console.log('북데이터', bookData);
+    // const bookData = await getBookDetail(1);
+    // console.log('북데이터', bookData);
 
     return (
         <main className="flex flex-col justify-center items-center mx-24 mt-16">
@@ -46,7 +52,7 @@ export default async function Home() {
                     <SortDropdown />
                 </div>
             </div>
-            {/* <BookList bookInfo={bookInfo} /> */}
+            <BookList bookInfo={bookInfo} />
             <ScrollUpButton />
         </main>
     );

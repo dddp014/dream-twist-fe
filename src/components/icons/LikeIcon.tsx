@@ -17,8 +17,8 @@ interface LikeIconProps {
 export const LikeIcon = ({ fill = false }: LikeIconProps) => {
     return (
         <svg
-            width="27"
-            height="28"
+            width="25"
+            height="26"
             viewBox="-1 0 38 33"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
