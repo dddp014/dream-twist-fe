@@ -10,7 +10,7 @@ Date        Author   Status    Description
 
 'use client';
 
-import useModal from '@/hooks/useModal'; // useModal 훅을 불러옵니다.
+import { useModal } from '@/hooks/useModal'; // useModal 훅을 불러옵니다.
 import Modal from '@/components/bulidstory/modal';
 
 type Step2Props = {

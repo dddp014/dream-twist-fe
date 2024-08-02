@@ -36,3 +36,10 @@ body {
     background: #34d399;
     border-radius: 10px;
 }
+
+/** texto: 글 세로로 바꾸는 css  */
+.texto {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: 5px;
+}
