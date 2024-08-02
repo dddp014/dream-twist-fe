@@ -15,11 +15,6 @@ import Sample1 from '../../../../public/images/sample1.svg';
 import Sample2 from '../../../../public/images/sample2.svg';
 import { getBookDetail } from '@/apis/Board';
 
-interface BookInfo {
-    title: string;
-    nickname: string;
-}
-
 const sampleImages = [
     Sample1,
     Sample2,
@@ -36,7 +31,7 @@ const Board = async ({ params }: { params: { id: string } }) => {
 
     // console.log(data);
 
-    const bookImages = [data[0].coverImage, ...data[0].images];
+    // const bookImages = [data[0].coverImage, ...data[0].images];
     const contents: string[] = [
         '내용00',
         '내용01',
@@ -48,10 +43,19 @@ const Board = async ({ params }: { params: { id: string } }) => {
 
     return (
         <div className="h-screen flex flex-col justify-center items-center mt-8 mx-24 mb-12">
-            <div className="flex flex-col w-full mb-6">
-                <div className="flex flex-row justify-center items-center mb-3">
+            <div className="relative flex flex-col w-full mb-6">
+                <div className="flex flex-row justify-center items-center mb-3 m-auto">
                     <p className="text-2xl font-semibold">{data[0].title}</p>
                     <p className="text-[17px] ml-5">{data[0].nickname} 작가</p>
+                    <div className="flex flex-row items-center absolute right-0 bottom-14">
+                        <button type="button">
+                            <p className="text-gray-400 text-[13px]">수정</p>
+                        </button>
+                        <p className="text-gray-400 text-[12px]">ㅣ</p>
+                        <button type="button">
+                            <p className="text-gray-400 text-[13px]">삭제</p>
+                        </button>
+                    </div>
                 </div>
                 <hr className="border border-zinc-200 opacity-70" />
                 <div className="flex flex-row mt-2 justify-between">
