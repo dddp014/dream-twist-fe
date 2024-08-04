@@ -13,83 +13,27 @@ Date        Author   Status    Description
 2024.07.26  임도헌   Modified  select및 summary 코드 수정
 2024.07.30  임도헌   Modified  summary 주석 처리 및 코드 주석 추가, jotai 상태 관리 추가
 2024.07.31  임도헌   Modified  jotai 제거 및 localStorage 사용하는 코드로 변경
+2024.08.03  임도헌   Modified  훅 분리
 */
 
 'use client';
 
-import { useState } from 'react';
 import Toggle from '../common/Toggle';
 import StoryBlock from './StoryBlock';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { DropIcon } from '../icons/DropIcon';
-import { useRouter } from 'next/navigation';
-import { saveToLocalStorage } from '@/utils/localStorage';
-
-export interface IFairyTaleFormInputs {
-    title: string;
-    theme: string;
-    // summary: string;
-    storys: string[];
-    isPublic: boolean;
-}
-
-export type theme = {
-    name: string;
-};
-
-export const themes: theme[] = [
-    { name: '우화' },
-    { name: '환경' },
-    { name: '사랑' },
-    { name: '모험' },
-    { name: '추리' },
-    { name: '기타' }
-];
+import useFairytailForm, { themes } from '@/hooks/useFairytailForm';
 
 export default function FairytailForm() {
-    // 페이지 이동(book-preview)
-    const router = useRouter();
-
-    // block 클릭 상태
-    const [isClick, setIsClick] = useState<number>(0);
-
-    // Form 상태
     const {
         register,
         handleSubmit,
-        setValue,
-        watch,
         control,
-        formState: { errors }
-    } = useForm<IFairyTaleFormInputs>({
-        defaultValues: {
-            title: '',
-            theme: '',
-            storys: [],
-            isPublic: false
-        }
-    });
-
-    /**
-     * 1. 동화 상태 저장 후 페이지 이동
-     * 2. localStorage 사용한 동화 상태 각각 제목, 주제, 스토리 배열, 공개 여부 상태를 세팅한다.
-     * 3. localStorage로 세팅 후 페이지 이동
-     */
-    const onSubmit: SubmitHandler<IFairyTaleFormInputs> = (data) => {
-        saveToLocalStorage('title', data.title);
-        saveToLocalStorage('theme', data.theme);
-        saveToLocalStorage('storys', data.storys);
-        saveToLocalStorage('isPublic', data.isPublic);
-        router.push('/book-preview');
-    };
-
-    /**
-     * handleClick: 몇번 줄거리 선택 시 인덱스 변경
-     * @param {number} idx
-     */
-    const handleClick = (idx: number) => {
-        setIsClick(idx);
-    };
+        errors,
+        isClick,
+        handleClick,
+        onSubmit
+    } = useFairytailForm();
 
     return (
         <form
@@ -132,21 +76,6 @@ export default function FairytailForm() {
                             ))}
                         </select>
                     </div>
-                    {/* 이 코드 살릴수도 있고 없앨수도 있음 */}
-                    {/* <label htmlFor="summary" className="m-4 text-2xl">
-                        줄거리 요약
-                    </label>
-                    <textarea
-                        id="summary"
-                        {...register('summary', { required: true })}
-                        className="w-[280px] h-[460px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2"
-                        placeholder="주제 및 줄거리를 입력해주세요."
-                    />
-                    {errors.summary && (
-                        <span className="block ml-4 mb-2 text-sm text-red-600 font-bold">
-                            주제 및 줄거리를 입력해주세요.
-                        </span>
-                    )} */}
                 </div>
             </div>
             <div className="flex-1">
@@ -168,7 +97,7 @@ export default function FairytailForm() {
                         다음 페이지로 가야 저장됩니다.
                     </button>
                 </div>
-                {Array.from({ length: 11 }).map((_, index) => (
+                {Array.from({ length: 6 }).map((_, index) => (
                     <StoryBlock
                         key={index}
                         index={index}

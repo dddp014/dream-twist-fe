@@ -4,48 +4,29 @@ Description : 이미지 첨부에서 파일 업로드 시
 Author : 임도헌
 
 History
-Date        Author   Status    Description
+Date        Author   Status     Description
 2024.07.26  임도헌   Created
 2024.07.31  임도헌   Modified   portal 수정 및 react-hook-form으로 코드 변경
+2024.08.02  임도헌   Modified   creationWays 코드 추가 및 File 형태 폼제출 할 수 있도록 수정
+2024.08.03  임도헌   Modified   코드 분리
 */
 
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import Portal from '../common/Portal';
 import Image from 'next/image';
+import { useFileUploadModal } from '@/hooks/useFileUploadModal';
 
 interface FileUploadModalProps {
     onClose: () => void;
-    onFileSelect: (file: string) => void;
+    onFileSelect: (file: File) => void;
 }
 
 export default function FileUploadModal({
     onClose,
     onFileSelect
 }: FileUploadModalProps) {
-    const fileRef = useRef<HTMLInputElement>(null);
-    const [image, setImage] = useState<string | null>(null);
-
-    const handleClick = () => {
-        fileRef?.current?.click();
-    };
-
-    /**
-     * handleFileChange: 파일 선택 시 url로 변경해준다.
-     */
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            const fileUrl = URL.createObjectURL(file);
-            setImage(fileUrl);
-        }
-    };
-
-    // 확인 버튼 클릭 시 onFileSelect 호출해서 form 상태 업데이트 한다.
-    const handleSubmit = () => {
-        if (image) {
-            onFileSelect(image);
-        }
-    };
+    const { fileRef, image, handleClick, handleFileChange, handleSubmit } =
+        useFileUploadModal();
 
     return (
         <>
@@ -94,6 +75,7 @@ export default function FileUploadModal({
                                         width={400}
                                         height={400}
                                         alt="image preview"
+                                        className="object-fit w-[400px] h-[400px]"
                                     />
                                 </div>
                             ) : (
@@ -105,7 +87,7 @@ export default function FileUploadModal({
                         </div>
                         <button
                             type="button"
-                            onClick={handleSubmit}
+                            onClick={() => handleSubmit(onFileSelect)}
                             className="px-6 py-2 bg-main text-white rounded-md mb-10"
                         >
                             확인

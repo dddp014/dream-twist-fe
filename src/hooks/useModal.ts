@@ -14,7 +14,7 @@ Date        Author   Status     Description
 // hooks/useModal.ts
 import { useState } from 'react';
 
-const useModal = (initialPlot: string) => {
+export const useModal = (initialPlot: string) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [plot, setPlot] = useState(initialPlot);
 
@@ -35,24 +35,24 @@ const useModal = (initialPlot: string) => {
     };
 };
 
-function useEditModal() {
-    const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-    const [isSecondOpenModal, setIsSecondOpenModal] = useState<boolean>(false);
-
-    const openModal = (): void => setIsOpenModal(true);
-    const closeModal = (): void => setIsOpenModal(false);
-
-    const secondOpenModal = (): void => setIsSecondOpenModal(true);
-    const secondCloseModal = (): void => setIsSecondOpenModal(false);
+export const useBookModal = () => {
+    const [imageModalOpen, setImageModalOpen] = useState<boolean>(false);
+    const [storyModalOpen, setStoryModalOpen] = useState<boolean>(false);
+    const [fileUploadModalOpen, setFileUploadModalOpen] =
+        useState<boolean>(false);
+    const [paletteModalOpen, setPaletteModalOpen] = useState<boolean>(false);
+    const [aiModalOpen, setAiModalOpen] = useState<boolean>(false);
 
     return {
-        isOpenModal,
-        openModal,
-        closeModal,
-        isSecondOpenModal,
-        secondOpenModal,
-        secondCloseModal
+        imageModalOpen,
+        setImageModalOpen,
+        storyModalOpen,
+        setStoryModalOpen,
+        fileUploadModalOpen,
+        setFileUploadModalOpen,
+        paletteModalOpen,
+        setPaletteModalOpen,
+        aiModalOpen,
+        setAiModalOpen
     };
-}
-
-export { useModal, useEditModal };
+};

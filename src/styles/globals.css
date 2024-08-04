@@ -41,5 +41,5 @@ body {
 .texto {
     writing-mode: vertical-rl;
     text-orientation: upright;
-    letter-spacing: 5px;
+    letter-spacing: 1px;
 }

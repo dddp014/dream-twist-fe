@@ -10,109 +10,60 @@ Date        Author   Status    Description
 2024.07.30  임도헌   Modified  리액트 훅 폼 추가해야 될듯?
 2024.07.31  임도헌   Modified  react-hook-form으로 코드 변경(아직 미완성)
 2024.08.01  임도헌   Modified  portal 수정 및 전체 코드 변경
+2024.08.02  임도헌   Modified  폼 제출 api 연결 및 creationWays 코드 추가
+2024.08.02  임도헌   Modified  File 형태 폼제출 할 수 있도록 수정
+2024.08.03  임도헌   Modified  코드 분리
 */
 
 'use client';
 
-import { useEffect, useState } from 'react';
 import ImageModal from './ImageModal';
 import StoryModal from './StoryModal';
 import Toggle from '../common/Toggle';
 import Image from 'next/image';
 import { ArrowIcon } from '../icons/ArrowIcon';
-import { Controller, useForm } from 'react-hook-form';
-import useFairytailInfo from '@/hooks/useFairytailInfo';
-import { themes } from '../edit/FairytailForm';
+import { Controller } from 'react-hook-form';
 import { DropIcon } from '../icons/DropIcon';
-
-type PageData = {
-    image: string | null;
-    story: string;
-};
-
-type FormData = {
-    title: string;
-    theme: string;
-    cover: string | null;
-    isPublic: boolean;
-    pages: PageData[];
-};
+import { themes } from '@/hooks/useFairytailForm';
+import { useBook } from '@/hooks/useBook';
+import { useBookModal } from '@/hooks/useModal';
 
 export default function Book() {
-    const author: string = '도헌';
-    // 현재 페이지 상태
-    const [currentPage, setCurrentPage] = useState<number>(0);
-    // 로컬스토리지 데이터 불러오기
-    const { title, theme, storys, isPublic } = useFairytailInfo();
+    const {
+        register,
+        handleSubmit,
+        control,
+        pages,
+        cover,
+        title,
+        theme,
+        currentPage,
+        author,
+        handlePrevPage,
+        handleNextPage,
+        handleImageSelect,
+        handleStoryChange,
+        updateCreationWay,
+        onSubmit
+    } = useBook();
 
-    const { register, setValue, watch, handleSubmit, reset, control } =
-        useForm<FormData>({
-            defaultValues: {
-                cover: null,
-                theme: theme,
-                isPublic: isPublic,
-                pages:
-                    storys.length > 0
-                        ? storys.map((story) => ({ image: null, story: story }))
-                        : [{ image: null, story: '' }]
-            }
-        });
-
-    const [imageModalOpen, setImageModalOpen] = useState(false);
-    const [storyModalOpen, setStoryModalOpen] = useState(false);
-    const pages = watch('pages');
-    const cover = watch('cover');
-    const selectedTheme = watch('theme');
-    const isPublicState = watch('isPublic');
-
-    useEffect(() => {
-        // Use data from useFairytailInfo to set form values
-        reset({
-            title,
-            theme,
-            cover,
-            isPublic,
-            pages: storys.map((story) => ({ image: null, story }))
-        });
-    }, [title, theme, storys, isPublic, reset]);
-
-    useEffect(() => {
-        // 주제 변경 시 특정 로직이 필요한 경우 여기에 추가
-        console.log('Selected theme:', selectedTheme);
-    }, [selectedTheme]);
-
-    console.log(storys);
-    console.log(pages);
-
-    const onSubmit = (data: FormData) => {
-        console.log(data);
-
-        // 제출 로직
-    };
-
-    /**
-     * handlePrevPage: 이전 페이지
-     */
-    const handlePrevPage = () => {
-        if (currentPage > 0) setCurrentPage(currentPage - 1);
-    };
-
-    /**
-     * handleNextPage: 다음 페이지
-     */
-    const handleNextPage = () => {
-        if (currentPage < pages.length) setCurrentPage(currentPage + 1);
-    };
+    const {
+        imageModalOpen,
+        storyModalOpen,
+        setImageModalOpen,
+        setStoryModalOpen
+    } = useBookModal();
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col items-center">
                 <div className="relative flex items-center">
-                    <div className="absolute top-[34px] left-[270px]">
+                    <div className="absolute top-[28px] right-[390px] z-10">
                         <DropIcon rotate="" />
                     </div>
+
                     <select
-                        className="w-[280px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2 appearance-none"
+                        className="absolute right-[357px] w-[280px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2 appearance-none"
                         id="theme"
                         {...register('theme', { required: true })}
                         defaultValue={theme}
@@ -127,9 +78,7 @@ export default function Book() {
 
                     <p className="my-4 font-bold text-2xl">{title}</p>
 
-                    <div className="absolute left-[700px] w-[48]"></div>
-
-                    <div className="absolute left-[700px] w-[48]">
+                    <div className="absolute left-[450px] w-[48]">
                         <Controller
                             name="isPublic"
                             control={control}
@@ -143,7 +92,7 @@ export default function Book() {
                     </div>
                     <button
                         type="submit"
-                        className="ml-4 w-[60px] h-[36px] text-base bg-main rounded-md font-bold text-white hover:bg-green-600"
+                        className="absolute left-[590px] ml-0 w-[60px] h-[36px] text-base bg-main rounded-md font-bold text-white hover:bg-green-600"
                     >
                         저장
                     </button>
@@ -167,50 +116,61 @@ export default function Book() {
                                 : currentPage + currentPage - 1}
                         </div>
                     </div>
-                    <div className="w-[600px] h-[600px] border-2 flex justify-center items-center">
+                    <div className="flex w-[600px] h-[600px] border-2 justify-center">
                         {/* 만약 페이지가 0이면 북 커버를 보여줘야 함 API 호출은 나중에 */}
                         {currentPage === 0 ? (
-                            <button
-                                type="button"
-                                onClick={() => setImageModalOpen(true)}
-                                className={`flex justify-center items-center group relative w-[300px] bg-[#D9D9D9] rounded-[2px] text-main font-bold hover:opacity-60 hover:bg-gray-300`}
-                            >
-                                {cover ? (
-                                    <Image
-                                        src={cover}
-                                        width={300}
-                                        height={300}
-                                        alt="bookCover"
-                                    />
-                                ) : (
-                                    <div className="w-[300px] h-[300px] flex flex-col items-center justify-center">
-                                        <Image
-                                            src={'/images/BiImageAlt.svg'}
-                                            width={200}
-                                            height={200}
-                                            alt="defaultBookCover"
-                                        />
-                                        <p>클릭해서 이미지 생성</p>
+                            <div className="flex flex-col justify-center items-center">
+                                <button
+                                    type="button"
+                                    onClick={() => setImageModalOpen(true)}
+                                    className={`relative flex justify-center items-center group w-[300px] h-[300px] bg-[#D9D9D9] rounded-[2px] text-main font-bold hover:opacity-60 hover:bg-gray-300`}
+                                >
+                                    {cover ? (
+                                        <div className="absolute top-0 left-0 w-full h-full">
+                                            <Image
+                                                src={URL.createObjectURL(cover)}
+                                                width={300}
+                                                height={300}
+                                                alt="bookCover"
+                                                className="object-cover w-full h-full mx-auto bg-white"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="w-[300px] h-[300px] flex flex-col items-center justify-center">
+                                            <Image
+                                                src={'/images/BiImageAlt.svg'}
+                                                width={200}
+                                                height={200}
+                                                alt="defaultBookCover"
+                                                className="object-fit w-[200px] h-[200px]"
+                                            />
+                                            <p>클릭해서 이미지 생성</p>
+                                        </div>
+                                    )}
+                                    <div className="p-2 mt-2 invisible group-hover:visible absolute text-white bg-gray-600 rounded-md">
+                                        클릭하면 이미지 생성이 가능합니다.
                                     </div>
-                                )}
-                                <div className="p-2 mt-2 invisible group-hover:visible absolute text-white bg-gray-600 rounded-md">
-                                    클릭하면 이미지 생성이 가능합니다.
-                                </div>
-                            </button>
+                                </button>
+                            </div>
                         ) : (
                             // 만약 페이지가 0이아니라면 각페이지에 동화 이미지를 넣는다.
                             <button
                                 type="button"
                                 onClick={() => setImageModalOpen(true)}
-                                className={`flex justify-center items-center group relative w-[600px] h-[600px] bg-[#D9D9D9] rounded-[2px] text-main font-bold hover:opacity-60 hover:bg-gray-300`}
+                                className={`relative flex justify-center items-center group w-[600px] h-[600px] bg-[#D9D9D9] rounded-[2px] text-main font-bold hover:opacity-60 hover:bg-gray-300`}
                             >
                                 {pages[currentPage - 1]?.image ? (
-                                    <Image
-                                        src={pages[currentPage - 1].image!}
-                                        width={600}
-                                        height={600}
-                                        alt="Page Image"
-                                    />
+                                    <div className="absolute top-0 left-0 w-full h-full">
+                                        <Image
+                                            src={URL.createObjectURL(
+                                                pages[currentPage - 1].image!
+                                            )}
+                                            width={600}
+                                            height={600}
+                                            alt="Page Image"
+                                            className="object-cover w-full h-full mx-auto bg-white"
+                                        />
+                                    </div>
                                 ) : (
                                     <div className="flex flex-col">
                                         <Image
@@ -250,13 +210,13 @@ export default function Book() {
                                     className={`relative flex justify-center items-center group w-[600px] h-[500px] bg-[#D9D9D9] rounded-[2px] text-main font-bold hover:opacity-60 hover:bg-gray-300 overflow-hidden`}
                                 >
                                     {cover ? (
-                                        <div className="">
+                                        <div className="absolute top-0 left-0 w-full h-full">
                                             <Image
-                                                src={cover}
-                                                layout="fill"
-                                                objectFit="cover"
+                                                src={URL.createObjectURL(cover)}
+                                                width={400}
+                                                height={400}
                                                 alt="bookCover"
-                                                className="absolute inset-0"
+                                                className="object-cover w-full h-full mx-auto bg-white"
                                             />
                                         </div>
                                     ) : (
@@ -315,25 +275,18 @@ export default function Book() {
             </div>
             {imageModalOpen && (
                 <ImageModal
+                    currentPage={currentPage}
+                    updateCreationWay={updateCreationWay}
                     onClose={() => setImageModalOpen(false)}
-                    onImageSelect={(image) => {
-                        if (currentPage === 0) {
-                            setValue('cover', image);
-                        } else {
-                            setValue(`pages.${currentPage - 1}.image`, image);
-                        }
-                        setImageModalOpen(false);
-                    }}
+                    onImageSelect={handleImageSelect}
+                    initialText={pages[currentPage - 1]?.story}
                 />
             )}
             {storyModalOpen && (
                 <StoryModal
                     initialText={pages[currentPage - 1]?.story || ''}
                     onClose={() => setStoryModalOpen(false)}
-                    onSave={(story) => {
-                        setValue(`pages.${currentPage - 1}.story`, story);
-                        setStoryModalOpen(false);
-                    }}
+                    onChange={handleStoryChange}
                 />
             )}
         </form>

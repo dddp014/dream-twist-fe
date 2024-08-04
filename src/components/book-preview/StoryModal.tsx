@@ -9,29 +9,29 @@ Date        Author   Status    Description
 2024.07.27  임도헌   Modified   portal 적용
 2024.07.29  임도헌   Modified   필요없는 코드 삭제
 2024.07.31  임도헌   Modified   portal 수정 및 react-hook-form으로 코드 변경
+2024.08.03  임도헌   Modified   코드 분리
 */
 
 import { useState } from 'react';
-import { useEditModal } from '@/hooks/useModal';
 import Image from 'next/image';
 import Portal from '../common/Portal';
 
 interface StoryModalProps {
     initialText: string;
     onClose: () => void;
-    onSave: (text: string) => void;
+    onChange: (text: string) => void;
 }
 
 export default function StoryModal({
     initialText,
     onClose,
-    onSave
+    onChange
 }: StoryModalProps) {
-    const { isOpenModal, openModal, closeModal } = useEditModal();
     const [story, setStory] = useState(initialText);
 
     const handleSave = () => {
-        onSave(story);
+        onChange(story);
+        onClose();
     };
 
     return (
