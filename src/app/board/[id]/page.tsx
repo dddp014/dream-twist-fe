@@ -37,7 +37,7 @@ export default async function Board({ params }: { params: { id: string } }) {
                     <p className="text-2xl font-semibold">{data[0].title}</p>
                     <p className="text-[17px] ml-5">{data[0].nickname} 작가</p>
                     <div className="flex flex-row items-center absolute right-0 bottom-14">
-                        <EditDeleteBtn />
+                        <EditDeleteBtn id={id} modalType="book" />
                     </div>
                 </div>
                 <hr className="border border-zinc-200 opacity-70" />

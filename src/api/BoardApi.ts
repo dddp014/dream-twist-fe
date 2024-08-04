@@ -22,3 +22,16 @@ export const getBookDetail = async (fairytaleId: string) => {
         return error;
     }
 };
+
+export const deleteBook = async (fairytaleId: string) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/${fairytaleId}`, {
+            method: 'DELETE'
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('error:', error);
+        return error;
+    }
+};

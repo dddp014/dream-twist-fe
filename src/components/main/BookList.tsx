@@ -15,7 +15,6 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { FairytaleInfo } from '@/types/fairytale';
-import Sample2 from '../../../public/images/sample2.svg';
 
 interface BookListProps {
     fairytaleInfo: FairytaleInfo[];
@@ -75,7 +74,7 @@ const BookList = ({ fairytaleInfo }: BookListProps) => {
                                     {item.nickname} 작가
                                 </p>
                                 <p className="text-[0.8rem] text-gray-400 mr-4 -mb-0.5">
-                                    2024-08-02
+                                    {item.createdAt}
                                 </p>
                             </div>
                         </div>
