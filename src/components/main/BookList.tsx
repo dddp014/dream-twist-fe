@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { FairytaleInfo } from '@/types/fairytale';
+import Sample2 from '../../../public/images/sample2.svg';
 
 interface BookListProps {
     fairytaleInfo: FairytaleInfo[];
@@ -50,24 +51,36 @@ const BookList = ({ fairytaleInfo }: BookListProps) => {
         <div>
             <div className="grid grid-cols-5 gap-8 gap-y-9 my-10 z-0">
                 {items.map((item) => (
-                    <div key={item.fairytaleId} className="relative">
-                        <div className="absolute bottom-3 left-5">
-                            <p className="text-lg font-semibold -mb-1">
+                    <button
+                        key={item.fairytaleId}
+                        onClick={() =>
+                            router.push(`/board/${item.fairytaleId}`)
+                        }
+                        className="relative w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
+                    >
+                        <div
+                            className="absolute top-0 w-full"
+                            style={{
+                                backgroundImage: `url(${Sample2.src})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'top',
+                                height: '80%'
+                            }}
+                        />
+                        <div className="absolute bottom-3.5 left-5 w-full text-left">
+                            <p className="text-xl font-semibold ">
                                 {item.title}
                             </p>
-                            <p>{item.nickname} 작가</p>
+                            <div className="flex justify-between items-center">
+                                <p className="text-base">
+                                    {item.nickname} 작가
+                                </p>
+                                <p className="text-xs text-gray-400 mr-10">
+                                    2024-08-02
+                                </p>
+                            </div>
                         </div>
-                        <Image
-                            src="/images/sample1.svg"
-                            alt="book-image"
-                            onClick={() =>
-                                router.push(`/board/${item.fairytaleId}`)
-                            }
-                            className="w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white cursor-pointer transition-transform animate-scaleIn"
-                            width={100}
-                            height={300}
-                        />
-                    </div>
+                    </button>
                 ))}
             </div>
             {!isPageEnd && <div ref={ref} />}

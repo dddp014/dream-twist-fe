@@ -40,14 +40,14 @@ export default function MyBookList({ bookInfo }: MyBookListProps) {
                         className="relative w-[15rem] h-[19rem] border rounded-lg border-gray-200 overflow-hidden"
                     >
                         <div
-                            className="absolute top-0 left-0 w-full"
+                            className="absolute top-0 w-full overflow-hidden"
                             style={{
                                 backgroundImage: `url(${item.coverImage})`,
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'top',
                                 height: '78%'
                             }}
-                        ></div>
+                        />
                         <div className="absolute bottom-0 w-full py-2 text-left pl-4">
                             <p className="text-[1.05rem] font-medium">
                                 동화 제목
