@@ -14,29 +14,19 @@ import SearchInput from '@/components/main/SearchInput';
 import SortDropdown from '@/components/main/SortDropdown';
 import BookList from '@/components/main/BookList';
 import ScrollUpButton from '@/components/main/ScrollUpButton';
-import { getBookList } from '@/apis/Main';
-
-interface BookInfo {
-    fairytaleId: number;
-    title: string;
-    theme: string;
-    nickname: string;
-    coverImage: string;
-}
+import { FairytaleInfo } from '@/types/fairytale';
+import { getBookList } from '@/api/MainApi';
 
 export default async function Home() {
     const data = await getBookList();
-    const bookInfo = data.map(
-        ({ fairytaleId, title, theme, nickname, coverImage }: BookInfo) => ({
-            fairytaleId,
-            theme,
-            title,
-            nickname,
-            coverImage
-        })
-    );
+    const fairytaleInfo = data.map((item: FairytaleInfo) => {
+        const date = item.createdAt.split('T')[0];
 
-    // console.log(data);
+        return {
+            ...item,
+            createdAt: date
+        };
+    });
 
     return (
         <main className="flex flex-col justify-center items-center mx-24 mt-16">
@@ -48,7 +38,7 @@ export default async function Home() {
                     <SortDropdown />
                 </div>
             </div>
-            <BookList bookInfo={bookInfo} />
+            <BookList fairytaleInfo={fairytaleInfo} />
             <ScrollUpButton />
         </main>
     );

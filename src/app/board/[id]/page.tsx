@@ -14,7 +14,7 @@ import BookLike from '@/components/board/BookLike';
 import EditDeleteBtn from '@/components/board/EditDeleteBtn';
 import Sample1 from '../../../../public/images/sample1.svg';
 import Sample2 from '../../../../public/images/sample2.svg';
-import { getBookDetail } from '@/apis/Board';
+import { getBookDetail } from '@/api/BoardApi';
 
 const sampleImages = [
     Sample1,
@@ -29,9 +29,6 @@ const sampleImages = [
 export default async function Board({ params }: { params: { id: string } }) {
     const { id } = params;
     const data = await getBookDetail(id);
-
-    // console.log(data);
-
     // const bookImages = [data[0].coverImage, ...data[0].images];
     const contents: string[] = [
         '내용00',
@@ -39,8 +36,6 @@ export default async function Board({ params }: { params: { id: string } }) {
         '내용02',
         ...(Object.values(data[0].content) as string[])
     ];
-
-    // console.log(contents);
 
     return (
         <div className="h-screen flex flex-col justify-center items-center mt-8 mx-24 mb-12">

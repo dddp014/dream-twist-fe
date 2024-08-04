@@ -15,26 +15,21 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { FairytaleInfo } from '@/types/fairytale';
 
 interface BookListProps {
-    bookInfo: {
-        fairytaleId: number;
-        title: string;
-        theme: string;
-        nickname: string;
-        coverImage: string;
-    }[];
+    fairytaleInfo: FairytaleInfo[];
 }
 
 const itemsPerPage: number = 10;
 
-const BookList = ({ bookInfo }: BookListProps) => {
+const BookList = ({ fairytaleInfo }: BookListProps) => {
     const router = useRouter();
-    const [items, setItems] = useState(bookInfo.slice(0, itemsPerPage));
+    const [items, setItems] = useState(fairytaleInfo.slice(0, itemsPerPage));
     const pageIndexRef = useRef<number>(2);
 
     const loadItems = () => {
-        const newItems = bookInfo.slice(
+        const newItems = fairytaleInfo.slice(
             (pageIndexRef.current - 1) * itemsPerPage,
             pageIndexRef.current * itemsPerPage
         );
