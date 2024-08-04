@@ -13,8 +13,6 @@ import { Metadata } from 'next';
 import RenderBook from '@/components/board/RenderBook';
 import BookLike from '@/components/board/BookLike';
 import EditDeleteBtn from '@/components/board/EditDeleteBtn';
-import Sample1 from '../../../../public/images/sample1.svg';
-import Sample2 from '../../../../public/images/sample2.svg';
 import { getBookDetail } from '@/api/BoardApi';
 
 export const metadata: Metadata = {
@@ -22,26 +20,15 @@ export const metadata: Metadata = {
     description: 'AI로 생성된 꿈틀의 동화 갤러리'
 };
 
-const sampleImages = [
-    Sample1,
-    Sample2,
-    Sample1,
-    Sample2,
-    Sample1,
-    Sample2,
-    Sample2
-];
-
 export default async function Board({ params }: { params: { id: string } }) {
     const { id } = params;
     const data = await getBookDetail(id);
-    // const bookImages = [data[0].coverImage, ...data[0].images];
+    const bookImages = [data[0].coverImage, ...data[0].images];
     const contents: string[] = [
-        '내용00',
-        '내용01',
-        '내용02',
         ...(Object.values(data[0].content) as string[])
     ];
+
+    // console.log(data);
 
     return (
         <div className="h-screen flex flex-col justify-center items-center mt-8 mx-24 mb-12">
@@ -61,7 +48,7 @@ export default async function Board({ params }: { params: { id: string } }) {
                     </div>
                 </div>
             </div>
-            <RenderBook bookImages={sampleImages} contents={contents} />
+            <RenderBook bookImages={bookImages} contents={contents} />
         </div>
     );
 }

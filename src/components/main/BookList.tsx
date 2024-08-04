@@ -60,13 +60,13 @@ const BookList = ({ fairytaleInfo }: BookListProps) => {
                         <div
                             className="absolute top-0 w-full h-full overflow-hidden"
                             style={{
-                                backgroundImage: `url(${Sample2.src})`,
+                                backgroundImage: `url(${item.coverImage})`,
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'top',
                                 height: '78%'
                             }}
                         />
-                        <div className="absolute bg-white bottom-0 w-full text-left py-3 pl-5">
+                        <div className="absolute bg-white bottom-0 w-full text-left py-3 pl-4">
                             <p className="text-[1.15rem] font-semibold">
                                 {item.title}
                             </p>
@@ -74,7 +74,7 @@ const BookList = ({ fairytaleInfo }: BookListProps) => {
                                 <p className="text-[1rem]">
                                     {item.nickname} 작가
                                 </p>
-                                <p className="text-[0.9rem] text-gray-400 mr-5">
+                                <p className="text-[0.8rem] text-gray-400 mr-4 -mb-0.5">
                                     2024-08-02
                                 </p>
                             </div>

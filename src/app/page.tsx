@@ -43,7 +43,6 @@ export default async function Home() {
             <div className="w-full">
                 <BookList fairytaleInfo={fairytaleInfo} />
             </div>
-
             <ScrollUpButton />
         </main>
     );
