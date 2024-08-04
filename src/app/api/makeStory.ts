@@ -1,5 +1,16 @@
+/**
+File Name : apis/makeStory
+Description : 동화 생성
+Author : 김민규
+
+History
+Date        Author   Status    Description
+2024.08.02  김민규    Created
+
+*/
+
+
 export interface StoryResponse {
-    // 서버 응답에 따라 인터페이스 정의
     story: string[];
 }
 

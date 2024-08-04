@@ -8,6 +8,13 @@ Date        Author   Status    Description
 2024.07.25  임도헌    Created
 */
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: '꿈틀 동화 생성',
+    description: 'Ai 동화 생성 꿈틀 프로젝트'
+};
+
 export default function BookPreviewLayout({
     children
 }: {

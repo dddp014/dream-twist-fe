@@ -6,11 +6,15 @@ Author : 김민규
 History
 Date        Author   Status    Description
 2024.07.20  김민규    Created
+2024.07.30  김민규    Modified  배경 디자인 변경
+
 */
 
 import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image';
+
+
 
 const BuildStoryPage: React.FC = () => {
     return (
