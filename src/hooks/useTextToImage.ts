@@ -8,6 +8,8 @@ Date        Author   Status    Description
 2024.07.27  나경윤    Created
 */
 
+'use client';
+
 import { useEffect, useRef } from 'react';
 
 export default function useTextToImage(text: string) {

@@ -8,8 +8,14 @@ Date        Author   Status    Description
 2024.07.26  나경윤    Created
 */
 
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+    title: '꿈틀 로그인',
+    description: '꿈틀에 로그인 하고 AI 동화 생성 서비스를 이용해 보세요.'
+};
 
 export default function Login() {
     return (
