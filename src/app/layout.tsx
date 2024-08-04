@@ -5,7 +5,8 @@ import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
     title: '꿈틀',
-    description: 'Ai 동화 생성 꿈틀 프로젝트',
+    description: 'AI 동화 생성 꿈틀 프로젝트',
+    keywords: ['꿈틀', 'DreamTwist', 'AI동화'],
     icons: {
         icon: '/favicon.ico'
     }

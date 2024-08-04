@@ -8,9 +8,15 @@ Date        Author   Status    Description
 2024.08.02  나경윤    Created
 */
 
+import { Metadata } from 'next';
 import Image from 'next/image';
 import MyBookList from '@/components/mypage/MyBookList';
 import { sampleImages } from '@/utils/dummyBooks';
+
+export const metadata: Metadata = {
+    title: '꿈틀 마이페이지',
+    description: '나의 동화 목록과 정보를 확인하세요.'
+};
 
 export default function Mypage() {
     const coverImage = sampleImages;

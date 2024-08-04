@@ -9,12 +9,18 @@ Date        Author   Status    Description
 2024.07.31  나경윤    Modified  북 렌더 컴포넌트 통합
 */
 
+import { Metadata } from 'next';
 import RenderBook from '@/components/board/RenderBook';
 import BookLike from '@/components/board/BookLike';
 import EditDeleteBtn from '@/components/board/EditDeleteBtn';
 import Sample1 from '../../../../public/images/sample1.svg';
 import Sample2 from '../../../../public/images/sample2.svg';
 import { getBookDetail } from '@/api/BoardApi';
+
+export const metadata: Metadata = {
+    title: '꿈틀 동화 갤러리',
+    description: 'AI로 생성된 꿈틀의 동화 갤러리'
+};
 
 const sampleImages = [
     Sample1,
