@@ -4,104 +4,37 @@ Description : 이미지 첨부에서 파일 업로드 시
 Author : 임도헌
 
 History
-Date        Author   Status    Description
-2024.07.26  임도헌    Created
+Date        Author   Status     Description
+2024.07.26  임도헌   Created
+2024.07.31  임도헌   Modified   portal 수정 및 react-hook-form으로 코드 변경
+2024.08.02  임도헌   Modified   creationWays 코드 추가 및 File 형태 폼제출 할 수 있도록 수정
+2024.08.03  임도헌   Modified   코드 분리
 */
 
-import React, { MutableRefObject, useRef, useState } from 'react';
+import React from 'react';
+import Portal from '../common/Portal';
 import Image from 'next/image';
-import { useEditModal } from '@/hooks/useModal';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useFileUploadModal } from '@/hooks/useFileUploadModal';
 
-interface ISecondModalProps {
-    isSecondOpenModal: boolean;
-    secondOpenModal: () => void;
-    secondCloseModal: () => void;
-}
-
-interface IFormInput {
-    file: File | null;
+interface FileUploadModalProps {
+    onClose: () => void;
+    onFileSelect: (file: File) => void;
 }
 
 export default function FileUploadModal({
-    closeModal
-}: {
-    closeModal: () => void;
-}) {
-    const { register, handleSubmit, reset, setValue } = useForm<IFormInput>({
-        defaultValues: {
-            file: null
-        }
-    });
-    const trigger: MutableRefObject<null> = useRef(null);
-    const modal: MutableRefObject<null> = useRef(null);
-
-    const {
-        isSecondOpenModal,
-        secondOpenModal,
-        secondCloseModal
-    }: ISecondModalProps = useEditModal();
-
-    const fileRef = useRef<HTMLInputElement>(null);
-    const [image, setImage] = useState<string>();
-
-    const handleClick = () => {
-        fileRef?.current?.click();
-    };
-
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0] as File;
-        if (file) {
-            const selectedImage: string = URL.createObjectURL(file);
-            setImage(selectedImage);
-            setValue('file', file); // Set the file value in the form
-        }
-    };
-
-    const onSubmit: SubmitHandler<IFormInput> = (data) => {
-        if (data.file) {
-            const file = data.file;
-            console.log('Selected file:', file.name);
-            reset();
-            secondCloseModal();
-            closeModal();
-        } else {
-            console.error('No file selected');
-        }
-    };
+    onClose,
+    onFileSelect
+}: FileUploadModalProps) {
+    const { fileRef, image, handleClick, handleFileChange, handleSubmit } =
+        useFileUploadModal();
 
     return (
         <>
-            <button
-                ref={trigger}
-                onClick={() => {
-                    secondOpenModal();
-                }}
-                className="flex flex-col w-[200px] h-[200px] bg-main rounded-lg justify-center items-center hover:bg-green-600"
-            >
-                <Image
-                    src={'/images/pictureIcon.svg'}
-                    width={100}
-                    height={100}
-                    alt="palette"
-                />
-                <p className="font-bold text-xl text-white">사진 첨부</p>
-            </button>
-
-            <div
-                className={`fixed left-0 top-0 flex w-full h-full min-h-screen items-center justify-center bg-dark/90 z-10 ${
-                    isSecondOpenModal ? 'block' : 'hidden'
-                }`}
-            >
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div
-                        ref={modal}
-                        onFocus={() => secondOpenModal()}
-                        className="w-[900px] max-w-[920px] h-[472px] mb-[1px] rounded-lg bg-white text-center first-line: border-[1px] border-main px-8"
-                    >
+            <Portal>
+                <div className="fixed left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-dark/90 z-10 bg-black bg-opacity-50">
+                    <div className="w-full max-w-[900px] rounded-lg bg-white text-center first-line: border-[1px] border-main px-8">
                         <button
-                            type="button"
-                            onClick={() => secondCloseModal()}
+                            onClick={onClose}
                             className="ml-[800px] mt-[20px]"
                         >
                             <Image
@@ -111,28 +44,57 @@ export default function FileUploadModal({
                                 alt="cancle"
                             />
                         </button>
+
                         <label htmlFor="file">사진 첨부</label>
                         <input
                             className="hidden"
                             type="file"
                             accept="image/*"
-                            {...register('file')}
                             ref={fileRef}
-                            onChange={(e) => {
-                                handleImageChange(e);
-                                register('file').onChange(e);
-                            }}
+                            onChange={handleFileChange}
                         />
-                        <button type="button" onClick={handleClick}>
-                            +
-                        </button>
-                        <div>
-                            <img src={image} width={100} height={100} alt="" />
+                        <div className="w-18 h-18">
+                            <button
+                                className="p-8 bg-gray-200 rounded-md flex-none"
+                                type="button"
+                                onClick={handleClick}
+                            >
+                                <Image
+                                    src="/images/PalettePicture.svg"
+                                    width={60}
+                                    height={60}
+                                    alt="picture"
+                                />
+                            </button>
                         </div>
-                        <button type="submit">업로드</button>
+                        <div className="flex justify-center m-10">
+                            {image ? ( // 이미지가 있을 때만 렌더링
+                                <div className="flex justify-center m-10 border-[3px] border-gray-400">
+                                    <img
+                                        src={image}
+                                        width={400}
+                                        height={400}
+                                        alt="image preview"
+                                        className="object-fit w-[400px] h-[400px]"
+                                    />
+                                </div>
+                            ) : (
+                                // 이미지가 없으면 빈 div 보여준다.
+                                <div className="flex justify-center items-center font-bold w-[400px] h-[400px] border-[3px] border-gray-400">
+                                    빈 이미지
+                                </div>
+                            )}
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => handleSubmit(onFileSelect)}
+                            className="px-6 py-2 bg-main text-white rounded-md mb-10"
+                        >
+                            확인
+                        </button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </Portal>
         </>
     );
 }

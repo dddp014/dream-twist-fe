@@ -4,16 +4,17 @@ Description : modal 관련 기능
 Author : 김민규, 임도헌
 
 History
-Date        Author   Status    Description
-2024.07.24  김민규    Created  useModal 생성
-2024.07.24  임도헌    Created  useEditModal생성
-2024.07.27  임도헌    Modified useEditModal파일을 useModal로 합침
+Date        Author   Status     Description
+2024.07.24  김민규    Created   useModal 생성
+2024.07.24  임도헌    Created   useEditModal생성
+2024.07.27  임도헌    Modified  useEditModal파일을 useModal로 합침
+2024.07.31  임도헌    Modified  함수 type 명시
 */
 
 // hooks/useModal.ts
 import { useState } from 'react';
 
-const useModal = (initialPlot: string) => {
+export const useModal = (initialPlot: string) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [plot, setPlot] = useState(initialPlot);
 
@@ -34,24 +35,24 @@ const useModal = (initialPlot: string) => {
     };
 };
 
-function useEditModal() {
-    const [isOpenModal, setIsOpenModal] = useState(false);
-    const [isSecondOpenModal, setIsSecondOpenModal] = useState(false);
-
-    const openModal = () => setIsOpenModal(true);
-    const closeModal = () => setIsOpenModal(false);
-
-    const secondOpenModal = () => setIsSecondOpenModal(true);
-    const secondCloseModal = () => setIsSecondOpenModal(false);
+export const useBookModal = () => {
+    const [imageModalOpen, setImageModalOpen] = useState<boolean>(false);
+    const [storyModalOpen, setStoryModalOpen] = useState<boolean>(false);
+    const [fileUploadModalOpen, setFileUploadModalOpen] =
+        useState<boolean>(false);
+    const [paletteModalOpen, setPaletteModalOpen] = useState<boolean>(false);
+    const [aiModalOpen, setAiModalOpen] = useState<boolean>(false);
 
     return {
-        isOpenModal,
-        openModal,
-        closeModal,
-        isSecondOpenModal,
-        secondOpenModal,
-        secondCloseModal
+        imageModalOpen,
+        setImageModalOpen,
+        storyModalOpen,
+        setStoryModalOpen,
+        fileUploadModalOpen,
+        setFileUploadModalOpen,
+        paletteModalOpen,
+        setPaletteModalOpen,
+        aiModalOpen,
+        setAiModalOpen
     };
-}
-
-export { useModal, useEditModal };
+};
