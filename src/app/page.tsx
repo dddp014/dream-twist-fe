@@ -28,6 +28,8 @@ export default async function Home() {
         };
     });
 
+    // console.log(data);
+
     return (
         <main className="flex flex-col justify-center items-center mx-24 mt-16">
             <div className="bg-main-100 h-80 w-full mb-16 rounded-xl"> </div>
@@ -38,7 +40,10 @@ export default async function Home() {
                     <SortDropdown />
                 </div>
             </div>
-            <BookList fairytaleInfo={fairytaleInfo} />
+            <div className="w-full">
+                <BookList fairytaleInfo={fairytaleInfo} />
+            </div>
+
             <ScrollUpButton />
         </main>
     );

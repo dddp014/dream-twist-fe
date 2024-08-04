@@ -32,15 +32,15 @@ export default function MyBookList({ bookInfo }: MyBookListProps) {
     };
 
     return (
-        <div className="flex flex-col justify-center mt-6">
-            <div className="grid grid-cols-6 gap-7">
+        <div className="flex flex-col justify-between mt-6">
+            <div className="grid md:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-6 gap-6">
                 {bookInfo.slice(0, bookCount).map((item, index) => (
                     <button
                         key={index}
-                        className="relative w-[15rem] h-[19rem] border rounded-lg border-gray-200 overflow-hidden"
+                        className="relative max-w-[15rem] w-full aspect-[4/5] border rounded-lg border-gray-200 overflow-hidden"
                     >
                         <div
-                            className="absolute top-0 w-full overflow-hidden"
+                            className="absolute top-0 w-full h-full overflow-hidden"
                             style={{
                                 backgroundImage: `url(${item.coverImage})`,
                                 backgroundSize: 'cover',
@@ -48,13 +48,13 @@ export default function MyBookList({ bookInfo }: MyBookListProps) {
                                 height: '78%'
                             }}
                         />
-                        <div className="absolute bottom-0 w-full py-2 text-left pl-4">
-                            <p className="text-[1.05rem] font-medium">
+                        <div className="absolute bg-white bottom-0 w-full py-2 text-left pl-4">
+                            <p className="text-[1rem] font-medium -mb-0.5">
                                 동화 제목
                             </p>
                             <div className="flex justify-between items-center pr-3">
-                                <p className="text-[0.9rem]">민규 작가</p>
-                                <p className="text-xs text-gray-400">
+                                <p className="text-[0.85rem]">민규 작가</p>
+                                <p className="text-[0.7rem] text-gray-400">
                                     2024-08-02
                                 </p>
                             </div>

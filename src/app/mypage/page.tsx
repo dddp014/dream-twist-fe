@@ -22,8 +22,8 @@ export default function Mypage() {
     const coverImage = sampleImages;
     return (
         <div className="flex flex-col justify-center items-center mx-24 mt-16">
-            <div className="bg-main-100 h-64 w-full mb-16 rounded-xl px-44 flex justify-center items-center">
-                <div className="flex flex-row ">
+            <div className="bg-main-100 h-64 w-full mb-16 rounded-xl flex justify-center items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 2xl:px-44">
+                <div className="flex flex-row">
                     <Image
                         src={'/images/default-profile.svg'}
                         alt="profile"
@@ -77,7 +77,7 @@ export default function Mypage() {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col self-start mb-16">
+            <div className="flex flex-col self-start mb-16 w-full">
                 <p className="text-[1.3rem] font-semibold">나의 동화</p>
                 <MyBookList bookInfo={coverImage} />
                 <p className="text-[1.3rem] font-semibold mb-4 mt-16">

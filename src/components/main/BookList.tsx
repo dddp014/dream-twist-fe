@@ -11,7 +11,6 @@ Date        Author   Status    Description
 
 'use client';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
@@ -48,34 +47,34 @@ const BookList = ({ fairytaleInfo }: BookListProps) => {
     });
 
     return (
-        <div>
-            <div className="grid grid-cols-5 gap-8 gap-y-9 my-10 z-0">
+        <div className="flex flex-col justify-between">
+            <div className="grid sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-8 gap-y-9 my-10 z-0">
                 {items.map((item) => (
                     <button
                         key={item.fairytaleId}
                         onClick={() =>
                             router.push(`/board/${item.fairytaleId}`)
                         }
-                        className="relative w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
+                        className="relative max-w-[18rem] w-full aspect-[4/5] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
                     >
                         <div
-                            className="absolute top-0 w-full"
+                            className="absolute top-0 w-full h-full overflow-hidden"
                             style={{
                                 backgroundImage: `url(${Sample2.src})`,
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'top',
-                                height: '80%'
+                                height: '78%'
                             }}
                         />
-                        <div className="absolute bottom-3.5 left-5 w-full text-left">
-                            <p className="text-xl font-semibold ">
+                        <div className="absolute bg-white bottom-0 w-full text-left py-3 pl-5">
+                            <p className="text-[1.15rem] font-semibold">
                                 {item.title}
                             </p>
                             <div className="flex justify-between items-center">
-                                <p className="text-base">
+                                <p className="text-[1rem]">
                                     {item.nickname} 작가
                                 </p>
-                                <p className="text-xs text-gray-400 mr-10">
+                                <p className="text-[0.9rem] text-gray-400 mr-5">
                                     2024-08-02
                                 </p>
                             </div>
