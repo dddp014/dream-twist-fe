@@ -11,10 +11,10 @@ Date        Author   Status    Description
 'use client';
 
 import DeleteModal from './DeleteModal';
-import { useEditModal } from '@/hooks/useModal';
+import { useConfirmModal } from '@/hooks/useModal';
 
 export default function EditDeleteBtn() {
-    const { isOpenModal, openModal, closeModal } = useEditModal();
+    const { isOpenModal, openModal, closeModal } = useConfirmModal();
 
     const handleDeleteClick = () => {
         openModal();

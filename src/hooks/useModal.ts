@@ -9,6 +9,7 @@ Date        Author   Status     Description
 2024.07.24  임도헌    Created   useEditModal생성
 2024.07.27  임도헌    Modified  useEditModal파일을 useModal로 합침
 2024.07.31  임도헌    Modified  함수 type 명시
+2024.08.04  나경윤    Modified  useConfirmModal 생성
 */
 
 // hooks/useModal.ts
@@ -54,5 +55,18 @@ export const useBookModal = () => {
         setPaletteModalOpen,
         aiModalOpen,
         setAiModalOpen
+    };
+};
+
+export const useConfirmModal = () => {
+    const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+
+    const openModal = (): void => setIsOpenModal(true);
+    const closeModal = (): void => setIsOpenModal(false);
+
+    return {
+        isOpenModal,
+        openModal,
+        closeModal
     };
 };
