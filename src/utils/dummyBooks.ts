@@ -1,3 +1,5 @@
+import Sample2 from '../../public/images/sample2.svg';
+
 export interface Book {
     id: number;
     title: string;
@@ -18,3 +20,7 @@ export const contents: string[] = [
     '미미는 마을을 지키기 위해 용감하게 나서기로 결심했어요. 미미는 친구들과 함께 악당 쥐들을 물리치기 위한 계획을 세우고, 그 과정에서 많은 어려움을 겪게 돼요.',
     '하지만 미미는 포기하지 않고 끝까지 싸워 마침내 악당 쥐들을 물리치게 되는데... 과연 미미는 어떻게 마을을 지킬 수 있을까요?'
 ];
+
+export const sampleImages = Array.from({ length: 10 }, (_, i) => ({
+    coverImage: `/images/sample2.svg`
+}));

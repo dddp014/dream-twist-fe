@@ -9,8 +9,11 @@ Date        Author   Status    Description
 */
 
 import Image from 'next/image';
+import MyBookList from '@/components/mypage/MyBookList';
+import { sampleImages } from '@/utils/dummyBooks';
 
 export default function Mypage() {
+    const coverImage = sampleImages;
     return (
         <div className="flex flex-col justify-center items-center mx-24 mt-16">
             <div className="bg-main-100 h-64 w-full mb-16 rounded-xl px-44 flex justify-center items-center">
@@ -38,8 +41,8 @@ export default function Mypage() {
                             </div>
                             <div className="w-px h-14 bg-gray-300" />
                             <div className="flex flex-col justify-center items-center text-lg">
-                                <p className="font-medium">이용권</p>
-                                <p className="text-main font-semibold">1개월</p>
+                                <p className="font-medium">포인트</p>
+                                <p className="text-main font-semibold">500</p>
                             </div>
                         </div>
                     </div>
@@ -63,18 +66,18 @@ export default function Mypage() {
                                 width={22}
                                 height={0}
                             />
-                            <p className="ml-3 mb-0.5">이용권 구매</p>
+                            <p className="ml-3">포인트 충전</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="flex flex-col self-start mb-16">
-                <p className="text-[1.3rem] font-semibold mb-4">나의 동화</p>
-                <button className="border rounded-lg bg-gray-200 w-52 h-64"></button>
+                <p className="text-[1.3rem] font-semibold">나의 동화</p>
+                <MyBookList bookInfo={coverImage} />
                 <p className="text-[1.3rem] font-semibold mb-4 mt-16">
                     좋아요한 동화
                 </p>
-                <button className="border rounded-lg bg-gray-200 w-52 h-64"></button>
+                <MyBookList bookInfo={coverImage} />
             </div>
         </div>
     );
