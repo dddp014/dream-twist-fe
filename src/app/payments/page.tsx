@@ -35,10 +35,12 @@ const Page: React.FC = () => {
             setIsLoading(true);
 
             const tossPayments: TossPayments = (await loadTossPayments(
+                //토스페이먼츠에서 제공하는 결제 요청 메서드를 정의
                 process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY as string
             )) as TossPayments;
 
             await tossPayments.requestPayment('카드', {
+                //requestPayment 메서드를 사용하여 카드 결제를 요청한다
                 amount,
                 orderId: Math.random().toString(36).slice(2),
                 orderName,

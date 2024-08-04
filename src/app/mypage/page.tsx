@@ -12,6 +12,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import MyBookList from '@/components/mypage/MyBookList';
 import { sampleImages } from '@/utils/dummyBooks';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: '꿈틀 마이페이지',
@@ -56,7 +57,7 @@ export default function Mypage() {
                 <div className="flex flex-row text-lg justify-center items-center ml-28 mt-16">
                     <div className="w-px h-14 bg-main mr-5" />
                     <div className="flex flex-col">
-                        <div className="flex flex-row">
+                        <div className="flex flex-row p-1">
                             <Image
                                 src={'/images/profile.svg'}
                                 alt="profile-edit"
@@ -65,15 +66,18 @@ export default function Mypage() {
                             />
                             <p className="ml-3 mb-0.5">프로필 수정</p>
                         </div>
-                        <div className="flex flex-row">
+                        <Link
+                            href="/payments"
+                            className="flex flex-row items-center p-1 bg-main-100 text-black rounded-lg hover:bg-green-200 transition duration-300"
+                        >
                             <Image
                                 src={'/images/credit.svg'}
-                                alt="profile-edit"
+                                alt="포인트 충전"
                                 width={22}
-                                height={0}
+                                height={22}
                             />
                             <p className="ml-3">포인트 충전</p>
-                        </div>
+                        </Link>
                     </div>
                 </div>
             </div>

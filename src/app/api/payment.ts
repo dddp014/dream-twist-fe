@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error('결제 서버 에러', error);
         return NextResponse.json(
-            { error: 'Internal Server Error' },
+            { error: '서버 에러' },
             { status: 500 }
         );
     }
