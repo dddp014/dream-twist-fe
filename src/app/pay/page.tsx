@@ -55,55 +55,94 @@ const Page: React.FC = () => {
     return (
         <div className="flex flex-col items-center p-8">
             <h1 className="text-3xl font-bold text-main mt-10">
-                꿈틀 이용권 구매
+                꿈틀 포인트 구매
             </h1>
             <p className="mt-2 mb-10 text-gray-600">
-                이용권을 구매하고 꿈틀의 AI 동화 생성 서비스를 마음껏
+                포인트를 구매하고 꿈틀의 AI 동화 생성 서비스를 마음껏
                 즐겨보세요!
             </p>
-            <div className="flex flex-wrap gap-4 justify-center mt-6">
-                <div className="border border-gray-200 rounded-lg p-6 w-full max-w-md shadow-lg">
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <h2 className="text-xl font-semibold">
-                                1개월 이용권
-                            </h2>
-                            <p className="mt-2 text-lg text-green-500">
-                                <del className="text-gray-500">180,000원</del>{' '}
-                                110,000원
-                            </p>
-                            <ul className="mt-4 list-none">
-                                <li>✔️ AI 줄거리 생성 하루 최대 10회</li>
-                                <li>✔️ AI 이미지 생성 하루 최대 10회</li>
-                            </ul>
-                        </div>
+            <div className="flex justify-between flex-wrap gap-4 mt-6 w-full max-w-6xl">
+                <div className="border border-gray-200 rounded-lg p-6 w-full flex-1 max-w-sm shadow-lg">
+                    <div className="flex flex-col items-center">
+                        <h2 className="text-xl font-semibold mb-3 flex items-center">
+                            100 나뭇잎
+                            <img
+                                src="/images/Clover.svg"
+                                alt="Leaf Icon"
+                                className="ml-2 w-6 h-6"
+                            />
+                        </h2>
+                        <p className="mt-2 text-lg text-green-500">1,000원</p>
                         <button
-                            className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
-                            onClick={() => handleClick(110000, '꿈틀 1달 구독')}
+                            className="bg-green-500 text-white font-semibold py-2 px-4 mt-4 rounded-lg hover:bg-green-600 transition duration-300"
+                            onClick={() => handleClick(1000, '꿈틀 100 포인트')}
                             disabled={isLoading}
                         >
                             {isLoading ? '처리 중...' : '구매하기'}
                         </button>
                     </div>
                 </div>
-                <div className="border border-gray-200 rounded-lg p-6 w-full max-w-md shadow-lg">
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <h2 className="text-xl font-semibold">
-                                3개월 이용권
-                            </h2>
-                            <p className="mt-2 text-lg text-green-500">
-                                <del className="text-gray-500">540,000원</del>{' '}
-                                300,000원
-                            </p>
-                            <ul className="mt-4 list-none">
-                                <li>✔️ AI 줄거리 생성 하루 최대 30회</li>
-                                <li>✔️ AI 이미지 생성 하루 최대 30회</li>
-                            </ul>
-                        </div>
+                <div className="border border-gray-200 rounded-lg p-6 w-full flex-1 max-w-sm shadow-lg">
+                    <div className="flex flex-col items-center">
+                        <h2 className="text-xl font-semibold mb-3 flex items-center">
+                            300 나뭇잎
+                            <img
+                                src="/images/Clover.svg"
+                                alt="Leaf Icon"
+                                className="ml-2 w-6 h-6"
+                            />
+                        </h2>
+                        <p className="mt-2 text-lg text-green-500">3,000원</p>
                         <button
-                            className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300"
-                            onClick={() => handleClick(300000, '꿈틀 3달 구독')}
+                            className="bg-green-500 text-white font-semibold py-2 px-4 mt-4 rounded-lg hover:bg-green-600 transition duration-300"
+                            onClick={() => handleClick(3000, '꿈틀 300 포인트')}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? '처리 중...' : '구매하기'}
+                        </button>
+                    </div>
+                </div>
+                <div className="border border-gray-200 rounded-lg p-6 w-full flex-1 max-w-sm shadow-lg">
+                    <div className="flex flex-col items-center">
+                        <h2 className="text-xl font-semibold mb-3 flex items-center">
+                            700 나뭇잎
+                            <img
+                                src="/images/Clover.svg"
+                                alt="Leaf Icon"
+                                className="ml-2 w-6 h-6"
+                            />
+                        </h2>
+                        <p className="mt-2 text-lg text-green-500">
+                            <del className="text-gray-500">7,000원</del> 5,500원
+                        </p>
+                        <button
+                            className="bg-green-500 text-white font-semibold py-2 px-4 mt-4 rounded-lg hover:bg-green-600 transition duration-300"
+                            onClick={() => handleClick(5000, '꿈틀 700 포인트')}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? '처리 중...' : '구매하기'}
+                        </button>
+                    </div>
+                </div>
+                <div className="border border-gray-200 rounded-lg p-6 w-full flex-1 max-w-sm shadow-lg">
+                    <div className="flex flex-col items-center">
+                        <h2 className="text-xl font-semibold mb-3 flex items-center">
+                            1200 나뭇잎
+                            <img
+                                src="/images/Clover.svg"
+                                alt="Leaf Icon"
+                                className="ml-2 w-6 h-6"
+                            />
+                        </h2>
+                        <p className="mt-2 text-lg text-green-500">
+                            <del className="text-gray-500">12,000원</del>{' '}
+                            10,000원
+                        </p>
+                        <button
+                            className="bg-green-500 text-white font-semibold py-2 px-4 mt-4 rounded-lg hover:bg-green-600 transition duration-300"
+                            onClick={() =>
+                                handleClick(10000, '꿈틀 1000 포인트')
+                            }
                             disabled={isLoading}
                         >
                             {isLoading ? '처리 중...' : '구매하기'}

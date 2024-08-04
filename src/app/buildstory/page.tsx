@@ -14,8 +14,6 @@ import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image';
 
-
-
 const BuildStoryPage: React.FC = () => {
     return (
         <div
@@ -51,7 +49,7 @@ const BuildStoryPage: React.FC = () => {
                             글쓰기 능력이 쑥쑥 올라요.
                         </p>
                         <Link
-                            href="/buildstory/edit"
+                            href="/edit"
                             className="bg-main text-white w-36 py-2 px-4 rounded-md block text-center"
                         >
                             편집하기
