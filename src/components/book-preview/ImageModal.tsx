@@ -9,34 +9,62 @@ Date        Author   Status    Description
 2024.07.27  임도헌   Modified   portal 적용
 2024.07.29  임도헌   Modified   필요없는 코드 삭제
 2024.07.31  임도헌   Modified   쓸데 없는 코드 전부 삭제 및 portal 수정 및 react-hook-form으로 코드 변경
+2024.08.02  임도헌   Modified   creationWays 코드 추가 및 File 형태 폼제출 할 수 있도록 수정
+2024.08.03  임도헌   Modified    코드 분리
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Portal from '../common/Portal';
 import FileUploadModal from './FileUploadModal';
 import PaletteModal from './PaletteModal';
+import AiModal from './AiModal';
+import { useBookModal } from '@/hooks/useModal';
+import { CreationMethod } from '@/hooks/useBook';
 
 interface ImageModalProps {
+    currentPage: number;
+    updateCreationWay: (index: number, method: CreationMethod) => void;
     onClose: () => void;
-    onImageSelect: (image: string) => void;
+    onImageSelect: (file: File) => void;
+    initialText: string;
 }
 
 export default function ImageModal({
+    currentPage,
+    updateCreationWay,
     onClose,
-    onImageSelect
+    onImageSelect,
+    initialText
 }: ImageModalProps) {
-    const [fileUploadModalOpen, setFileUploadModalOpen] = useState(false);
-    const [paletteModalOpen, setPaletteModalOpen] = useState(false);
+    const {
+        fileUploadModalOpen,
+        setFileUploadModalOpen,
+        paletteModalOpen,
+        setPaletteModalOpen,
+        aiModalOpen,
+        setAiModalOpen
+    } = useBookModal();
 
-    const handleFileUpload = (image: string) => {
+    const handleFileUpload = (image: File) => {
         onImageSelect(image);
+        updateCreationWay(currentPage, 'upload');
         setFileUploadModalOpen(false);
+        onClose();
     };
 
-    const handleDrawingComplete = (image: string) => {
+    const handleDrawingUpload = (image: File) => {
         onImageSelect(image);
+        updateCreationWay(currentPage, 'palette');
         setPaletteModalOpen(false);
+        onClose();
+    };
+
+    const handleAiUpload = (image: File) => {
+        onImageSelect(image);
+        updateCreationWay(currentPage, 'ai');
+        setAiModalOpen(false);
+        onClose();
     };
 
     return (
@@ -86,7 +114,10 @@ export default function ImageModal({
                                 사진 첨부
                             </p>
                         </button>
-                        <button className="flex flex-col w-[200px] h-[200px] bg-main rounded-lg mr-10 justify-center items-center hover:bg-green-600">
+                        <button
+                            onClick={() => setAiModalOpen(true)}
+                            className="flex flex-col w-[200px] h-[200px] bg-main rounded-lg mr-10 justify-center items-center hover:bg-green-600"
+                        >
                             <Image
                                 src={'/images/aiIcon.svg'}
                                 width={100}
@@ -106,7 +137,14 @@ export default function ImageModal({
                     {paletteModalOpen && (
                         <PaletteModal
                             onClose={() => setPaletteModalOpen(false)}
-                            onDrawingComplete={handleDrawingComplete}
+                            handleDrawingUpload={handleDrawingUpload}
+                        />
+                    )}
+                    {aiModalOpen && (
+                        <AiModal
+                            onClose={() => setAiModalOpen(false)}
+                            handleAiUpload={handleAiUpload}
+                            initialText={initialText}
                         />
                     )}
                 </div>

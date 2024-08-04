@@ -11,7 +11,7 @@ Date        Author   Status    Description
 import { loadFromLocalStorage } from '@/utils/localStorage';
 import { useEffect, useState } from 'react';
 
-export default function useFairytailInfo() {
+export const useFairytailInfo = () => {
     const [title, setTitle] = useState<string>('');
     const [theme, setTheme] = useState<string>('');
     const [storys, setStorys] = useState<string[]>([]);
@@ -36,4 +36,4 @@ export default function useFairytailInfo() {
         storys,
         isPublic
     };
-}
+};
