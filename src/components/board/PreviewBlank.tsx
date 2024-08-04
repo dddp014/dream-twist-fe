@@ -18,6 +18,7 @@ interface PreviewProps {
     getTextForStep: (step: number) => string;
     getCurrentImage: (step: number) => [string, string];
     handlePreview: (index: number) => void;
+    info: string[];
 }
 
 const pageCount: number = 8;
@@ -26,7 +27,8 @@ export default function PreviewBlank({
     step,
     getTextForStep,
     getCurrentImage,
-    handlePreview
+    handlePreview,
+    info
 }: PreviewProps) {
     const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
@@ -81,15 +83,26 @@ export default function PreviewBlank({
                         >
                             <div
                                 key={index}
-                                className={`flex flex-row ${width} h-32`}
+                                className={`flex flex-row ${width} h-32 overflow-hidden`}
                             >
                                 <div
-                                    className={`border-solid border border-gray-200 shadow-md w-32 h-full shadow-neutral-100 mb-3 bg-center bg-no-repeat bg-cover`}
+                                    className={`relative border-solid border border-gray-200 shadow-md w-32 h-full shadow-neutral-100 mb-3 bg-center bg-no-repeat bg-cover`}
                                     style={{
                                         backgroundImage: backgroundImage,
                                         backgroundSize: backgroundSize
                                     }}
-                                ></div>
+                                >
+                                    <div
+                                        className={`${index === 0 ? 'display' : 'hidden'} select-none absolute bottom-0 flex flex-col justify-center items-center bg-white w-full h-[2rem]`}
+                                    >
+                                        <p className="text-[0.4rem] font-LaundryGothic">
+                                            {info[0]}
+                                        </p>
+                                        <p className="font-Hyemin text-[0.3rem]">
+                                            {info[1]} 작가
+                                        </p>
+                                    </div>
+                                </div>
 
                                 <div
                                     className={`${view} border-solid border border-gray-200 shadow-md shadow-neutral-100 w-32 h-full pt-6 px-5`}

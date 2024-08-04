@@ -18,12 +18,17 @@ import Logo from '../../../public/images/logo.svg';
 interface BookInfoProps {
     contents: string[];
     bookImages: string[];
+    info: string[];
 }
 
 const pageCount: number = 8;
 const endImg = Logo;
 
-export default function RenderBook({ contents, bookImages }: BookInfoProps) {
+export default function RenderBook({
+    contents,
+    bookImages,
+    info
+}: BookInfoProps) {
     const { step, setStep, nextStep, prevStep } = usePagination();
 
     const handlePreviewClick = (index: number) => {
@@ -51,6 +56,7 @@ export default function RenderBook({ contents, bookImages }: BookInfoProps) {
                     prevStep={prevStep}
                     getTextForStep={getTextForStep}
                     getCurrentImage={getCurrentImage}
+                    info={info}
                 />
             </div>
             <div className="flex overflow-x-scroll w-4/6 custom-scrollbar">
@@ -59,6 +65,7 @@ export default function RenderBook({ contents, bookImages }: BookInfoProps) {
                     getTextForStep={getTextForStep}
                     getCurrentImage={getCurrentImage}
                     handlePreview={handlePreviewClick}
+                    info={info}
                 />
             </div>
         </>

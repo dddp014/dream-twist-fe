@@ -27,7 +27,7 @@ export default async function Board({ params }: { params: { id: string } }) {
     const contents: string[] = [
         ...(Object.values(data[0].content) as string[])
     ];
-
+    const info = [data[0].title, data[0].nickname];
     // console.log(data);
 
     return (
@@ -48,7 +48,11 @@ export default async function Board({ params }: { params: { id: string } }) {
                     </div>
                 </div>
             </div>
-            <RenderBook bookImages={bookImages} contents={contents} />
+            <RenderBook
+                bookImages={bookImages}
+                contents={contents}
+                info={info}
+            />
         </div>
     );
 }

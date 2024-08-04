@@ -21,6 +21,7 @@ interface ViewerProps {
     prevStep: () => void;
     getTextForStep: (step: number) => string;
     getCurrentImage: (step: number) => [string, string];
+    info: string[];
 }
 
 const pageCount: number = 8;
@@ -30,7 +31,8 @@ export default function BookViewer({
     nextStep,
     prevStep,
     getTextForStep,
-    getCurrentImage
+    getCurrentImage,
+    info
 }: ViewerProps) {
     const text = getTextForStep(step);
     const canvasRef = useTextToImage(text);
@@ -45,7 +47,7 @@ export default function BookViewer({
 
         return (
             <div
-                className={`flex felx-row justify-center items-center ${width} h-[110%] mx-8`}
+                className={`relative flex felx-row justify-center items-center ${width} h-[110%] mx-8`}
             >
                 <div
                     className="border-solid border border-gray-100 bg-[length:100%_100%] w-full h-full bg-cover bg-center bg-no-repeat shadow-lg"
@@ -54,7 +56,16 @@ export default function BookViewer({
                         backgroundSize: backgroundSize
                     }}
                 >
-                    {' '}
+                    <div
+                        className={`${step === 0 ? 'display' : 'hidden'} select-none absolute bottom-0 flex flex-col justify-center items-center bg-white w-full h-[7.5rem]`}
+                    >
+                        <p className="text-[1.8rem] font-LaundryGothic mb-0.5">
+                            {info[0]}
+                        </p>
+                        <p className="font-Hyemin text-[1rem]">
+                            {info[1]} 작가
+                        </p>
+                    </div>
                 </div>
                 <div
                     className={`${view} flex justify-center items-center border-solid border border-gray-100 w-full h-full bg-[length:100%_100%] bg-cover bg-center bg-no-repeat shadow-lg`}
