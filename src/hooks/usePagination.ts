@@ -1,7 +1,9 @@
+'use client';
+
 import { useState } from 'react';
 
 const usePagination = () => {
-    const [step, setStep] = useState(0); // 0은 초기 화면, 1은 Step1 화면
+    const [step, setStep] = useState(0);
 
     const handleStartClick = () => {
         setStep(1);
@@ -15,7 +17,8 @@ const usePagination = () => {
         setStep,
         handleStartClick,
         nextStep,
-        prevStep
+        prevStep,
+        setStep
     };
 };
 
