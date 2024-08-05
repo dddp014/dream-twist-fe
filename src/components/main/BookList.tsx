@@ -14,21 +14,23 @@ Date        Author   Status    Description
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { Book, dummyBooks } from '../../utils/dummyBooks';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
-import { LoadingIcon } from '../icons/LoadingIcon';
+import { FairytaleInfo } from '@/types/fairytale';
+import Sample2 from '../../../public/images/sample2.svg';
+
+interface BookListProps {
+    fairytaleInfo: FairytaleInfo[];
+}
 
 const itemsPerPage: number = 10;
 
-export default function BookList() {
+const BookList = ({ fairytaleInfo }: BookListProps) => {
     const router = useRouter();
-    const [items, setItems] = useState<Book[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const pageIndexRef = useRef<number>(1);
+    const [items, setItems] = useState(fairytaleInfo.slice(0, itemsPerPage));
+    const pageIndexRef = useRef<number>(2);
 
-    // api 연동 예정
     const loadItems = () => {
-        const newItems = dummyBooks.slice(
+        const newItems = fairytaleInfo.slice(
             (pageIndexRef.current - 1) * itemsPerPage,
             pageIndexRef.current * itemsPerPage
         );
@@ -39,7 +41,6 @@ export default function BookList() {
 
         setItems((prev) => [...prev, ...newItems]);
         pageIndexRef.current++;
-        setLoading(false);
     };
 
     const { ref, isPageEnd, setEnd } = useInfiniteScroll({
@@ -50,26 +51,41 @@ export default function BookList() {
         <div>
             <div className="grid grid-cols-5 gap-8 gap-y-9 my-10 z-0">
                 {items.map((item) => (
-                    <div key={item.id} className="relative">
-                        <div className="absolute bottom-2 left-4">
-                            <p className="text-lg font-semibold -mb-1">
+                    <button
+                        key={item.fairytaleId}
+                        onClick={() =>
+                            router.push(`/board/${item.fairytaleId}`)
+                        }
+                        className="relative w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
+                    >
+                        <div
+                            className="absolute top-0 w-full"
+                            style={{
+                                backgroundImage: `url(${Sample2.src})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'top',
+                                height: '80%'
+                            }}
+                        />
+                        <div className="absolute bottom-3.5 left-5 w-full text-left">
+                            <p className="text-xl font-semibold ">
                                 {item.title}
                             </p>
-                            <p>{item.author}</p>
+                            <div className="flex justify-between items-center">
+                                <p className="text-base">
+                                    {item.nickname} 작가
+                                </p>
+                                <p className="text-xs text-gray-400 mr-10">
+                                    2024-08-02
+                                </p>
+                            </div>
                         </div>
-                        <Image
-                            src="/images/sample1.svg"
-                            alt="book-image"
-                            onClick={() => router.push('/board')}
-                            className="w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white cursor-pointer transition-transform animate-scaleIn"
-                            width={100}
-                            height={300}
-                        />
-                    </div>
+                    </button>
                 ))}
             </div>
-            {!isPageEnd && loading && <LoadingIcon />}
             {!isPageEnd && <div ref={ref} />}
         </div>
     );
-}
+};
+
+export default BookList;

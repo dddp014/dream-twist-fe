@@ -9,8 +9,8 @@ Date        Author   Status    Description
 2024.07.26  임도헌   Create  StoryBlock 컴포넌트 색상 변경
 */
 
+import { IFairyTaleFormInputs } from '@/hooks/useFairytailForm';
 import { UseFormRegister, FieldErrors, FieldError } from 'react-hook-form';
-import { IFairyTaleFormInputs } from './FairytailForm';
 
 interface StoryBlockProps {
     index: number;

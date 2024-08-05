@@ -17,7 +17,8 @@ const config: Config = {
             colors: {
                 main: '#35c16f',
                 'main-200': '#66CF92',
-                'main-100': '#EFFBEE'
+                'main-100': '#EFFBEE',
+                like: '#ff3672'
             },
             animation: {
                 scaleIn: 'scaleIn 0.3s ease-out'
