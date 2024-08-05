@@ -18,8 +18,11 @@ export default function BookLike() {
     const [likeCount, setLikeCount] = useState(0);
 
     const handleLikeClick = () => {
-        setLike((prevLike) => !prevLike);
-        setLikeCount((prevCount) => prevCount + (like ? -1 : 1));
+        setLike((prevLike) => {
+            const newLike = !prevLike;
+            setLikeCount((prevCount) => prevCount + (newLike ? 1 : -1));
+            return newLike;
+        });
     };
 
     return (

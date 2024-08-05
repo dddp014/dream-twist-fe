@@ -13,6 +13,7 @@ Date        Author   Status    Description
 
 'use client';
 
+import { useMemo } from 'react';
 import { ArrowIcon } from '../icons/ArrowIcon';
 import useTextToImage from '@/hooks/useTextToImage';
 
@@ -41,11 +42,13 @@ export default function BookViewer({
     const renderBooks = () => {
         const [backgroundImage, backgroundSize] = getCurrentImage(step);
 
-        const view =
-            step === 0 || step === pageCount - 1 ? 'hidden' : 'display';
-        const width =
-            step === 0 || step === pageCount - 1 ? 'w-4/12' : 'w-8/12';
-
+        const [view, width] = useMemo(
+            () =>
+                step === 0 || step === pageCount - 1
+                    ? ['hidden', 'w-4/12']
+                    : ['display', 'w-8/12'],
+            [step]
+        );
         return (
             <div
                 className={`relative flex felx-row justify-center items-center ${width} h-[33rem] mx-8`}

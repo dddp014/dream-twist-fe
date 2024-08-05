@@ -11,7 +11,7 @@ Date        Author   Status    Description
 
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import useTextToImage from '@/hooks/useTextToImage';
 
 interface PreviewProps {
@@ -60,10 +60,14 @@ export default function PreviewBlank({
             const canvasRef = useTextToImage(text);
             const label = createPreviewLabel(index);
 
-            const view =
-                index === 0 || index === pageCount - 1 ? 'hidden' : 'display';
-            const width =
-                index === 0 || index === pageCount - 1 ? 'w-32' : 'w-64';
+            const [view, width] = useMemo(
+                () =>
+                    index === 0 || index === pageCount - 1
+                        ? ['hidden', 'w-32']
+                        : ['display', 'w-64'],
+                [index]
+            );
+
             const selectedStyle = isSelected
                 ? 'outline outline-emerald-400 outline-4'
                 : '';
