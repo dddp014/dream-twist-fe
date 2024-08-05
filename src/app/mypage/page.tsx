@@ -10,6 +10,7 @@ Date        Author   Status    Description
 
 import { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import MyBookList from '@/components/mypage/MyBookList';
 import { sampleImages } from '@/utils/dummyBooks';
 
@@ -63,7 +64,9 @@ export default function Mypage() {
                                 width={22}
                                 height={0}
                             />
-                            <p className="ml-3 mb-0.5">프로필 수정</p>
+                            <Link href={'/edit-profile'}>
+                                <p className="ml-3 mb-0.5">프로필 수정</p>
+                            </Link>
                         </div>
                         <div className="flex flex-row">
                             <Image
@@ -80,7 +83,7 @@ export default function Mypage() {
             <div className="flex flex-col self-start mb-16 w-full">
                 <p className="text-[1.3rem] font-semibold">나의 동화</p>
                 <MyBookList bookInfo={coverImage} />
-                <p className="text-[1.3rem] font-semibold mb-4 mt-16">
+                <p className="text-[1.3rem] font-semibold mt-16">
                     좋아요한 동화
                 </p>
                 <MyBookList bookInfo={coverImage} />
