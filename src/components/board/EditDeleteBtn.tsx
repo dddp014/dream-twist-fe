@@ -12,13 +12,19 @@ Date        Author   Status    Description
 
 import DeleteModal from './DeleteModal';
 import { useConfirmModal } from '@/hooks/useModal';
+import CommentBox from './CommentBox';
 
 interface EditDeleteBtnProps {
     id: string;
     modalType: string;
+    onEditClick?: () => void;
 }
 
-export default function EditDeleteBtn({ id, modalType }: EditDeleteBtnProps) {
+export default function EditDeleteBtn({
+    id,
+    modalType,
+    onEditClick
+}: EditDeleteBtnProps) {
     const { isOpenModal, openModal, closeModal } = useConfirmModal();
 
     const handleDeleteClick = () => {
@@ -29,9 +35,15 @@ export default function EditDeleteBtn({ id, modalType }: EditDeleteBtnProps) {
         closeModal();
     };
 
+    const handleEditClick = () => {};
+
     return (
         <>
-            <button type="button" className="text-gray-400 text-[13px]">
+            <button
+                type="button"
+                onClick={onEditClick}
+                className="text-gray-400 text-[13px]"
+            >
                 수정
             </button>
             <p className="text-gray-400 text-[12px]">ㅣ</p>

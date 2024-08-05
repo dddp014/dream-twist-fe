@@ -24,3 +24,41 @@ export const contents: string[] = [
 export const sampleImages = Array.from({ length: 10 }, (_, i) => ({
     coverImage: `/images/sample2.svg`
 }));
+
+export const dummyComments = [
+    {
+        id: '1',
+        username: 'user123',
+        date: '2024-08-01',
+        content: '재밌네용',
+        profile: '/images/sample2.svg'
+    },
+    {
+        id: '2',
+        username: '안녕',
+        date: '2024-08-02',
+        content: '잘 읽고 갑니다',
+        profile: '/images/sample2.svg'
+    },
+    {
+        id: '3',
+        username: '회원2',
+        date: '2024-08-02',
+        content: '좋아요',
+        profile: '/images/sample2.svg'
+    },
+    {
+        id: '4',
+        username: '달걀',
+        date: '2024-08-02',
+        content: '명작이네요',
+        profile: '/images/sample2.svg'
+    },
+    {
+        id: '5',
+        username: '하하',
+        date: '2024-08-02',
+        content: '웃기당',
+        profile: '/images/sample2.svg'
+    }
+];

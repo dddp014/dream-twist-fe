@@ -13,6 +13,7 @@ import { Metadata } from 'next';
 import RenderBook from '@/components/board/RenderBook';
 import BookLike from '@/components/board/BookLike';
 import EditDeleteBtn from '@/components/board/EditDeleteBtn';
+import CommentList from '@/components/board/CommentList';
 import { getBookDetail } from '@/api/BoardApi';
 
 export const metadata: Metadata = {
@@ -30,9 +31,13 @@ export default async function Board({ params }: { params: { id: string } }) {
     const info = [data[0].title, data[0].nickname];
     // console.log(data);
 
+    const handleEditClick = () => {
+        return 0;
+    };
+
     return (
-        <div className="h-screen flex flex-col justify-center items-center mt-8 mx-24 mb-12">
-            <div className="relative flex flex-col w-full mb-6">
+        <div className="flex flex-col justify-center items-center mx-24 pb-28 pt-12">
+            <div className="relative flex flex-col w-full mb-4">
                 <div className="flex flex-row justify-center items-center mb-3 m-auto">
                     <p className="text-2xl font-semibold">{data[0].title}</p>
                     <p className="text-[17px] ml-5">{data[0].nickname} 작가</p>
@@ -48,11 +53,16 @@ export default async function Board({ params }: { params: { id: string } }) {
                     </div>
                 </div>
             </div>
-            <RenderBook
-                bookImages={bookImages}
-                contents={contents}
-                info={info}
-            />
+            <div className="flex flex-col w-full h-full justify-center items-center">
+                <RenderBook
+                    bookImages={bookImages}
+                    contents={contents}
+                    info={info}
+                />
+            </div>
+            <div className="flex flex-col w-full h-full justify-center items-center mt-16">
+                <CommentList />
+            </div>
         </div>
     );
 }

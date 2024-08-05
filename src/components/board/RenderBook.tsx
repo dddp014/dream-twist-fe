@@ -49,7 +49,7 @@ export default function RenderBook({
 
     return (
         <>
-            <div className="flex flex-row w-full h-3/6 justify-center items-center mb-20 mt-2">
+            <div className="flex flex-row w-full h-full justify-center items-center mb-12">
                 <BookViewer
                     step={step}
                     nextStep={nextStep}
@@ -59,7 +59,7 @@ export default function RenderBook({
                     info={info}
                 />
             </div>
-            <div className="flex overflow-x-scroll w-4/6 custom-scrollbar">
+            <div className="flex overflow-x-scroll w-[66.5rem] h-full custom-scrollbar">
                 <PreviewBlank
                     step={step}
                     getTextForStep={getTextForStep}

@@ -45,7 +45,7 @@ export default function MyBookList({ bookInfo }: MyBookListProps) {
                                 backgroundImage: `url(${item.coverImage})`,
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'top',
-                                height: '78%'
+                                height: '80%'
                             }}
                         />
                         <div className="absolute bg-white bottom-0 w-full py-2 text-left pl-4">

@@ -6,6 +6,7 @@ Author : 나경윤
 History
 Date        Author   Status    Description
 2024.07.19  나경윤    Created
+2024.08.04  나경윤    Modified  동화 내용 api 연결
 */
 
 'use client';
@@ -95,10 +96,10 @@ export default function PreviewBlank({
                                     <div
                                         className={`${index === 0 ? 'display' : 'hidden'} select-none absolute bottom-0 flex flex-col justify-center items-center bg-white w-full h-[2rem]`}
                                     >
-                                        <p className="text-[0.4rem] font-LaundryGothic">
+                                        <p className="text-[0.4rem] text-slate-800 font-LaundryGothic">
                                             {info[0]}
                                         </p>
-                                        <p className="font-Hyemin text-[0.3rem]">
+                                        <p className="font-Hyemin text-slate-800 text-[0.3rem]">
                                             {info[1]} 작가
                                         </p>
                                     </div>
