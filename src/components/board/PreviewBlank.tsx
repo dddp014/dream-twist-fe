@@ -77,7 +77,7 @@ export default function PreviewBlank({
                     <div>
                         <button
                             type="button"
-                            className={`hover:outline hover:outline-emerald-400 hover:outline-4 ${selectedStyle}`}
+                            className={`shadow-lg shadow-gray-200 hover:outline hover:outline-emerald-400 hover:outline-4 ${selectedStyle}`}
                             onClick={() => {
                                 handlePreview(index);
                                 handleButtonClick(index);

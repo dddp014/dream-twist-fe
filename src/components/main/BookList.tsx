@@ -66,14 +66,14 @@ const BookList = ({ fairytaleInfo }: BookListProps) => {
                             }}
                         />
                         <div className="absolute bg-white bottom-0 w-full text-left py-3 pl-4">
-                            <p className="text-[1.15rem] font-semibold">
+                            <p className="text-[1.15rem] font-semibold ">
                                 {item.title}
                             </p>
                             <div className="flex justify-between items-center">
-                                <p className="text-[1rem]">
+                                <p className="text-[1rem] flex-grow truncate pr-4">
                                     {item.nickname} 작가
                                 </p>
-                                <p className="text-[0.8rem] text-gray-400 mr-4 -mb-0.5">
+                                <p className="text-[0.8rem] text-gray-400 mr-4 -mb-0.5 whitespace-nowrap">
                                     {item.createdAt}
                                 </p>
                             </div>

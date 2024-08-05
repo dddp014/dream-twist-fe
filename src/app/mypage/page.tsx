@@ -42,7 +42,7 @@ export default async function Mypage() {
         })
     );
 
-    console.log(payData);
+    // console.log(payData);
 
     return (
         <div className="flex flex-col justify-center items-center mx-24 mt-16 mb-7">
@@ -112,7 +112,7 @@ export default async function Mypage() {
                     좋아요한 동화
                 </p>
                 <MyBookList bookInfo={coverImage} />
-                <div className="flex flex-row w-full space-x-20">
+                <div className="flex flex-row w-full space-x-20 mt-6">
                     <div className="flex flex-col flex-1">
                         <p className="text-[1.3rem] font-semibold mt-16">
                             나의 댓글
