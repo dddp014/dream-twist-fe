@@ -45,7 +45,7 @@ const Page: React.FC = () => {
                 orderId: Math.random().toString(36).slice(2),
                 orderName,
                 successUrl: `${window.location.origin}/payments/complete`,
-                failUrl: `${window.location.origin}/apis/payments/fail`
+                failUrl: `${window.location.origin}/api/payments/fail`
             });
         } catch (error) {
             console.error('결제 요청 실패:', error);
@@ -119,7 +119,7 @@ const Page: React.FC = () => {
                         </p>
                         <button
                             className="bg-green-500 text-white font-semibold py-2 px-4 mt-4 rounded-lg hover:bg-green-600 transition duration-300"
-                            onClick={() => handleClick(5000, '꿈틀 700 포인트')}
+                            onClick={() => handleClick(5500, '꿈틀 700 포인트')}
                             disabled={isLoading}
                         >
                             {isLoading ? '처리 중...' : '구매하기'}

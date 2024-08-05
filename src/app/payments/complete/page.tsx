@@ -9,39 +9,52 @@ Date        Author   Status    Description
 
 */
 
+'use client';
+
 import { notFound } from 'next/navigation';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Link from 'next/link';
 
 interface PaymentPageProps {
     searchParams: {
-        orderId?: string;
+        amount: number;
+        orderId: string;
+        paymentKey: string;
     };
 }
 
-const PaymentCompletePage: FC<PaymentPageProps> = async ({ searchParams }) => {
+const PaymentCompletePage: FC<PaymentPageProps> = ({ searchParams }) => {
     if (!searchParams.orderId) {
         notFound();
+        return null; // 리다이렉션 이후에는 컴포넌트가 렌더링되지 않도록 함
     }
 
-    const secretKey = process.env.TOSS_SECRET_KEY || '';
-    const basicToken = Buffer.from(`${secretKey}:`, 'utf-8').toString('base64');
+    useEffect(() => {
+        const { amount, orderId, paymentKey } = searchParams;
 
-    const url = `https://api.tosspayments.com/v1/payments/orders/${searchParams.orderId}`;
-    const response = await fetch(url, {
-        headers: {
-            Authorization: `Basic ${basicToken}`,
-            'Content-Type': 'application/json'
-        }
-    });
+        const confirmPayment = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/billing', {
+                    method: 'POST',
+                    body: JSON.stringify({ amount, orderId, paymentKey }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
 
-    if (!response.ok) {
-        return <div>결제 정보 조회에 실패했습니다.</div>;
-    }
+                if (!response.ok) {
+                    throw new Error(
+                        `결제 정보 조회에 실패했습니다: ${response.statusText}`
+                    );
+                }
+                const result = await response.json();
+                console.log(result);
+            } catch (error) {
+                console.error(error);
+                alert('결제 정보 조회에 실패했습니다. 다시 시도해 주세요.');
+            }
+        };
 
-    const payments = await response.json();
-    console.log(payments);
-    const { card } = payments;
+        confirmPayment();
+    }, [searchParams]);
 
     return (
         <div className="flex flex-col items-center p-8">
@@ -50,8 +63,8 @@ const PaymentCompletePage: FC<PaymentPageProps> = async ({ searchParams }) => {
             </h1>
             <div className="border border-gray-200 rounded-lg p-6 w-full max-w-md shadow-lg mt-6">
                 <ul className="list-none text-left">
-                    <li className="mb-2">결제 상품: {payments.orderName}</li>
-                    <li className="mb-2">주문번호: {payments.orderId}</li>
+                    <li className="mb-2">주문번호: {searchParams.orderId}</li>
+                    <li className="mb-2">결제 가격: {searchParams.amount}</li>
                     <li className="mb-2">
                         결제승인날짜: {Intl.DateTimeFormat().format(new Date())}
                     </li>
