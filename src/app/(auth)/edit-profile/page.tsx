@@ -8,7 +8,13 @@ Date        Author   Status    Description
 2024.08.05  나경윤    Created
 */
 
+import { Metadata } from 'next';
 import EditProfileList from '@/components/auth/EditProfileList';
+
+export const metadata: Metadata = {
+    title: '꿈틀 프로필 수정',
+    description: '프로필을 등록하고 다양한 꿈틀 작가들과 만나보아요.'
+};
 
 export default function EditProfile() {
     return (

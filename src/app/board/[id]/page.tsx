@@ -31,10 +31,6 @@ export default async function Board({ params }: { params: { id: string } }) {
     const info = [data[0].title, data[0].nickname];
     // console.log(data);
 
-    const handleEditClick = () => {
-        return 0;
-    };
-
     return (
         <div className="flex flex-col justify-center items-center mx-24 pb-28 pt-12">
             <div className="relative flex flex-col w-full mb-4">

@@ -62,3 +62,69 @@ export const dummyComments = [
         profile: '/images/sample2.svg'
     }
 ];
+
+export const dummyMyComments = [
+    {
+        id: '1',
+        fairytaleId: '1',
+        date: '2024-08-01',
+        content: '재밌네용',
+        title: '철학자와 신비한 마을'
+    },
+    {
+        id: '2',
+        fairytaleId: '2',
+        date: '2024-08-02',
+        content: '222222',
+        title: '신비아파트'
+    },
+    {
+        id: '3',
+        fairytaleId: '3',
+        date: '2024-08-03',
+        content: '추천',
+        title: '수상한 빨간 망토'
+    },
+    {
+        id: '1',
+        fairytaleId: '1',
+        date: '2024-08-01',
+        content: '재밌네용',
+        title: '철학자와 신비한 마을'
+    },
+    {
+        id: '2',
+        fairytaleId: '2',
+        date: '2024-08-02',
+        content: '222222',
+        title: '신비아파트'
+    },
+    {
+        id: '3',
+        fairytaleId: '3',
+        date: '2024-08-03',
+        content: '추천',
+        title: '수상한 빨간 망토'
+    },
+    {
+        id: '1',
+        fairytaleId: '1',
+        date: '2024-08-01',
+        content: '재밌네용',
+        title: '철학자와 신비한 마을'
+    },
+    {
+        id: '2',
+        fairytaleId: '2',
+        date: '2024-08-02',
+        content: '222222',
+        title: '신비아파트'
+    },
+    {
+        id: '3',
+        fairytaleId: '3',
+        date: '2024-08-03',
+        content: '추천',
+        title: '수상한 빨간 망토'
+    }
+];

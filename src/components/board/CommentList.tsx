@@ -17,7 +17,6 @@ import CommentBox from './CommentBox';
 
 export default function CommentList() {
     const [editCommentId, setEditCommentId] = useState<string | null>(null);
-    const [editBox, setEditBox] = useState(false);
 
     const commentInfo = dummyComments.map((item) => {
         return { ...item };
