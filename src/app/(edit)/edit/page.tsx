@@ -9,7 +9,10 @@ Date        Author   Status    Description
 2024.07.25  임도헌   Modified  FairytailInfo 컴포넌트 삭제
 */
 
+
+
 import FairytailForm from '@/components/edit/FairytailForm';
+
 
 export default function EditPage() {
     return (

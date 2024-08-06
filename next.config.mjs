@@ -1,14 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        remotePatterns: [
+    async rewrites() {
+        return [
             {
-                protocol: 'https',
-                hostname: 'www.course-api.com',
-                port: '',
-                pathname: '/images/tours/**'
+                source: '/buildstory/summery', // 프록시할 경로
+                destination: 'http://localhost:4000/ai-fairytale/story' // 실제 API 서버
             }
-        ]
+        ];
     }
 };
 

@@ -1,4 +1,13 @@
-// components/Modal.js
+/**
+File Name : buildstory/modal
+Description : 동화 생성
+Author : 김민규
+
+History
+Date        Author   Status    Description
+2024.07.26  김민규    Created   편집 모달
+*/
+
 import React from 'react';
 
 type ModalProps = {
