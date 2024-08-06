@@ -8,6 +8,7 @@ Date        Author   Status    Description
 2024.07.28  김민규    Created
 2024.07.31  김민규    Created   Ai 모델 Api 연동
 2024.08.01  김민규    Created   로딩창 연동
+2024.08.05  임도헌   Modified   ai로 생성한 데이터 로컬스토리지에 저장
 
 **/
 'use client';
@@ -16,6 +17,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // App Router 환경에서의 라우터를 사용
 import Loading from '@/components/bulidstory/Loading';
 import { generatePlot, StoryResponse } from '@/app/api/makeStory';
+import { saveToLocalStorage } from '@/utils/localStorage';
 
 const SummeryPage: React.FC = () => {
     const router = useRouter();
@@ -33,7 +35,9 @@ const SummeryPage: React.FC = () => {
             console.log(result); // 서버 응답 확인
 
             // 로컬 스토리지에 데이터 저장
-            localStorage.setItem('storyData', JSON.stringify(result));
+            saveToLocalStorage('title', result.title);
+            saveToLocalStorage('theme', result.theme);
+            saveToLocalStorage('storys', result.story);
 
             router.push('/buildstory/makestory-ai'); // 다음 페이지로 이동
         } catch (error: any) {
