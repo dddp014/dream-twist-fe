@@ -22,4 +22,5 @@ export interface payInfo {
     method: string;
     order_name: string;
     isRefundable: string;
+    createdAt: string;
 }

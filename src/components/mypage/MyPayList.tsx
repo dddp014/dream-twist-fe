@@ -28,16 +28,18 @@ export default function MyPayList({ payInfo }: MyPayProps) {
                                     </p>
                                     <p className="text-[1rem]">
                                         결제 금액 : {item.amount}원
-                                        <span className="text-gray-400 ml-2">
+                                        <span className="ml-2">
                                             (결제 수단 - {item.method})
                                         </span>
                                     </p>
                                 </div>
                                 <div className="flex flex-col text-right mr-6">
                                     <p className="text-[0.9rem] text-gray-400">
-                                        2024-08-04
+                                        {item.createdAt}
                                     </p>
-                                    <p className="text-[0.9rem] text-red-400">
+                                    <p
+                                        className={`text-[0.9rem] ${item.isRefundable === 'T' ? 'text-blue-500' : 'text-red-500'}`}
+                                    >
                                         {item.isRefundable === 'T'
                                             ? '환불 가능'
                                             : '환불 불가'}
@@ -51,7 +53,7 @@ export default function MyPayList({ payInfo }: MyPayProps) {
                     ))
                 ) : (
                     <p className="text-left text-gray-500">
-                        등록된 결제 내역이 없습니다.
+                        결제 내역이 없습니다.
                     </p>
                 )}
             </div>

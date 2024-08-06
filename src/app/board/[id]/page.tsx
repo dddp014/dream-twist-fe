@@ -30,8 +30,9 @@ export default async function Board({ params }: { params: { id: string } }) {
 
         if (!data || data.length === 0) {
             notFound();
-            return null;
         }
+
+        // console.log(data);
 
         const bookImages = [data[0].coverImage, ...data[0].images];
         const contents: string[] = [
@@ -55,7 +56,9 @@ export default async function Board({ params }: { params: { id: string } }) {
                     </div>
                     <hr className="border border-zinc-200 opacity-70" />
                     <div className="flex flex-row mt-2 justify-between">
-                        <p className="text-gray-500 text-[14px]">조회 8</p>
+                        <p className="text-gray-500 text-[14px]">
+                            조회 {data[0].views}
+                        </p>
                         <div className="self-end">
                             <BookLike />
                         </div>

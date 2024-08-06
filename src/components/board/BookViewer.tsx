@@ -49,6 +49,7 @@ export default function BookViewer({
                     : ['display', 'w-8/12'],
             [step]
         );
+
         return (
             <div
                 className={`relative flex felx-row justify-center items-center ${width} h-[33rem] mx-8`}
@@ -72,11 +73,11 @@ export default function BookViewer({
                     </div>
                 </div>
                 <div
-                    className={`${view} flex justify-center items-center border-solid border border-gray-100 w-full h-full bg-[length:100%_100%] bg-cover bg-center bg-no-repeat shadow-lg`}
+                    className={`${view} flex justify-center items-center py-6 border-solid border border-gray-100 w-full h-full bg-[length:100%_100%] bg-cover bg-center bg-no-repeat shadow-lg`}
                 >
                     <canvas
                         ref={canvasRef}
-                        className="flex flex-col justify-center items-center w-full mx-24 mt-16"
+                        className="flex justify-center items-center w-full h-[80%] mx-24"
                     />
                 </div>
             </div>

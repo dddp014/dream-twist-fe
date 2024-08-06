@@ -39,17 +39,13 @@ export default async function Mypage() {
         console.error(error);
     }
 
-    const payInfo = payData.map(
-        ({ id, amount, method, order_name, isRefundable }: payInfo) => ({
-            id,
-            amount,
-            method,
-            order_name,
-            isRefundable
-        })
-    );
+    const payInfo = payData.map((item: payInfo) => {
+        return {
+            ...item
+        };
+    });
 
-    console.log(payData);
+    // console.log(payData);
 
     return (
         <div className="flex flex-col justify-center items-center mx-24 mt-16 mb-7">
