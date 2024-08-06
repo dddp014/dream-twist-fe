@@ -11,7 +11,7 @@ Date        Author   Status    Description
 'use client';
 
 import Image from 'next/image';
-import MyDropdown from '../auth/\bMyDropDown';
+import MyDropdown from '../auth/MyDropDown';
 import { useDropdown } from '@/hooks/useDropdown';
 
 export default function LoginNav() {

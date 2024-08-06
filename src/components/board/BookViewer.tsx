@@ -73,7 +73,7 @@ export default function BookViewer({
                     </div>
                 </div>
                 <div
-                    className={`${view} flex justify-center items-center py-6 border-solid border border-gray-100 w-full h-full bg-[length:100%_100%] bg-cover bg-center bg-no-repeat shadow-lg`}
+                    className={`${view} flex justify-center items-center py-6 border-solid border border-gray-100 w-full h-full shadow-lg`}
                 >
                     <canvas
                         ref={canvasRef}

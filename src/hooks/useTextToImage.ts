@@ -29,7 +29,7 @@ export default function useTextToImage(text: string) {
 
         // 텍스트 스타일 설정
         context.fillStyle = '#000000';
-        context.font = '21px Hyemin';
+        context.font = '20px Hyemin';
         context.textAlign = 'left';
         context.textBaseline = 'top';
 

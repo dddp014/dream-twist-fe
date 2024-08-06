@@ -21,3 +21,15 @@ export const getBookList = async () => {
 
     return response.json();
 };
+
+export const getSearchBook = async (value: string) => {
+    const response = await fetch(`${API_BASE_URL}/byTitle/${value}`, {
+        cache: 'no-store'
+    });
+
+    if (!response.ok) {
+        throw new Error('검색 동화 조회 실패');
+    }
+
+    return response.json();
+};

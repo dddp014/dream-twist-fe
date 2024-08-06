@@ -33,7 +33,7 @@ export default function CommentList() {
     return (
         <div className="flex flex-col w-[66.5rem] h-full">
             <div className="w-full">
-                <p className="text-xl font-semibold text-left mb-4">댓글</p>
+                <p className="text-xl font-semibold text-left my-6">댓글</p>
                 <CommentBox editStatus={false} initialContent="" />
                 <div className="mt-16">
                     {commentInfo.map((item, index) => (
