@@ -9,9 +9,10 @@ Date        Author   Status    Description
 
 */
 
-
 export interface StoryResponse {
     story: string[];
+    theme: string;
+    title: string;
 }
 
 export const generatePlot = async (

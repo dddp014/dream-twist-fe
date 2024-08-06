@@ -22,7 +22,7 @@ export default function BookPreviewLayout({
 }) {
     return (
         <div>
-            <header className="py-4 bg-main-200 text-white text-center mb-4 font-bold">
+            <header className="py-4 bg-main-200 text-white text-center mb-4 ">
                 <div className="container mx-auto flex items-center justify-center text-neutral-900">
                     <span className="">AI 스토리 추천</span>
                     <span className="px-6 text-xl text-emerald-700">{'>'}</span>

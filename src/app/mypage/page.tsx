@@ -32,15 +32,18 @@ export default async function Mypage() {
     });
 
     const payData = await getMyPayList('2');
-    const payInfo = payData.map(
-        ({ id, amount, method, order_name, isRefundable }: payInfo) => ({
-            id,
-            amount,
-            method,
-            order_name,
-            isRefundable
-        })
-    );
+
+    // const payInfo = payData
+    //     ? payData.map(
+    //           ({ id, amount, method, order_name, isRefundable }: payInfo) => ({
+    //               id,
+    //               amount,
+    //               method,
+    //               order_name,
+    //               isRefundable
+    //           })
+    //       )
+    //     : [];
 
     // console.log(payData);
 
@@ -80,28 +83,33 @@ export default async function Mypage() {
                 <div className="flex flex-row text-lg justify-center items-center ml-28 mt-16">
                     <div className="w-px h-14 bg-main mr-5" />
                     <div className="flex flex-col">
-                        <div className="flex flex-row">
-                            <Image
-                                src={'/images/profile.svg'}
-                                alt="profile-edit"
-                                width={22}
-                                height={0}
-                            />
-                            <Link href={'/edit-profile'}>
+                        <Link href={'/edit-profile'}>
+                            <div className="flex flex-row">
+                                <Image
+                                    src={'/images/profile.svg'}
+                                    alt="profile-edit"
+                                    width={22}
+                                    height={0}
+                                />
+
                                 <p className="ml-3 mb-0.5 hover:text-main">
                                     프로필 수정
                                 </p>
-                            </Link>
-                        </div>
-                        <div className="flex flex-row">
-                            <Image
-                                src={'/images/credit.svg'}
-                                alt="profile-edit"
-                                width={22}
-                                height={0}
-                            />
-                            <p className="ml-3 hover:text-main">포인트 충전</p>
-                        </div>
+                            </div>
+                        </Link>
+                        <Link href={'/payments'}>
+                            <div className="flex flex-row">
+                                <Image
+                                    src={'/images/credit.svg'}
+                                    alt="profile-edit"
+                                    width={22}
+                                    height={0}
+                                />
+                                <p className="ml-3 hover:text-main">
+                                    포인트 충전
+                                </p>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -123,7 +131,7 @@ export default async function Mypage() {
                         <p className="text-[1.3rem] font-semibold mt-16">
                             나의 결제 내역
                         </p>
-                        <MyPayList payInfo={payInfo} />
+                        {/* <MyPayList payInfo={payInfo} /> */}
                     </div>
                 </div>
             </div>
