@@ -6,6 +6,8 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.08.03  임도헌   Created
+2024.08.07  임도헌   Modified  fairytaleId props 추가
+2024.08.07  임도헌   Modified  fairytaleId가 있다면 데이터 불러와서 폼에 적용
 */
 
 import { useForm } from 'react-hook-form';
@@ -13,19 +15,19 @@ import { useFairytailInfo } from './useFairytailInfo';
 import { useEffect } from 'react';
 
 type PageData = {
-    image: File | null;
+    image: File | string | null;
     story: string;
 };
 
 type FormData = {
     title: string;
     theme: string;
-    cover: File | null;
+    cover: File | string | null;
     isPublic: boolean;
     pages: PageData[];
 };
 
-export const useBookForm = () => {
+export const useBookForm = (fairytaleId?: number) => {
     // 로컬 스토리지 데이터 불러오기
     const { title, theme, storys, isPublic } = useFairytailInfo();
     // useForm 사용해서 값 세팅한다.
@@ -42,15 +44,46 @@ export const useBookForm = () => {
             }
         });
 
-    // 새로 고침 발생 시 새로 reset해서 현재 값 세팅
+    // fairytaleId가 존재하면 reset해서 현재 값 세팅
     useEffect(() => {
-        reset({
-            title,
-            theme,
-            cover: null,
-            isPublic,
-            pages: storys.map((story) => ({ image: null, story }))
-        });
+        const fairytaleData = async () => {
+            if (fairytaleId) {
+                try {
+                    const response = await fetch(
+                        `http://localhost:4000/fairytale/${fairytaleId}`
+                    );
+                    const data = await response.json();
+                    const savedCover = data[0].coverImage;
+                    const savedImages = data[0].images;
+                    const savedStorys = storys;
+                    const savedIsPublic = isPublic;
+
+                    const pages = savedStorys.map((story, index) => ({
+                        image: savedImages[index] || null,
+                        story
+                    }));
+
+                    reset({
+                        title: title,
+                        theme: theme,
+                        cover: savedCover,
+                        isPublic: savedIsPublic,
+                        pages: pages
+                    });
+                } catch (error) {
+                    console.error(`Error fetching fairytale data: ${error}`);
+                }
+            } else {
+                reset({
+                    title: title,
+                    theme: theme,
+                    cover: null,
+                    isPublic: isPublic,
+                    pages: storys.map((story) => ({ image: null, story }))
+                });
+            }
+        };
+        fairytaleData();
     }, [title, theme, storys, isPublic, reset]);
 
     // 현재 페이지랑 커버 볼수 있게

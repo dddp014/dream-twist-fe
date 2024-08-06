@@ -6,20 +6,29 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.08.03  임도헌   Created
+2024.08.05  임도헌   Modified  ai이미지는 url이고 파일인 경우에만 s3 요청하는 코드로 변경
+2024.08.07  임도헌   Modified  localstorage 폼 제출 시 삭제하는 코드 적용
+2024.08.07  임도헌   Modified  fairytaleId가 있으면 수정으로 아니라면 생성할 수 있게 코드 예외처리
+2024.08.07  임도헌   Modified  커버가 ai로 생성했을 경우 url 이기 때문에 예외처리 적용
 */
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useBookForm } from '@/hooks/useBookForm';
 import {
     fetchPresignedURL,
     submitBookForm,
+    updateBookForm,
     uploadFileToS3
 } from '@/api/BookApi';
 import { useBookModal } from './useModal';
+import { removeFromLocalStorage } from '@/utils/localStorage';
 
 export type CreationMethod = 'default' | 'upload' | 'ai' | 'palette';
 
-export const useBook = () => {
+export const useBook = (fairytaleId?: number) => {
+    // 페이지 이동(메인페이지)
+    const router = useRouter();
     // 임시 유저아이디 1
     const userId: number = 1;
     // 임시 작가 이름
@@ -37,7 +46,7 @@ export const useBook = () => {
         cover,
         title,
         theme
-    } = useBookForm();
+    } = useBookForm(fairytaleId);
 
     // 현재 페이지 상태
     const [currentPage, setCurrentPage] = useState<number>(0);
@@ -98,15 +107,17 @@ export const useBook = () => {
         });
         // 커버 이미지 AWS S3로 보내서 url로 변환
         let coverUrl = null;
-        if (data.cover) {
+        if (data.cover && typeof data.cover !== 'string') {
             coverUrl = await UploadImageToS3(data.cover, 0);
+        } else {
+            coverUrl = data.cover;
         }
-        //
+        // 파일이면 파일형식으로 아니면 그대로 리턴
         const imageUploadPromises = Object.keys(images).map((key, index) => {
-            if (images[key]) {
-                return UploadImageToS3(images[key], index);
+            if (images[key] && typeof images[key] !== 'string') {
+                return UploadImageToS3(images[key] as File, index);
             } else {
-                return Promise.resolve(null);
+                return Promise.resolve(images[key]);
             }
         });
 
@@ -132,9 +143,19 @@ export const useBook = () => {
         formdata.append('images', JSON.stringify(imageUrlsObject));
 
         try {
-            const result = await submitBookForm(formdata);
-            console.log(result);
-            alert('동화가 성공적으로 저장되었습니다.');
+            if (fairytaleId) {
+                await updateBookForm(formdata, fairytaleId);
+                alert('동화가 성공적으로 수정되었습니다.');
+            } else {
+                await submitBookForm(formdata);
+                alert('동화가 성공적으로 저장되었습니다.');
+            }
+            // 동화 생성 후 로컬스토리지 값 삭제
+            removeFromLocalStorage('title');
+            removeFromLocalStorage('theme');
+            removeFromLocalStorage('storys');
+            removeFromLocalStorage('isPublic');
+            router.push('/');
         } catch (error) {
             console.error('Error:', error);
         }
@@ -154,12 +175,12 @@ export const useBook = () => {
     };
 
     // 이미지 선택 시 표지면 커버로 아니라면 그 페이지에 이미지파일 세팅
-    const handleImageSelect = (file: File) => {
+    const handleImageSelect = (fileOrUrl: File | string) => {
         if (currentPage === 0) {
-            setValue('cover', file);
+            setValue('cover', fileOrUrl);
         } else {
             const updatedPages = [...pages];
-            updatedPages[currentPage - 1].image = file;
+            updatedPages[currentPage - 1].image = fileOrUrl;
             setValue('pages', updatedPages);
         }
         setImageModalOpen(false);
