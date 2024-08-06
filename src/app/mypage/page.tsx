@@ -31,21 +31,25 @@ export default async function Mypage() {
         return { ...item };
     });
 
-    const payData = await getMyPayList('2');
+    let payData = [];
 
-    // const payInfo = payData
-    //     ? payData.map(
-    //           ({ id, amount, method, order_name, isRefundable }: payInfo) => ({
-    //               id,
-    //               amount,
-    //               method,
-    //               order_name,
-    //               isRefundable
-    //           })
-    //       )
-    //     : [];
+    try {
+        payData = await getMyPayList('2');
+    } catch (error) {
+        console.error(error);
+    }
 
-    // console.log(payData);
+    const payInfo = payData.map(
+        ({ id, amount, method, order_name, isRefundable }: payInfo) => ({
+            id,
+            amount,
+            method,
+            order_name,
+            isRefundable
+        })
+    );
+
+    console.log(payData);
 
     return (
         <div className="flex flex-col justify-center items-center mx-24 mt-16 mb-7">
@@ -131,7 +135,7 @@ export default async function Mypage() {
                         <p className="text-[1.3rem] font-semibold mt-16">
                             나의 결제 내역
                         </p>
-                        {/* <MyPayList payInfo={payInfo} /> */}
+                        <MyPayList payInfo={payInfo} />
                     </div>
                 </div>
             </div>

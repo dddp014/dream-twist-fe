@@ -18,17 +18,21 @@ import { FairytaleInfo } from '@/types/fairytale';
 import { getBookList } from '@/api/MainApi';
 
 export default async function Home() {
-    const data = await getBookList();
+    let data = [];
 
-    const fairytaleInfo = data
-        ? data.map((item: FairytaleInfo) => {
-              const date = item.createdAt.split('T')[0];
-              return {
-                  ...item,
-                  createdAt: date
-              };
-          })
-        : [];
+    try {
+        data = await getBookList();
+    } catch (error) {
+        console.error(error);
+    }
+
+    const fairytaleInfo = data.map((item: FairytaleInfo) => {
+        const date = item.createdAt.split('T')[0];
+        return {
+            ...item,
+            createdAt: date
+        };
+    });
 
     // console.log(data);
 

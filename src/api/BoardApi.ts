@@ -11,27 +11,23 @@ Date        Author   Status    Description
 const API_BASE_URL = 'http://localhost:4000/fairytale';
 
 export const getBookDetail = async (fairytaleId: string) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/${fairytaleId}`, {
-            cache: 'no-store'
-        });
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('error:', error);
-        return error;
+    const response = await fetch(`${API_BASE_URL}/${fairytaleId}`, {
+        cache: 'no-store'
+    });
+
+    if (!response.ok) {
+        throw new Error('동화 세부 정보 조회 실패');
     }
+
+    return response.json();
 };
 
 export const deleteBook = async (fairytaleId: string) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/${fairytaleId}`, {
-            method: 'DELETE'
-        });
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('error:', error);
-        return error;
+    const response = await fetch(`${API_BASE_URL}/${fairytaleId}`, {
+        method: 'DELETE'
+    });
+
+    if (!response.ok) {
+        throw new Error('동화 삭제 실패');
     }
 };

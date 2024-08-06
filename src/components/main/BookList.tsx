@@ -48,38 +48,44 @@ const BookList = ({ fairytaleInfo }: BookListProps) => {
     return (
         <div className="flex flex-col justify-between">
             <div className="grid sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-8 gap-y-9 my-10 z-0">
-                {items.map((item) => (
-                    <button
-                        key={item.fairytaleId}
-                        onClick={() =>
-                            router.push(`/board/${item.fairytaleId}`)
-                        }
-                        className="relative max-w-[18rem] w-full aspect-[4/5] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
-                    >
-                        <div
-                            className="absolute top-0 w-full h-full overflow-hidden"
-                            style={{
-                                backgroundImage: `url(${item.coverImage})`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'top',
-                                height: '78%'
-                            }}
-                        />
-                        <div className="absolute bg-white bottom-0 w-full text-left py-3 pl-4">
-                            <p className="text-[1.15rem] font-semibold ">
-                                {item.title}
-                            </p>
-                            <div className="flex justify-between items-center">
-                                <p className="text-[1rem] flex-grow truncate pr-4">
-                                    {item.nickname} 작가
+                {items.length > 0 ? (
+                    items.map((item) => (
+                        <button
+                            key={item.fairytaleId}
+                            onClick={() =>
+                                router.push(`/board/${item.fairytaleId}`)
+                            }
+                            className="relative max-w-[18rem] w-full aspect-[4/5] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
+                        >
+                            <div
+                                className="absolute top-0 w-full h-full overflow-hidden"
+                                style={{
+                                    backgroundImage: `url(${item.coverImage})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'top',
+                                    height: '78%'
+                                }}
+                            />
+                            <div className="absolute bg-white bottom-0 w-full text-left py-3 pl-4">
+                                <p className="text-[1.15rem] font-semibold ">
+                                    {item.title}
                                 </p>
-                                <p className="text-[0.8rem] text-gray-400 mr-4 -mb-0.5 whitespace-nowrap">
-                                    {item.createdAt}
-                                </p>
+                                <div className="flex justify-between items-center">
+                                    <p className="text-[1rem] flex-grow truncate pr-4">
+                                        {item.nickname} 작가
+                                    </p>
+                                    <p className="text-[0.8rem] text-gray-400 mr-4 -mb-0.5 whitespace-nowrap">
+                                        {item.createdAt}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    </button>
-                ))}
+                        </button>
+                    ))
+                ) : (
+                    <p className="text-center text-gray-500">
+                        등록된 동화가 없습니다.
+                    </p>
+                )}
             </div>
             {!isPageEnd && <div ref={ref} />}
         </div>

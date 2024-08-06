@@ -11,14 +11,13 @@ Date        Author   Status    Description
 const API_BASE_URL = 'http://localhost:4000';
 
 export const getMyPayList = async (userId: string) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/billing/${userId}`, {
-            cache: 'no-store'
-        });
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('error:', error);
-        return error;
+    const response = await fetch(`${API_BASE_URL}/billing/${userId}`, {
+        cache: 'no-store'
+    });
+
+    if (!response.ok) {
+        throw new Error('나의 결제 내역 조회 실패');
     }
+
+    return response.json();
 };
