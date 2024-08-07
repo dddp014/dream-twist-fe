@@ -6,22 +6,57 @@ Author : 나경윤
 History
 Date        Author   Status    Description
 2024.08.05  나경윤    Created
+2024.08.08  김민규    Created   환불 요청 폼 
 */
 
+'use client';
+
 import { payInfo } from '@/types/mypage';
+import { useState } from 'react';
+import Modal from '@/components/mypage/Modal';
+import RefundForm from '@/components/mypage/RefundForm';
 
 interface MyPayProps {
     payInfo: payInfo[];
 }
 
 export default function MyPayList({ payInfo }: MyPayProps) {
+    const [showForm, setShowForm] = useState<string | null>(null);
+
+    const handleRefund = async (paymentId: string, cancelReason: string) => {
+        console.log(`환불 상품 ID: ${paymentId} 환불 사유 : ${cancelReason}`);
+        try {
+            const response = await fetch(
+                'http://localhost:4000/billing/cancel',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: paymentId,
+                        cancelReason
+                    })
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('서버 응답 오류');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('환불 요청 실패:', error);
+            throw error;
+        }
+    };
     return (
         <div className="flex flex-col justify-start w-full mt-8 h-72 ">
             <div className="overflow-y-auto thin-scrollbar">
                 {payInfo.length > 0 ? (
                     payInfo.map((item, index) => (
                         <div key={item.id}>
-                            <div className="flex flex-row justify-between">
+                            <div className="flex flex-row justify-between mb-4">
                                 <div className="flex flex-col">
                                     <div className="flex flex-row items-center">
                                         <p className="text-[1.1rem] font-medium text-main">
@@ -50,19 +85,45 @@ export default function MyPayList({ payInfo }: MyPayProps) {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex flex-col text-right mr-6">
-                                    <p className="text-[0.9rem] text-gray-400">
-                                        {item.createdAt}
-                                    </p>
-                                    <p
-                                        className={`text-[0.9rem] ${item.isRefundable === 'T' ? 'text-blue-500' : 'text-red-500'}`}
-                                    >
-                                        {item.isRefundable === 'T'
-                                            ? '환불 가능'
-                                            : '환불 불가'}
-                                    </p>
+                                <div className="flex flex-col">
+                                    <div className="flex flex-low text-right mr-6">
+                                        <p className="text-[0.9rem] text-gray-400 mr-2">
+                                            {item.createdAt}
+                                        </p>
+                                        <p
+                                            className={`text-[0.9rem] ${item.isRefundable === 'T' ? 'text-blue-500' : 'text-red-500'}`}
+                                        >
+                                            {item.isRefundable === 'T'
+                                                ? '환불 가능'
+                                                : '환불 불가'}
+                                        </p>
+                                    </div>
+                                    <div className="flex justify-end mr-5">
+                                        {item.isRefundable === 'T' && (
+                                            <button
+                                                onClick={() =>
+                                                    setShowForm(item.id)
+                                                }
+                                                className="btn btn-primary mt-2 px-1 rounded border border-gray-400 text-[0.85rem]"
+                                            >
+                                                환불 요청
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
+                            <Modal
+                                isOpen={showForm !== null}
+                                onClose={() => setShowForm(null)}
+                            >
+                                {showForm === item.id && (
+                                    <RefundForm
+                                        Id={item.id}
+                                        onSubmit={handleRefund}
+                                        onCancel={() => setShowForm(null)}
+                                    />
+                                )}
+                            </Modal>
                             {index < payInfo.length - 1 && (
                                 <hr className="border-[0.5px] border-gray-200 w-full my-4" />
                             )}
