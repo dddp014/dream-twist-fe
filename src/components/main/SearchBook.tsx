@@ -64,6 +64,7 @@ export default function SearchBook() {
 
         if (label === '모든 주제') {
             setSearchResults(initData);
+            console.log(initData);
             return;
         }
 

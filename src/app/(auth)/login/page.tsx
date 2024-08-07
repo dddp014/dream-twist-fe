@@ -8,11 +8,10 @@ Date        Author   Status    Description
 2024.07.26  나경윤    Created
 */
 
-import GoogleLoginButton from '@/components/common/GoogleLoginButton';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import GoogleLogin from '@/components/auth/GoogleLogin';
+import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
 
 export const metadata: Metadata = {
     title: '꿈틀 로그인',

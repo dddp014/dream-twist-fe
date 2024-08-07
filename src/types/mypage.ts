@@ -20,7 +20,8 @@ export interface payInfo {
     id: string;
     amount: string;
     method: string;
-    order_name: string;
+    status: string;
+    description: string;
     isRefundable: string;
     createdAt: string;
 }

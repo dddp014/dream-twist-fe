@@ -18,6 +18,8 @@ import { sampleImages } from '@/utils/dummyBooks';
 import { dummyMyComments } from '@/utils/dummyBooks';
 import { payInfo } from '@/types/mypage';
 import MyPayList from '@/components/mypage/MyPayList';
+import { getMyPoint } from '@/api/MypageApi';
+import MyInfoList from '@/components/mypage/MyInfoList';
 
 export const metadata: Metadata = {
     title: '꿈틀 마이페이지',
@@ -58,26 +60,7 @@ export default async function Mypage() {
                         height={0}
                     />
                     <div className="flex flex-col mx-12 mt-1">
-                        <p className="text-[1.7rem] font-semibold">
-                            안녕하세요, <span className="text-main">민규</span>{' '}
-                            작가님!
-                        </p>
-                        <div className="flex flex-row space-x-7 justify-center items-center mt-5">
-                            <div className="flex flex-col justify-center items-center text-lg">
-                                <p className="font-medium">내 동화</p>
-                                <p className="text-main font-semibold">3권</p>
-                            </div>
-                            <div className="w-px h-14 bg-gray-300" />
-                            <div className="flex flex-col justify-center items-center text-lg">
-                                <p className="font-medium">받은 좋아요</p>
-                                <p className="text-main font-semibold">356</p>
-                            </div>
-                            <div className="w-px h-14 bg-gray-300" />
-                            <div className="flex flex-col justify-center items-center text-lg">
-                                <p className="font-medium">포인트</p>
-                                <p className="text-main font-semibold">500</p>
-                            </div>
-                        </div>
+                        <MyInfoList />
                     </div>
                 </div>
                 <div className="flex flex-row text-lg justify-center items-center ml-28 mt-16">

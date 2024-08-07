@@ -23,15 +23,32 @@ export default function MyPayList({ payInfo }: MyPayProps) {
                         <div key={item.id}>
                             <div className="flex flex-row justify-between">
                                 <div className="flex flex-col">
-                                    <p className="text-[1rem]">
-                                        결제 상품 : {item.order_name}
-                                    </p>
-                                    <p className="text-[1rem]">
-                                        결제 금액 : {item.amount}원
-                                        <span className="ml-2">
-                                            (결제 수단 - {item.method})
-                                        </span>
-                                    </p>
+                                    <div className="flex flex-row items-center">
+                                        <p className="text-[1.1rem] font-medium text-main">
+                                            {item.description}
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-row items-center text-[1.05rem] mt-0.5">
+                                        <p className="">
+                                            결제 금액 : {item.amount}원
+                                        </p>
+                                        <div className="flex flex-row items-center text-[0.9rem]">
+                                            <span className="ml-2">
+                                                ({item.method}
+                                            </span>
+                                            <span className="ml-1 ">
+                                                <span> - </span>
+                                                <span
+                                                    className={`${item.status === 'DONE' ? 'text-blue-500' : 'text-red-500'}`}
+                                                >
+                                                    {item.status === 'DONE'
+                                                        ? '승인'
+                                                        : '취소'}
+                                                </span>
+                                                <span>)</span>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="flex flex-col text-right mr-6">
                                     <p className="text-[0.9rem] text-gray-400">

@@ -12,7 +12,7 @@ const API_BASE_URL = 'http://localhost:4000/fairytale';
 
 export const getBookList = async () => {
     const response = await fetch(`${API_BASE_URL}`, {
-        cache: 'no-store'
+        cache: 'reload'
     });
 
     if (!response.ok) {
@@ -24,7 +24,7 @@ export const getBookList = async () => {
 
 export const getSearchBook = async (value: string) => {
     const response = await fetch(`${API_BASE_URL}/byTitle/${value}`, {
-        cache: 'no-store'
+        cache: 'reload'
     });
 
     if (!response.ok) {

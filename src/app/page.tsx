@@ -14,33 +14,16 @@ import BookList from '@/components/main/BookList';
 import ScrollUpButton from '@/components/main/ScrollUpButton';
 import { FairytaleInfo } from '@/types/fairytale';
 import { getBookList } from '@/api/MainApi';
+import GetToken from '@/components/auth/GetToken';
 
-export default async function Home() {
-    let data = [];
-
-    try {
-        data = await getBookList();
-    } catch (error) {
-        console.error(error);
-    }
-
-    const fairytaleInfo = data.map((item: FairytaleInfo) => {
-        const date = item.createdAt.split('T')[0];
-        return {
-            ...item,
-            createdAt: date
-        };
-    });
-
-    // console.log(data);
-
+export default function Home() {
     return (
         <main className="flex flex-col justify-center items-center mx-24 mt-16">
-            <div className="bg-main-100 h-80 w-full mb-16 rounded-xl"> </div>
+            <GetToken />
+            <div className="bg-main-100 h-80 w-full mb-16 rounded-xl"/>
             <div className="flex flex-col justify-center items-center w-full">
                 <SearchBook />
             </div>
-
             <ScrollUpButton />
         </main>
     );

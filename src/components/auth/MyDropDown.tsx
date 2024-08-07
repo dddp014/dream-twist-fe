@@ -6,18 +6,27 @@ Author : 나경윤
 History
 Date        Author   Status    Description
 2024.08.06  나경윤    Created
+2024.08.07  나경윤    Modified   로그아웃 연결
 */
 
-import { useDropdown } from '@/hooks/useDropdown';
+'use client';
+
+import { postLogout } from '@/api/AuthApi';
 
 const options = ['마이페이지', '로그아웃'];
 
 export default function MyDropdown() {
-    const { isDropDown, dropdownRef, handleDropdown } = useDropdown();
-
-    const handleOptionClick = (index: number) => {
+    const handleOptionClick = async (index: number) => {
         if (index === 0) {
             window.location.href = '/mypage';
+        }
+        if (index === 1) {
+            try {
+                await postLogout();
+                window.location.href = '/';
+            } catch (error) {
+                console.error(error);
+            }
         }
     };
 

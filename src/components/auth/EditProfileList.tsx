@@ -15,7 +15,8 @@ import Image from 'next/image';
 
 export default function EditProfileList() {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const [profileImg, setProfileImg] = useState('/images/sample2.svg');
+    const [profileImg, setProfileImg] = useState<string>('/images/sample2.svg');
+    const [Imgfile, setImgFile] = useState<File>();
     const [nickname, setNickname] = useState('경윤');
 
     const handleImgEditClick = () => {
@@ -25,16 +26,12 @@ export default function EditProfileList() {
     };
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-
+        if (!e.target.files) return;
+        const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const imgUrl = reader.result as string;
-                setProfileImg(imgUrl);
-            };
-
-            reader.readAsDataURL(file);
+            let image = window.URL.createObjectURL(file);
+            setProfileImg(image);
+            setImgFile(file);
         }
     };
 

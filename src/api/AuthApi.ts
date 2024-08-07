@@ -10,13 +10,24 @@ Date        Author   Status    Description
 
 const API_BASE_URL = 'http://localhost:4000';
 
-export const getLogin = async () => {
-    const response = await fetch(`${API_BASE_URL}/auth/google/login`, {
-        cache: 'no-store'
-    });
+export const postLogout = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        }
+    };
+
+    const response = await fetch(`${API_BASE_URL}/users/logout`, options);
+
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
 
     if (!response.ok) {
-        throw new Error('로그인 실패');
+        throw new Error('로그아웃 실패');
     }
 
     return response.json();

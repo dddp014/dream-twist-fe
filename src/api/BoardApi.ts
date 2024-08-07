@@ -12,7 +12,7 @@ const API_BASE_URL = 'http://localhost:4000/fairytale';
 
 export const getBookDetail = async (fairytaleId: string) => {
     const response = await fetch(`${API_BASE_URL}/${fairytaleId}`, {
-        cache: 'no-store'
+        cache: 'reload'
     });
 
     if (!response.ok) {
