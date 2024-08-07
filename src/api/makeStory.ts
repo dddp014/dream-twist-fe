@@ -14,6 +14,8 @@ export interface StoryResponse {
     title: string;
     theme: string;
     story: string[];
+    theme: string;
+    title: string;
 }
 
 export const generatePlot = async (

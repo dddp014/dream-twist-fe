@@ -11,7 +11,6 @@ Date        Author   Status    Description
 2024.08.06  임도헌   Modified   useFairytailInfo로 storys 가져오는 코드로 변경
 
 **/
-
 'use client';
 
 import { useFairytailInfo } from '@/hooks/useFairytailInfo';
@@ -23,27 +22,27 @@ const MakestoryAiPage: React.FC = () => {
 
     return (
         <div
-            className="min-h-screen flex items-center justify-center bg-cover bg-center"
+            className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
             style={{
                 backgroundImage: 'url("/images/storybg.png")',
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat'
             }}
         >
-            <div className="container mx-auto py-8">
-                <h1 className="text-2xl font-bold text-center mb-4">
+            <div className="container mx-auto py-8 ">
+                <h1 className="text-2xl font-bold mb-4 text-center">
                     줄거리를 토대로 6p 플롯을 생성했어요.
                 </h1>
-                <p className="text-center mb-8">
+                <p className="text-l mb-10 text-center">
                     동화책 각 페이지에 들어갈 이야기를 수정할 수 있어요.
                 </p>
                 <div className="flex overflow-x-auto w-full space-x-4">
                     {storys.map((story: string, index: number) => (
                         <div
                             key={index}
-                            className={`flex-shrink-0 w-full max-w-xs bg-white p-6 rounded-lg shadow-md`}
+                            className="flex-shrink-0 w-full max-w-xs bg-white p-6 rounded-lg shadow-md text-center"
                         >
-                            <h2 className="text-xl font-bold mb-2 text-center">
+                            <h2 className="text-xl font-bold mb-2">
                                 {index + 1}
                             </h2>
                             <p className="text-center">{story}</p>

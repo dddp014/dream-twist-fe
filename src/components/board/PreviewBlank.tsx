@@ -6,11 +6,12 @@ Author : 나경윤
 History
 Date        Author   Status    Description
 2024.07.19  나경윤    Created
+2024.08.04  나경윤    Modified  동화 내용 api 연결
 */
 
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import useTextToImage from '@/hooks/useTextToImage';
 
 interface PreviewProps {
@@ -18,6 +19,7 @@ interface PreviewProps {
     getTextForStep: (step: number) => string;
     getCurrentImage: (step: number) => [string, string];
     handlePreview: (index: number) => void;
+    info: string[];
 }
 
 const pageCount: number = 8;
@@ -26,7 +28,8 @@ export default function PreviewBlank({
     step,
     getTextForStep,
     getCurrentImage,
-    handlePreview
+    handlePreview,
+    info
 }: PreviewProps) {
     const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
@@ -57,10 +60,14 @@ export default function PreviewBlank({
             const canvasRef = useTextToImage(text);
             const label = createPreviewLabel(index);
 
-            const view =
-                index === 0 || index === pageCount - 1 ? 'hidden' : 'display';
-            const width =
-                index === 0 || index === pageCount - 1 ? 'w-32' : 'w-64';
+            const [view, width] = useMemo(
+                () =>
+                    index === 0 || index === pageCount - 1
+                        ? ['hidden', 'w-32']
+                        : ['display', 'w-64'],
+                [index]
+            );
+
             const selectedStyle = isSelected
                 ? 'outline outline-emerald-400 outline-4'
                 : '';
@@ -70,7 +77,7 @@ export default function PreviewBlank({
                     <div>
                         <button
                             type="button"
-                            className={`hover:outline hover:outline-emerald-400 hover:outline-4 ${selectedStyle}`}
+                            className={`shadow-lg shadow-gray-200 hover:outline hover:outline-emerald-400 hover:outline-4 ${selectedStyle}`}
                             onClick={() => {
                                 handlePreview(index);
                                 handleButtonClick(index);
@@ -81,15 +88,26 @@ export default function PreviewBlank({
                         >
                             <div
                                 key={index}
-                                className={`flex flex-row ${width} h-32`}
+                                className={`flex flex-row ${width} h-32 overflow-hidden`}
                             >
                                 <div
-                                    className={`border-solid border border-gray-200 shadow-md w-32 h-full shadow-neutral-100 mb-3 bg-center bg-no-repeat bg-cover`}
+                                    className={`relative border-solid border border-gray-200 shadow-md w-32 h-full shadow-neutral-100 mb-3 bg-center bg-no-repeat bg-cover`}
                                     style={{
                                         backgroundImage: backgroundImage,
                                         backgroundSize: backgroundSize
                                     }}
-                                ></div>
+                                >
+                                    <div
+                                        className={`${index === 0 ? 'display' : 'hidden'} select-none absolute bottom-0 flex flex-col justify-center items-center bg-white w-full h-[2rem]`}
+                                    >
+                                        <p className="text-[0.4rem] text-slate-800 font-LaundryGothic">
+                                            {info[0]}
+                                        </p>
+                                        <p className="font-Hyemin text-slate-800 text-[0.3rem]">
+                                            {info[1]} 작가
+                                        </p>
+                                    </div>
+                                </div>
 
                                 <div
                                     className={`${view} border-solid border border-gray-200 shadow-md shadow-neutral-100 w-32 h-full pt-6 px-5`}
