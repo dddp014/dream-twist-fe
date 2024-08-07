@@ -1,5 +1,5 @@
 /**
-File Name : compoenents/book-preview/ImageModal
+File Name : compoenents/final-edit/ImageModal
 Description : 이미지 첨부 모달
 Author : 임도헌
 
@@ -11,6 +11,7 @@ Date        Author   Status    Description
 2024.07.31  임도헌   Modified   쓸데 없는 코드 전부 삭제 및 portal 수정 및 react-hook-form으로 코드 변경
 2024.08.02  임도헌   Modified   creationWays 코드 추가 및 File 형태 폼제출 할 수 있도록 수정
 2024.08.03  임도헌   Modified    코드 분리
+2024.08.05  임도헌   Modified   커버 생성때 사용할 수 있는 동화 제목 추가
 */
 
 import React from 'react';
@@ -23,14 +24,16 @@ import { useBookModal } from '@/hooks/useModal';
 import { CreationMethod } from '@/hooks/useBook';
 
 interface ImageModalProps {
+    title: string;
     currentPage: number;
     updateCreationWay: (index: number, method: CreationMethod) => void;
     onClose: () => void;
-    onImageSelect: (file: File) => void;
+    onImageSelect: (fileOrUrl: File | string) => void;
     initialText: string;
 }
 
 export default function ImageModal({
+    title,
     currentPage,
     updateCreationWay,
     onClose,
@@ -60,8 +63,8 @@ export default function ImageModal({
         onClose();
     };
 
-    const handleAiUpload = (image: File) => {
-        onImageSelect(image);
+    const handleAiUpload = (imageUrl: string) => {
+        onImageSelect(imageUrl);
         updateCreationWay(currentPage, 'ai');
         setAiModalOpen(false);
         onClose();
@@ -144,6 +147,8 @@ export default function ImageModal({
                         <AiModal
                             onClose={() => setAiModalOpen(false)}
                             handleAiUpload={handleAiUpload}
+                            currentPage={currentPage}
+                            title={title}
                             initialText={initialText}
                         />
                     )}

@@ -1,11 +1,14 @@
 /**
-File Name : hooks/BookApi
+File Name : api/BookApi
 Description : Book 컴포넌트 api 모음
 Author : 임도헌
 
 History
 Date        Author   Status    Description
 2024.08.03  임도헌   Created
+2024.08.07  임도헌   Modified   updateBookForm 추가
+2024.08.07  임도헌   Modified   fetchAiImage 추가
+2024.08.07  임도헌   Modified   금지어 json으로 반환
 */
 
 const API_BASE_URL = 'http://localhost:4000/fairytale';
@@ -48,7 +51,41 @@ export const submitBookForm = async (formdata: FormData) => {
     });
 
     if (!response.ok) {
-        throw new Error('동화 제출 실패');
+        return response.json();
+    }
+
+    return response.text();
+};
+
+export const updateBookForm = async (
+    formdata: FormData,
+    fairytailId: number
+) => {
+    const response = await fetch(`${API_BASE_URL}/${fairytailId}`, {
+        method: 'PUT',
+        body: formdata,
+        credentials: 'include'
+    });
+
+    if (!response.ok) {
+        return response.json();
+    }
+
+    return response.text();
+};
+
+export const fetchAiImage = async (prompt: string): Promise<string> => {
+    const response = await fetch(`http://localhost:4000/ai-fairytale/image`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt: prompt }),
+        credentials: 'include'
+    });
+
+    if (!response.ok) {
+        throw new Error('AI 요청 실패');
     }
 
     return response.text();
