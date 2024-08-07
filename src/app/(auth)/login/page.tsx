@@ -8,6 +8,7 @@ Date        Author   Status    Description
 2024.07.26  나경윤    Created
 */
 
+import GoogleLoginButton from '@/components/common/GoogleLoginButton';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -37,7 +38,7 @@ export default function Login() {
                 <p className="text-2xl text-main font-semibold my-10">
                     환영합니다!
                 </p>
-                <GoogleLogin />
+                <GoogleLoginButton />
                 <div className="absolute bottom-0 w-full bg-main-100 h-12"></div>
             </div>
         </div>
