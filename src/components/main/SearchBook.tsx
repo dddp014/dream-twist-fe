@@ -60,7 +60,49 @@ export default function SearchBook() {
         fetchData();
     }, []);
 
+    const handleTagClick = async (label: string) => {
+        setSelectedTag(label);
+        setSearchStatus(true);
+
+        if (label === '모든 주제') {
+            // setSearchStatus(false);
+            setSearchResults(initData);
+            return;
+        }
+
+        let query = `?tags=${label}`;
+
+        if (debouncedInputValue) {
+            query += `&title=${debouncedInputValue}`;
+        }
+
+        try {
+            const result = await getSearchBook(query);
+            const fairytaleInfo = result.map((item: FairytaleInfo) => {
+                const date = item.createdAt.split('T')[0];
+                return {
+                    ...item,
+                    createdAt: date
+                };
+            });
+            setSearchResults(fairytaleInfo);
+        } catch (error) {
+            console.error(error);
+            setSearchResults([]);
+        }
+    };
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchInputValue(event.target.value);
+    };
+
     useEffect(() => {
+        if (debouncedInputValue === '' && selectedTag === '모든 주제') {
+            setSearchResults(initData);
+            setSearchStatus(false);
+            return;
+        }
+
         const fetchResults = async () => {
             let query = '';
             if (debouncedInputValue && selectedTag === '모든 주제') {
@@ -72,11 +114,13 @@ export default function SearchBook() {
                 setSearchStatus(true);
             }
 
-            if (!debouncedInputValue && selectedTag === '모든 주제') {
-                setSearchStatus(false);
+            if (debouncedInputValue === '' && selectedTag !== '모든 주제') {
+                query = `?tags=${selectedTag}`;
+                console.log('??', query);
             }
 
             try {
+                console.log('검색 쿼리', query);
                 const result = await getSearchBook(query);
                 const formattedResult = result.map((item: FairytaleInfo) => ({
                     ...item,
@@ -90,42 +134,8 @@ export default function SearchBook() {
         };
 
         fetchResults();
+        // handleTagClick(selectedTag);
     }, [debouncedInputValue, selectedTag]);
-
-    const handleTagClick = async (label: string) => {
-        setSelectedTag(label);
-        setSearchStatus(true);
-
-        let query = '';
-        if (debouncedInputValue) {
-            query =
-                selectedTag === '모든 주제'
-                    ? `?title=${debouncedInputValue}`
-                    : `?tags=${selectedTag}&title=${debouncedInputValue}`;
-        } else if (selectedTag !== '모든 주제') {
-            query = `?tags=${selectedTag}`;
-        }
-        console.log('검색어', debouncedInputValue);
-        try {
-            const result = await getSearchBook(query);
-            const fairytaleInfo = result.map((item: FairytaleInfo) => {
-                const date = item.createdAt.split('T')[0];
-                return {
-                    ...item,
-                    createdAt: date
-                };
-            });
-            setSearchResults(fairytaleInfo);
-            console.log('결과', fairytaleInfo);
-        } catch (error) {
-            console.error(error);
-            // setSearchResults([]);
-        }
-    };
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchInputValue(event.target.value);
-    };
 
     return (
         <>
@@ -170,16 +180,14 @@ export default function SearchBook() {
                     <div className="w-full flex justify-center items-center my-24">
                         <LoadingIcon />
                     </div>
-                ) : initData.length === 0 ? (
+                ) : searchResults.length === 0 ? (
                     <div className="flex flex-col justify-center items-center my-36">
                         <p className="text-center text-gray-500">
                             등록된 동화가 없습니다.
                         </p>
                     </div>
-                ) : searchStatus ? (
-                    <BookList fairytaleInfo={searchResults} />
                 ) : (
-                    <BookList fairytaleInfo={initData} />
+                    <BookList fairytaleInfo={searchResults} />
                 )}
             </div>
         </>
