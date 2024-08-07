@@ -28,6 +28,7 @@ import { DropIcon } from '../icons/DropIcon';
 import { themes } from '@/hooks/useFairytailForm';
 import { useBook } from '@/hooks/useBook';
 import { useBookModal } from '@/hooks/useModal';
+import usePageLeaveCheck from '@/hooks/usePageLeaveCheck';
 
 interface FairytailFormProps {
     fairytaleId?: number;
@@ -43,13 +44,14 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
         title,
         theme,
         currentPage,
-        author,
+        nickname,
         handlePrevPage,
         handleNextPage,
         handleImageSelect,
         handleStoryChange,
         updateCreationWay,
-        onSubmit
+        onSubmit,
+        handleBackButtonClick
     } = useBook(fairytaleId);
 
     const {
@@ -58,6 +60,9 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
         setImageModalOpen,
         setStoryModalOpen
     } = useBookModal();
+
+    //페이지 나갈때 체크
+    usePageLeaveCheck();
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -79,7 +84,7 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
                             </option>
                         ))}
                     </select>
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-center">
                         <div className="w-[120px]">
                             <Controller
                                 name="isPublic"
@@ -92,9 +97,15 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
                                 )}
                             />
                         </div>
+                        <div
+                            onClick={handleBackButtonClick}
+                            className="flex justify-center items-center ml-2 w-[80px] h-[36px] text-base bg-main rounded-md font-bold text-white hover:bg-green-600"
+                        >
+                            뒤로가기
+                        </div>
                         <button
                             type="submit"
-                            className="ml-0 w-[60px] h-[36px] text-base bg-main rounded-md font-bold text-white hover:bg-green-600"
+                            className="ml-2 w-[60px] h-[36px] text-base bg-main rounded-md font-bold text-white hover:bg-green-600"
                         >
                             저장
                         </button>
@@ -220,7 +231,7 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
                     {/* 책의 제목과 지은이 꿈틀 로고 들어감 */}
                     <div className="w-[60px] h-[600px] border-2 flex flex-col justify-between items-center">
                         <p className="texto mt-10 text-xl">{title}</p>
-                        <p className="texto text-lg">{author} 지음</p>
+                        <p className="texto text-lg">{nickname} 지음</p>
                         <Image
                             src={'/images/logo.svg'}
                             alt="logo"
@@ -278,7 +289,7 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
                                 <p className="text-3xl font-bold mt-2">
                                     {title}
                                 </p>
-                                <p className="text-sm mt-4">{author} 지음</p>
+                                <p className="text-sm mt-4">{nickname} 지음</p>
                             </div>
                         ) : (
                             <button

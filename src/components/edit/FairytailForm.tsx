@@ -15,6 +15,7 @@ Date        Author   Status    Description
 2024.07.31  임도헌   Modified  jotai 제거 및 localStorage 사용하는 코드로 변경
 2024.08.03  임도헌   Modified  훅 분리
 2024.08.07  임도헌   Modified  loading 페이지 추가
+2024.08.07  임도헌   Modified  유저가 페이지 새로고침이나 나갈려 할때 usePageLeaveCheck 추가
 */
 
 'use client';
@@ -25,12 +26,15 @@ import { Controller } from 'react-hook-form';
 import { DropIcon } from '../icons/DropIcon';
 import useFairytailForm, { themes } from '@/hooks/useFairytailForm';
 import Loading from '../common/Loading';
+import usePageLeaveCheck from '@/hooks/usePageLeaveCheck';
 
 interface FairytailFormProps {
     fairytaleId?: number;
 }
 
 export default function FairytailForm({ fairytaleId }: FairytailFormProps) {
+    //페이지 나갈때 체크
+    usePageLeaveCheck();
     const {
         register,
         handleSubmit,

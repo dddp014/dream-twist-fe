@@ -8,11 +8,12 @@ Date        Author   Status    Description
 2024.08.03  임도헌   Created
 2024.08.07  임도헌   Modified  fairytaleId props 추가
 2024.08.07  임도헌   Modified  fairytaleId가 있다면 데이터 불러와서 폼에 적용
+2024.08.07  임도헌   Modified  유저 닉네임 추가(작가 명)
 */
 
 import { useForm } from 'react-hook-form';
 import { useFairytailInfo } from './useFairytailInfo';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type PageData = {
     image: File | string | null;
@@ -28,6 +29,9 @@ type FormData = {
 };
 
 export const useBookForm = (fairytaleId?: number) => {
+    // 유저 닉네임 불러오기
+    const [nickname, setNickname] = useState<string>('');
+
     // 로컬 스토리지 데이터 불러오기
     const { title, theme, storys, isPublic } = useFairytailInfo();
     // useForm 사용해서 값 세팅한다.
@@ -57,6 +61,7 @@ export const useBookForm = (fairytaleId?: number) => {
                     const savedImages = data[0].images;
                     const savedStorys = storys;
                     const savedIsPublic = isPublic;
+                    setNickname(data[0].nickname);
 
                     const pages = savedStorys.map((story, index) => ({
                         image: savedImages[index] || null,
@@ -100,6 +105,7 @@ export const useBookForm = (fairytaleId?: number) => {
         pages,
         cover,
         title,
-        theme
+        theme,
+        nickname
     };
 };
