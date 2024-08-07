@@ -16,7 +16,7 @@ Date        Author   Status    Description
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // App Router 환경에서의 라우터를 사용
 import Loading from '@/components/bulidstory/Loading';
-import { generatePlot, StoryResponse } from '@/app/api/makeStory';
+import { generatePlot, StoryResponse } from '@/api/makeStory';
 import { saveToLocalStorage } from '@/utils/localStorage';
 
 const SummeryPage: React.FC = () => {
