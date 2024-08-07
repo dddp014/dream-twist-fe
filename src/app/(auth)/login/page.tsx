@@ -11,6 +11,7 @@ Date        Author   Status    Description
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
 
 export const metadata: Metadata = {
     title: '꿈틀 로그인',
@@ -31,23 +32,12 @@ export default function Login() {
                     />
                 </Link>
                 <span className="text-sm text-gray-700">
-                    Ai 동화 생성 서비스
+                    AI 동화 생성 서비스
                 </span>
-                <p className="text-2xl text-main font-semibold mt-8 mb-7 ">
-                    로그인
+                <p className="text-2xl text-main font-semibold my-10">
+                    환영합니다!
                 </p>
-                <button
-                    type="button"
-                    className="flex flex-row items-center justify-center w-72 border border-gray-300 rounded-lg py-3 hover:bg-gray-50"
-                >
-                    <Image
-                        src="/images/google.svg"
-                        alt="google-icon"
-                        width={20}
-                        height={20}
-                    />
-                    <span className="ml-4">Google로 시작하기</span>
-                </button>
+                <GoogleLoginButton />
                 <div className="absolute bottom-0 w-full bg-main-100 h-12"></div>
             </div>
         </div>

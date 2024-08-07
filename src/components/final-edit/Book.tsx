@@ -1,5 +1,5 @@
 /**
-File Name : book-preview/Book
+File Name : final-edit/Book
 Description : 동화 편집 - 스토리를 책 모양으로 볼 수 있고 편집도 가능한 컴포넌트
 Author : 임도헌
 
@@ -13,6 +13,7 @@ Date        Author   Status    Description
 2024.08.02  임도헌   Modified  폼 제출 api 연결 및 creationWays 코드 추가
 2024.08.02  임도헌   Modified  File 형태 폼제출 할 수 있도록 수정
 2024.08.03  임도헌   Modified  코드 분리
+2024.08.07  임도헌   Modified  fairytailId props 추가
 */
 
 'use client';
@@ -27,8 +28,13 @@ import { DropIcon } from '../icons/DropIcon';
 import { themes } from '@/hooks/useFairytailForm';
 import { useBook } from '@/hooks/useBook';
 import { useBookModal } from '@/hooks/useModal';
+import usePageLeaveCheck from '@/hooks/usePageLeaveCheck';
 
-export default function Book() {
+interface FairytailFormProps {
+    fairytaleId?: number;
+}
+
+export default function Book({ fairytaleId }: FairytailFormProps) {
     const {
         register,
         handleSubmit,
@@ -38,14 +44,15 @@ export default function Book() {
         title,
         theme,
         currentPage,
-        author,
+        nickname,
         handlePrevPage,
         handleNextPage,
         handleImageSelect,
         handleStoryChange,
         updateCreationWay,
-        onSubmit
-    } = useBook();
+        onSubmit,
+        handleBackButtonClick
+    } = useBook(fairytaleId);
 
     const {
         imageModalOpen,
@@ -54,16 +61,18 @@ export default function Book() {
         setStoryModalOpen
     } = useBookModal();
 
+    //페이지 나갈때 체크
+    usePageLeaveCheck();
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col items-center">
-                <div className="relative flex items-center">
-                    <div className="absolute top-[28px] right-[390px] z-10">
+                <div className="relative w-[1260px] flex items-center justify-between">
+                    <div className="absolute left-[260px]">
                         <DropIcon rotate="" />
                     </div>
-
                     <select
-                        className="absolute right-[357px] w-[280px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2 appearance-none"
+                        className="w-[280px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2 appearance-none"
                         id="theme"
                         {...register('theme', { required: true })}
                         defaultValue={theme}
@@ -75,27 +84,35 @@ export default function Book() {
                             </option>
                         ))}
                     </select>
-
-                    <p className="my-4 font-bold text-2xl">{title}</p>
-
-                    <div className="absolute left-[450px] w-[48]">
-                        <Controller
-                            name="isPublic"
-                            control={control}
-                            render={({ field }) => (
-                                <Toggle
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                />
-                            )}
-                        />
+                    <div className="flex items-center justify-center">
+                        <div className="w-[120px]">
+                            <Controller
+                                name="isPublic"
+                                control={control}
+                                render={({ field }) => (
+                                    <Toggle
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                    />
+                                )}
+                            />
+                        </div>
+                        <div
+                            onClick={handleBackButtonClick}
+                            className="flex justify-center items-center ml-2 w-[80px] h-[36px] text-base bg-main rounded-md font-bold text-white hover:bg-green-600"
+                        >
+                            뒤로가기
+                        </div>
+                        <button
+                            type="submit"
+                            className="ml-2 w-[60px] h-[36px] text-base bg-main rounded-md font-bold text-white hover:bg-green-600"
+                        >
+                            저장
+                        </button>
                     </div>
-                    <button
-                        type="submit"
-                        className="absolute left-[590px] ml-0 w-[60px] h-[36px] text-base bg-main rounded-md font-bold text-white hover:bg-green-600"
-                    >
-                        저장
-                    </button>
+                </div>
+                <div className="">
+                    <p className="mb-2 font-bold text-2xl">{title}</p>
                 </div>
 
                 <div className="flex justify-center items-center">
@@ -126,7 +143,15 @@ export default function Book() {
                                     className={`relative flex justify-center items-center group w-[300px] h-[300px] bg-[#D9D9D9] rounded-[2px] text-main font-bold hover:opacity-60 hover:bg-gray-300`}
                                 >
                                     {cover ? (
-                                        <div className="absolute top-0 left-0 w-full h-full">
+                                        typeof cover === 'string' ? (
+                                            <Image
+                                                src={cover}
+                                                width={300}
+                                                height={300}
+                                                alt="bookCover"
+                                                className="object-cover w-full h-full mx-auto bg-white"
+                                            />
+                                        ) : (
                                             <Image
                                                 src={URL.createObjectURL(cover)}
                                                 width={300}
@@ -134,7 +159,7 @@ export default function Book() {
                                                 alt="bookCover"
                                                 className="object-cover w-full h-full mx-auto bg-white"
                                             />
-                                        </div>
+                                        )
                                     ) : (
                                         <div className="w-[300px] h-[300px] flex flex-col items-center justify-center">
                                             <Image
@@ -161,15 +186,30 @@ export default function Book() {
                             >
                                 {pages[currentPage - 1]?.image ? (
                                     <div className="absolute top-0 left-0 w-full h-full">
-                                        <Image
-                                            src={URL.createObjectURL(
-                                                pages[currentPage - 1].image!
-                                            )}
-                                            width={600}
-                                            height={600}
-                                            alt="Page Image"
-                                            className="object-cover w-full h-full mx-auto bg-white"
-                                        />
+                                        {typeof pages[currentPage - 1].image ===
+                                        'string' ? (
+                                            <Image
+                                                src={
+                                                    pages[currentPage - 1]
+                                                        .image as string
+                                                }
+                                                width={600}
+                                                height={600}
+                                                alt={`Page ${currentPage}`}
+                                                className="object-cover w-full h-full mx-auto bg-white"
+                                            />
+                                        ) : (
+                                            <Image
+                                                src={URL.createObjectURL(
+                                                    pages[currentPage - 1]
+                                                        .image as File
+                                                )}
+                                                width={600}
+                                                height={600}
+                                                alt={`Page ${currentPage}`}
+                                                className="object-cover w-full h-full mx-auto bg-white"
+                                            />
+                                        )}
                                     </div>
                                 ) : (
                                     <div className="flex flex-col">
@@ -177,7 +217,7 @@ export default function Book() {
                                             src={'/images/BiImageAlt.svg'}
                                             width={300}
                                             height={300}
-                                            alt="default Page Image"
+                                            alt={`Default Page ${currentPage}`}
                                         />
                                         <p>클릭해서 이미지 생성</p>
                                     </div>
@@ -191,7 +231,7 @@ export default function Book() {
                     {/* 책의 제목과 지은이 꿈틀 로고 들어감 */}
                     <div className="w-[60px] h-[600px] border-2 flex flex-col justify-between items-center">
                         <p className="texto mt-10 text-xl">{title}</p>
-                        <p className="texto text-lg">{author} 지음</p>
+                        <p className="texto text-lg">{nickname} 지음</p>
                         <Image
                             src={'/images/logo.svg'}
                             alt="logo"
@@ -211,13 +251,25 @@ export default function Book() {
                                 >
                                     {cover ? (
                                         <div className="absolute top-0 left-0 w-full h-full">
-                                            <Image
-                                                src={URL.createObjectURL(cover)}
-                                                width={400}
-                                                height={400}
-                                                alt="bookCover"
-                                                className="object-cover w-full h-full mx-auto bg-white"
-                                            />
+                                            {typeof cover === 'string' ? (
+                                                <Image
+                                                    src={cover}
+                                                    width={400}
+                                                    height={400}
+                                                    alt="bookCover"
+                                                    className="object-cover w-full h-full mx-auto bg-white"
+                                                />
+                                            ) : (
+                                                <Image
+                                                    src={URL.createObjectURL(
+                                                        cover
+                                                    )}
+                                                    width={400}
+                                                    height={400}
+                                                    alt="bookCover"
+                                                    className="object-cover w-full h-full mx-auto bg-white"
+                                                />
+                                            )}
                                         </div>
                                     ) : (
                                         <div className="flex flex-col items-center">
@@ -237,7 +289,7 @@ export default function Book() {
                                 <p className="text-3xl font-bold mt-2">
                                     {title}
                                 </p>
-                                <p className="text-sm mt-4">{author} 지음</p>
+                                <p className="text-sm mt-4">{nickname} 지음</p>
                             </div>
                         ) : (
                             <button
@@ -275,6 +327,7 @@ export default function Book() {
             </div>
             {imageModalOpen && (
                 <ImageModal
+                    title={title}
                     currentPage={currentPage}
                     updateCreationWay={updateCreationWay}
                     onClose={() => setImageModalOpen(false)}

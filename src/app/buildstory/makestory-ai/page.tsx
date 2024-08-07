@@ -7,30 +7,18 @@ History
 Date        Author   Status    Description
 2024.07.28  김민규    Created
 2024.07.31  김민규    Created   Ai 모델 Api 연동
+2024.08.05  임도헌   Modified   이 플롯으로 완료 페이지 링크 추가
+2024.08.06  임도헌   Modified   useFairytailInfo로 storys 가져오는 코드로 변경
 
 **/
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useFairytailInfo } from '@/hooks/useFairytailInfo';
+import Link from 'next/link';
+import React from 'react';
 
 const MakestoryAiPage: React.FC = () => {
-    const [plots, setPlots] = useState<string[]>([]);
-    const [title, setTitle] = useState<string>('');
-    const [theme, setTheme] = useState<string>('');
-
-    useEffect(() => {
-        const storyData = localStorage.getItem('storyData');
-        console.log(storyData);
-
-        if (storyData) {
-            const parsedData = JSON.parse(storyData);
-            setPlots(parsedData.story || []);
-            setTitle(parsedData.title || '');
-            setTheme(parsedData.theme || '');
-        } else {
-            console.error('스토리 데이터가 없습니다.');
-        }
-    }, []);
+    const { storys } = useFairytailInfo();
 
     return (
         <div
@@ -48,12 +36,8 @@ const MakestoryAiPage: React.FC = () => {
                 <p className="text-l mb-10 text-center">
                     동화책 각 페이지에 들어갈 이야기를 수정할 수 있어요.
                 </p>
-                <div className="p-3 bg-main-100 text-black-500 rounded-md mb-1">
-                    <h1 className="text-xl font-bold mb-2">제목 : {title}</h1>
-                    <h2>주제 : {theme}</h2>
-                </div>
-                <div className="flex overflow-x-auto w-full space-x-4 p-4 rounded-md">
-                    {plots.map((plot: string, index: number) => (
+                <div className="flex overflow-x-auto w-full space-x-4">
+                    {storys.map((story: string, index: number) => (
                         <div
                             key={index}
                             className="flex-shrink-0 w-full max-w-xs bg-white p-6 rounded-lg shadow-md text-center"
@@ -61,14 +45,17 @@ const MakestoryAiPage: React.FC = () => {
                             <h2 className="text-xl font-bold mb-2">
                                 {index + 1}
                             </h2>
-                            <p>{plot}</p>
+                            <p className="text-center">{story}</p>
                         </div>
                     ))}
                 </div>
                 <div className="flex justify-center mt-10">
-                    <button className="bg-yellow-500 text-white py-2 px-4 rounded">
+                    <Link
+                        href="/create"
+                        className="bg-yellow-500 text-white py-2 px-4 rounded"
+                    >
                         이 플롯으로 완료
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>

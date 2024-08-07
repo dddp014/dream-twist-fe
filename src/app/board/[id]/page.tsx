@@ -10,11 +10,11 @@ Date        Author   Status    Description
 */
 
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import RenderBook from '@/components/board/RenderBook';
 import BookLike from '@/components/board/BookLike';
 import EditDeleteBtn from '@/components/board/EditDeleteBtn';
-import Sample1 from '../../../../public/images/sample1.svg';
-import Sample2 from '../../../../public/images/sample2.svg';
+import CommentList from '@/components/board/CommentList';
 import { getBookDetail } from '@/api/BoardApi';
 
 export const metadata: Metadata = {
@@ -22,46 +22,62 @@ export const metadata: Metadata = {
     description: 'AI로 생성된 꿈틀의 동화 갤러리'
 };
 
-const sampleImages = [
-    Sample1,
-    Sample2,
-    Sample1,
-    Sample2,
-    Sample1,
-    Sample2,
-    Sample2
-];
-
 export default async function Board({ params }: { params: { id: string } }) {
     const { id } = params;
-    const data = await getBookDetail(id);
-    // const bookImages = [data[0].coverImage, ...data[0].images];
-    const contents: string[] = [
-        '내용00',
-        '내용01',
-        '내용02',
-        ...(Object.values(data[0].content) as string[])
-    ];
 
-    return (
-        <div className="h-screen flex flex-col justify-center items-center mt-8 mx-24 mb-12">
-            <div className="relative flex flex-col w-full mb-6">
-                <div className="flex flex-row justify-center items-center mb-3 m-auto">
-                    <p className="text-2xl font-semibold">{data[0].title}</p>
-                    <p className="text-[17px] ml-5">{data[0].nickname} 작가</p>
-                    <div className="flex flex-row items-center absolute right-0 bottom-14">
-                        <EditDeleteBtn />
+    try {
+        const data = await getBookDetail(id);
+
+        if (!data || data.length === 0) {
+            notFound();
+        }
+
+        // console.log(data);
+
+        const bookImages = [data[0].coverImage, ...data[0].images];
+        const contents: string[] = [
+            ...(Object.values(data[0].content) as string[])
+        ];
+        const info = [data[0].title, data[0].nickname];
+
+        return (
+            <div className="flex flex-col justify-center items-center mx-24 pb-28 pt-12">
+                <div className="relative flex flex-col w-full mb-4">
+                    <div className="flex flex-row justify-center items-center mb-3 m-auto">
+                        <p className="text-2xl font-semibold">
+                            {data[0].title}
+                        </p>
+                        <p className="text-[17px] ml-5">
+                            {data[0].nickname} 작가
+                        </p>
+                        <div className="flex flex-row items-center absolute right-0 bottom-14">
+                            <EditDeleteBtn id={id} modalType="book" />
+                        </div>
+                    </div>
+                    <hr className="border border-zinc-200 opacity-70" />
+                    <div className="flex flex-row mt-2 justify-between">
+                        <p className="text-gray-500 text-[14px]">
+                            조회 {data[0].views}
+                        </p>
+                        <div className="self-end">
+                            <BookLike />
+                        </div>
                     </div>
                 </div>
-                <hr className="border border-zinc-200 opacity-70" />
-                <div className="flex flex-row mt-2 justify-between">
-                    <p className="text-gray-500 text-[14px]">조회 8</p>
-                    <div className="self-end">
-                        <BookLike />
-                    </div>
+                <div className="flex flex-col w-full h-full justify-center items-center">
+                    <RenderBook
+                        bookImages={bookImages}
+                        contents={contents}
+                        info={info}
+                    />
+                </div>
+                <div className="flex flex-col w-full h-full justify-center items-center mt-16">
+                    <CommentList />
                 </div>
             </div>
-            <RenderBook bookImages={sampleImages} contents={contents} />
-        </div>
-    );
+        );
+    } catch (error) {
+        notFound();
+        return null;
+    }
 }

@@ -24,3 +24,107 @@ export const contents: string[] = [
 export const sampleImages = Array.from({ length: 10 }, (_, i) => ({
     coverImage: `/images/sample2.svg`
 }));
+
+export const dummyComments = [
+    {
+        id: '1',
+        username: 'user123',
+        date: '2024-08-01',
+        content: '재밌네용',
+        profile: '/images/sample2.svg'
+    },
+    {
+        id: '2',
+        username: '안녕',
+        date: '2024-08-02',
+        content: '잘 읽고 갑니다',
+        profile: '/images/sample2.svg'
+    },
+    {
+        id: '3',
+        username: '회원2',
+        date: '2024-08-02',
+        content: '좋아요',
+        profile: '/images/sample2.svg'
+    },
+    {
+        id: '4',
+        username: '달걀',
+        date: '2024-08-02',
+        content: '명작이네요',
+        profile: '/images/sample2.svg'
+    },
+    {
+        id: '5',
+        username: '하하',
+        date: '2024-08-02',
+        content: '웃기당',
+        profile: '/images/sample2.svg'
+    }
+];
+
+export const dummyMyComments = [
+    {
+        id: '1',
+        fairytaleId: '1',
+        date: '2024-08-01',
+        content: '재밌네용',
+        title: '철학자와 신비한 마을'
+    },
+    {
+        id: '2',
+        fairytaleId: '2',
+        date: '2024-08-02',
+        content: '222222',
+        title: '신비아파트'
+    },
+    {
+        id: '3',
+        fairytaleId: '3',
+        date: '2024-08-03',
+        content: '추천',
+        title: '수상한 빨간 망토'
+    },
+    {
+        id: '1',
+        fairytaleId: '1',
+        date: '2024-08-01',
+        content: '재밌네용',
+        title: '철학자와 신비한 마을'
+    },
+    {
+        id: '2',
+        fairytaleId: '2',
+        date: '2024-08-02',
+        content: '222222',
+        title: '신비아파트'
+    },
+    {
+        id: '3',
+        fairytaleId: '3',
+        date: '2024-08-03',
+        content: '추천',
+        title: '수상한 빨간 망토'
+    },
+    {
+        id: '1',
+        fairytaleId: '1',
+        date: '2024-08-01',
+        content: '재밌네용',
+        title: '철학자와 신비한 마을'
+    },
+    {
+        id: '2',
+        fairytaleId: '2',
+        date: '2024-08-02',
+        content: '222222',
+        title: '신비아파트'
+    },
+    {
+        id: '3',
+        fairytaleId: '3',
+        date: '2024-08-03',
+        content: '추천',
+        title: '수상한 빨간 망토'
+    }
+];

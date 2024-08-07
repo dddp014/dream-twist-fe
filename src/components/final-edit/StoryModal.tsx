@@ -1,5 +1,5 @@
 /**
-File Name : compoenents/book-preview/StoryModal
+File Name : compoenents/final-edit/StoryModal
 Description : 동화 내용 변경 모달
 Author : 임도헌
 
