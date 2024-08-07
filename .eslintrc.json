@@ -20,17 +20,27 @@
         "next/core-web-vitals",
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended",
-        "prettier",
-        "@typescript-eslint/parser"
+        "prettier"
     ],
-    "rules": {
-        "react/jsx-props-no-spreading": 0,
-        "no-useless-catch": "off",
-        "no-duplicate-imports": "warn",
-        "no-unused-vars": "warn",
-        "quotes": ["warn", "single", { "avoidEscape": true }],
-        "import/extensions": "off",
-        "import/no-extraneous-dependencies": ["off"],
-        "global-require": "off"
-    }
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx"],
+            "parser": "@typescript-eslint/parser",
+            "extends": [
+                "eslint:recommended",
+                "plugin:@typescript-eslint/recommended"
+            ],
+            "plugins": ["@typescript-eslint"],
+            "rules": {
+                "react/jsx-props-no-spreading": 0,
+                "no-useless-catch": "off",
+                "no-duplicate-imports": "warn",
+                "no-unused-vars": "warn",
+                "quotes": ["warn", "single", { "avoidEscape": true }],
+                "import/extensions": "off",
+                "import/no-extraneous-dependencies": ["off"],
+                "global-require": "off"
+            }
+        }
+    ]
 }

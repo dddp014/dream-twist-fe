@@ -1,21 +1,22 @@
 /**
-File Name : edit/layout
-Description : 동화 글 편집 레이아웃
+File Name : app/(fairytale)/create/layout
+Description : 동화 생성 레이아웃
 Author : 임도헌
 
 History
 Date        Author   Status    Description
-2024.07.25  임도헌    Created
+2024.07.25  임도헌   Created
+2024.08.07  임도헌   Modified  폴더위치 및 폴더명 변경
 */
 
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: '꿈틀 동화 생성',
-    description: 'Ai 동화 생성 꿈틀 프로젝트'
+    description: 'AI를 사용하여 새로운 동화를 생성하세요 - 꿈틀'
 };
 
-export default function EditLayout({
+export default function CreateLayout({
     children
 }: {
     children: React.ReactNode;

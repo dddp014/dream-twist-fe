@@ -1,5 +1,5 @@
 /**
-File Name : compoenents/book-preview/PaletteModal
+File Name : compoenents/final-edit/PaletteModal
 Description : 그림판 모달
 Author : 임도헌
 
@@ -12,12 +12,13 @@ Date        Author   Status      Description
 2024.08.01  임도헌   Modified    portal 수정 및 코드 리팩토링
 2024.08.02  임도헌   Modified    creationWays 코드 추가 및 이미지를 File로 변경 후 File 형태 폼제출 할 수 있도록 수정
 2024.08.03  임도헌   Modified    코드 분리
+2024.08.05  임도헌   Modified    colorOptions 분리
 */
 
 import React from 'react';
 import Image from 'next/image';
 import Portal from '../common/Portal';
-import { useCanvas } from '@/hooks/useCanvas';
+import { colorOptions, useCanvas } from '@/hooks/useCanvas';
 
 interface PaletteModalProps {
     onClose: () => void;
@@ -35,7 +36,6 @@ export default function PalleteModal({
         color,
         isFilling,
         lineWidth,
-        colorOptions,
         setColor,
         handleMouseMove,
         handleMouseDown,

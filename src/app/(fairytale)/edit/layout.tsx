@@ -1,6 +1,6 @@
 /**
-File Name : edit/layout
-Description : 동화 이미지 편집 레이아웃
+File Name : app/(fairytale)/edit/[fairytaleId]/page
+Description : 동화 글 편집 레이아웃
 Author : 임도헌
 
 History
@@ -11,11 +11,11 @@ Date        Author   Status    Description
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: '꿈틀 동화 생성',
-    description: 'Ai 동화 생성 꿈틀 프로젝트'
+    title: '꿈틀 동화 수정',
+    description: '동화를 수정하세요 - 꿈틀 프로젝트'
 };
 
-export default function BookPreviewLayout({
+export default function EditLayout({
     children
 }: {
     children: React.ReactNode;
@@ -26,11 +26,11 @@ export default function BookPreviewLayout({
                 <div className="container mx-auto flex items-center justify-center text-neutral-900">
                     <span className="">AI 스토리 추천</span>
                     <span className="px-6 text-xl text-emerald-700">{'>'}</span>
-                    <span className="">글 편집</span>
-                    <span className="px-6 text-xl text-emerald-700">{'>'}</span>
                     <span className="px-3 py-1 bg-white rounded-md">
-                        이미지 편집
+                        글 편집
                     </span>
+                    <span className="px-6 text-xl text-emerald-700">{'>'}</span>
+                    <span className="">이미지 편집</span>
                 </div>
             </header>
             {children}

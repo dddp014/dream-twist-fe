@@ -1,5 +1,5 @@
 /**
-File Name : compoenents/book-preview/FileUploadModal
+File Name : compoenents/final-edit/FileUploadModal
 Description : 이미지 첨부에서 파일 업로드 시
 Author : 임도헌
 

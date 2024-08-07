@@ -5,7 +5,8 @@ Author : 임도헌
 
 History
 Date        Author   Status    Description
-2024.07.30   임도헌  Create
+2024.07.30  임도헌    Create
+2024/08.06  임도헌    Create    로컬스토리지 삭제 함수 구현
 */
 
 // 데이터 타입을 명시적으로 지정
@@ -28,4 +29,12 @@ export function loadFromLocalStorage<T>(key: string): T | null {
         console.error(`Error loading from localStorage: ${error}`);
     }
     return null;
+}
+
+export function removeFromLocalStorage(key: string): void {
+    try {
+        localStorage.removeItem(key);
+    } catch (error) {
+        console.error(`Error removing from localStorage: ${error}`);
+    }
 }

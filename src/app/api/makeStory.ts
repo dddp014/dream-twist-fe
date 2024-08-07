@@ -6,11 +6,13 @@ Author : 김민규
 History
 Date        Author   Status    Description
 2024.08.02  김민규    Created
+2024.08.07  임도헌   Modified  storyResponse에 제목과 주제 추가
 
 */
 
-
 export interface StoryResponse {
+    title: string;
+    theme: string;
     story: string[];
 }
 

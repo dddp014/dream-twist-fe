@@ -7,27 +7,19 @@ History
 Date        Author   Status    Description
 2024.07.28  김민규    Created
 2024.07.31  김민규    Created   Ai 모델 Api 연동
+2024.08.05  임도헌   Modified   이 플롯으로 완료 페이지 링크 추가
+2024.08.06  임도헌   Modified   useFairytailInfo로 storys 가져오는 코드로 변경
 
 **/
 
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useFairytailInfo } from '@/hooks/useFairytailInfo';
+import Link from 'next/link';
+import React from 'react';
 
 const MakestoryAiPage: React.FC = () => {
-    const [plots, setPlots] = useState<string[]>([]); // plots라는 상태 변수를 정의하고 빈 배열로 초기화합니다
-
-    useEffect(() => {
-        // 로컬 스토리지에서 데이터 읽어오는 코드
-        const storyData = localStorage.getItem('storyData');
-
-        if (storyData) {
-            const parsedData = JSON.parse(storyData); //데이터가 있으면 이를 JSON으로 파싱
-            setPlots(parsedData.story || []);
-        } else {
-            console.error('스토리 데이터가 없습니다.');
-        }
-    }, []);
+    const { storys } = useFairytailInfo();
 
     return (
         <div
@@ -46,7 +38,7 @@ const MakestoryAiPage: React.FC = () => {
                     동화책 각 페이지에 들어갈 이야기를 수정할 수 있어요.
                 </p>
                 <div className="flex overflow-x-auto w-full space-x-4">
-                    {plots.map((plot: string, index: number) => (
+                    {storys.map((story: string, index: number) => (
                         <div
                             key={index}
                             className={`flex-shrink-0 w-full max-w-xs bg-white p-6 rounded-lg shadow-md`}
@@ -54,14 +46,17 @@ const MakestoryAiPage: React.FC = () => {
                             <h2 className="text-xl font-bold mb-2 text-center">
                                 {index + 1}
                             </h2>
-                            <p className="text-center">{plot}</p>
+                            <p className="text-center">{story}</p>
                         </div>
                     ))}
                 </div>
                 <div className="flex justify-center mt-10">
-                    <button className="bg-yellow-500 text-white py-2 px-4 rounded">
+                    <Link
+                        href="/create"
+                        className="bg-yellow-500 text-white py-2 px-4 rounded"
+                    >
                         이 플롯으로 완료
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>

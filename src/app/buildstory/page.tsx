@@ -7,14 +7,13 @@ History
 Date        Author   Status    Description
 2024.07.20  김민규    Created
 2024.07.30  김민규    Modified  배경 디자인 변경
+2024.08.07  임도헌    Modified  편집하기 링크 create로 변경
 
 */
 
 import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image';
-
-
 
 const BuildStoryPage: React.FC = () => {
     return (
@@ -51,7 +50,7 @@ const BuildStoryPage: React.FC = () => {
                             글쓰기 능력이 쑥쑥 올라요.
                         </p>
                         <Link
-                            href="/buildstory/edit"
+                            href="/create"
                             className="bg-main text-white w-36 py-2 px-4 rounded-md block text-center"
                         >
                             편집하기

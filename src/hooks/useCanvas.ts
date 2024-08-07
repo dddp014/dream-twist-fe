@@ -6,6 +6,7 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.08.03  임도헌   Created
+2024.08.05  임도헌   Modified  colorOptions 분리
 */
 
 import { useRef, useState, useEffect } from 'react';
@@ -13,6 +14,19 @@ import { useRef, useState, useEffect } from 'react';
 const CANVAS_WIDTH: number = 600;
 const CANVAS_HEIGHT: number = 600;
 const CANVAS_LINE: number = 5;
+
+export const colorOptions = [
+    '#FF0000',
+    '#FF6B00',
+    '#FFE500',
+    '#22F400',
+    '#000000',
+    '#0085FF',
+    '#3C0F9C',
+    '#BD00FF',
+    '#FF70D7',
+    '#FFFFFF'
+];
 
 export const useCanvas = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -24,19 +38,6 @@ export const useCanvas = () => {
     const [isFilling, setIsFilling] = useState<boolean>(false);
     const [lineWidth, setLineWidth] = useState<number>(0);
     const [color, setColor] = useState<string>('#000000');
-
-    const colorOptions = [
-        '#FF0000',
-        '#FF6B00',
-        '#FFE500',
-        '#22F400',
-        '#000000',
-        '#0085FF',
-        '#3C0F9C',
-        '#BD00FF',
-        '#FF70D7',
-        '#FFFFFF'
-    ];
 
     useEffect(() => {
         setLineWidth(CANVAS_LINE);
@@ -202,7 +203,6 @@ export const useCanvas = () => {
         color,
         isFilling,
         lineWidth,
-        colorOptions,
         setColor,
         handleMouseMove,
         handleMouseDown,
