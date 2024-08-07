@@ -13,6 +13,7 @@ Date        Author   Status    Description
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import LoginNav from './LoginNav';
 
 export default function Nav() {
     const pathname = usePathname();
@@ -52,6 +53,7 @@ export default function Nav() {
                 >
                     로그인
                 </Link>
+                {/* <LoginNav /> */}
             </div>
         </nav>
     );

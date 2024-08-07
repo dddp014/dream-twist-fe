@@ -29,9 +29,9 @@ export default function useTextToImage(text: string) {
 
         // 텍스트 스타일 설정
         context.fillStyle = '#000000';
-        context.font = '22px Hyemin';
+        context.font = '20px Hyemin';
         context.textAlign = 'left';
-        context.textBaseline = 'middle';
+        context.textBaseline = 'top';
 
         // 텍스트 줄바꿈
         const wrapText = (text: string, maxWidth: number) => {
@@ -61,7 +61,7 @@ export default function useTextToImage(text: string) {
         // 라인별로 문장 설정
         const allLines = wrapText(text, canvasWidth);
         const lineHeight = 35; // 줄 간격
-        let y = 90; // 시작 위치
+        let y = 0; // 시작 위치
 
         // 텍스트 캔버스에 그리기
         allLines.forEach((line) => {

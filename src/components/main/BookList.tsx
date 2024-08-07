@@ -11,12 +11,10 @@ Date        Author   Status    Description
 
 'use client';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { FairytaleInfo } from '@/types/fairytale';
-import Sample2 from '../../../public/images/sample2.svg';
 
 interface BookListProps {
     fairytaleInfo: FairytaleInfo[];
@@ -28,6 +26,11 @@ const BookList = ({ fairytaleInfo }: BookListProps) => {
     const router = useRouter();
     const [items, setItems] = useState(fairytaleInfo.slice(0, itemsPerPage));
     const pageIndexRef = useRef<number>(2);
+
+    useEffect(() => {
+        setItems(fairytaleInfo.slice(0, itemsPerPage));
+        pageIndexRef.current = 2;
+    }, [fairytaleInfo]);
 
     const loadItems = () => {
         const newItems = fairytaleInfo.slice(
@@ -46,44 +49,57 @@ const BookList = ({ fairytaleInfo }: BookListProps) => {
     const { ref, isPageEnd, setEnd } = useInfiniteScroll({
         onLoadMore: loadItems
     });
-
     return (
-        <div>
-            <div className="grid grid-cols-5 gap-8 gap-y-9 my-10 z-0">
-                {items.map((item) => (
-                    <button
-                        key={item.fairytaleId}
-                        onClick={() =>
-                            router.push(`/board/${item.fairytaleId}`)
-                        }
-                        className="relative w-[18rem] h-[25rem] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
-                    >
-                        <div
-                            className="absolute top-0 w-full"
-                            style={{
-                                backgroundImage: `url(${Sample2.src})`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'top',
-                                height: '80%'
-                            }}
-                        />
-                        <div className="absolute bottom-3.5 left-5 w-full text-left">
-                            <p className="text-xl font-semibold ">
-                                {item.title}
-                            </p>
-                            <div className="flex justify-between items-center">
-                                <p className="text-base">
-                                    {item.nickname} 작가
-                                </p>
-                                <p className="text-xs text-gray-400 mr-10">
-                                    2024-08-02
-                                </p>
-                            </div>
-                        </div>
-                    </button>
-                ))}
-            </div>
-            {!isPageEnd && <div ref={ref} />}
+        <div className="flex flex-col">
+            {/* 데이터 없을 때 */}
+            {fairytaleInfo.length === 0 && (
+                <div className="flex flex-col justify-center items-center my-20">
+                    <p className="text-center text-gray-500">
+                        등록된 동화가 없습니다.
+                    </p>
+                </div>
+            )}
+
+            {/* 데이터 있을 때 */}
+            {fairytaleInfo.length > 0 && (
+                <>
+                    <div className="grid sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-8 gap-y-9 my-10 z-0">
+                        {items.map((item) => (
+                            <button
+                                key={item.fairytaleId}
+                                onClick={() =>
+                                    router.push(`/board/${item.fairytaleId}`)
+                                }
+                                className="relative max-w-[18rem] w-full aspect-[4/5] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
+                            >
+                                <div
+                                    className="absolute top-0 w-full h-full overflow-hidden"
+                                    style={{
+                                        backgroundImage: `url(${item.coverImage})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'top',
+                                        height: '78%'
+                                    }}
+                                />
+                                <div className="absolute bg-white bottom-0 w-full text-left py-3 pl-4">
+                                    <p className="text-[1.15rem] font-semibold truncate">
+                                        {item.title}
+                                    </p>
+                                    <div className="flex justify-between items-center">
+                                        <p className="text-[1rem] flex-grow truncate pr-4">
+                                            {item.nickname} 작가
+                                        </p>
+                                        <p className="text-[0.8rem] text-gray-400 mr-4 -mb-0.5 whitespace-nowrap">
+                                            {item.createdAt}
+                                        </p>
+                                    </div>
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                    {!isPageEnd && <div ref={ref} />}
+                </>
+            )}
         </div>
     );
 };

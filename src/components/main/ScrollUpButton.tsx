@@ -18,7 +18,7 @@ export default function ScrollUpButton() {
     };
 
     return (
-        <div className="sticky bottom-4">
+        <div className="sticky bottom-4 mb-4">
             <button
                 onClick={handleScrollUp}
                 className="bg-gray-300 opacity-80 rounded-full py-2 px-2 shadow"
