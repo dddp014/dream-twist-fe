@@ -10,6 +10,7 @@ Date        Author   Status    Description
 2024.08.07  임도헌   Modified  localstorage 폼 제출 시 삭제하는 코드 적용
 2024.08.07  임도헌   Modified  fairytaleId가 있으면 수정으로 아니라면 생성할 수 있게 코드 예외처리
 2024.08.07  임도헌   Modified  커버가 ai로 생성했을 경우 url 이기 때문에 예외처리 적용
+2024.08.07  임도헌   Modified  뒤로가기 버튼 경고 추가
 */
 
 import { useState } from 'react';
@@ -32,7 +33,6 @@ export const useBook = (fairytaleId?: number) => {
     // 임시 유저아이디 1
     const userId: number = 1;
     // 임시 작가 이름
-    const author: string = '도헌';
     // 모달 상태
     const { setImageModalOpen, setStoryModalOpen } = useBookModal();
 
@@ -45,7 +45,8 @@ export const useBook = (fairytaleId?: number) => {
         pages,
         cover,
         title,
-        theme
+        theme,
+        nickname
     } = useBookForm(fairytaleId);
 
     // 현재 페이지 상태
@@ -144,18 +145,32 @@ export const useBook = (fairytaleId?: number) => {
 
         try {
             if (fairytaleId) {
-                await updateBookForm(formdata, fairytaleId);
-                alert('동화가 성공적으로 수정되었습니다.');
+                const result = await updateBookForm(formdata, fairytaleId);
+                if (result.statusCode === 400) {
+                    alert(result.message);
+                } else {
+                    alert('동화가 성공적으로 수정되었습니다.');
+                    // 동화 생성 후 로컬스토리지 값 삭제
+                    removeFromLocalStorage('title');
+                    removeFromLocalStorage('theme');
+                    removeFromLocalStorage('storys');
+                    removeFromLocalStorage('isPublic');
+                    router.push('/');
+                }
             } else {
-                await submitBookForm(formdata);
-                alert('동화가 성공적으로 저장되었습니다.');
+                const result = await submitBookForm(formdata);
+                if (result.statusCode === 400) {
+                    alert(result.message);
+                } else {
+                    alert('동화가 성공적으로 저장되었습니다.');
+                    // 동화 생성 후 로컬스토리지 값 삭제
+                    removeFromLocalStorage('title');
+                    removeFromLocalStorage('theme');
+                    removeFromLocalStorage('storys');
+                    removeFromLocalStorage('isPublic');
+                    router.push('/');
+                }
             }
-            // 동화 생성 후 로컬스토리지 값 삭제
-            removeFromLocalStorage('title');
-            removeFromLocalStorage('theme');
-            removeFromLocalStorage('storys');
-            removeFromLocalStorage('isPublic');
-            router.push('/');
         } catch (error) {
             console.error('Error:', error);
         }
@@ -194,6 +209,16 @@ export const useBook = (fairytaleId?: number) => {
         setStoryModalOpen(false);
     };
 
+    const handleBackButtonClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        const confirmationMessage =
+            '작성하던 내용이 모두 사라집니다. 계속하시겠습니까?';
+        if (!window.confirm(confirmationMessage)) {
+            event.preventDefault();
+        } else {
+            router.push(`/edit/${fairytaleId}`);
+        }
+    };
+
     return {
         register,
         handleSubmit,
@@ -203,12 +228,13 @@ export const useBook = (fairytaleId?: number) => {
         title,
         theme,
         currentPage,
-        author,
+        nickname,
         handlePrevPage,
         handleNextPage,
         handleImageSelect,
         handleStoryChange,
         updateCreationWay,
-        onSubmit
+        onSubmit,
+        handleBackButtonClick
     };
 };
