@@ -35,7 +35,6 @@ export default function SearchBook() {
     const [searchResults, setSearchResults] = useState<FairytaleInfo[]>([]);
     const [initData, setInitData] = useState<FairytaleInfo[]>([]);
     const [searchInputValue, setSearchInputValue] = useState<string>('');
-    const [searchStatus, setSearchStatus] = useState(false);
     const [loading, setLoading] = useState(true);
 
     const debouncedInputValue = useDebounce(searchInputValue);
@@ -62,10 +61,8 @@ export default function SearchBook() {
 
     const handleTagClick = async (label: string) => {
         setSelectedTag(label);
-        setSearchStatus(true);
 
         if (label === '모든 주제') {
-            // setSearchStatus(false);
             setSearchResults(initData);
             return;
         }
@@ -99,7 +96,7 @@ export default function SearchBook() {
     useEffect(() => {
         if (debouncedInputValue === '' && selectedTag === '모든 주제') {
             setSearchResults(initData);
-            setSearchStatus(false);
+
             return;
         }
 
@@ -107,16 +104,14 @@ export default function SearchBook() {
             let query = '';
             if (debouncedInputValue && selectedTag === '모든 주제') {
                 query = `?title=${debouncedInputValue}`;
-                setSearchStatus(true);
             }
             if (debouncedInputValue && selectedTag !== '모든 주제') {
                 query = `?tags=${selectedTag}&title=${debouncedInputValue}`;
-                setSearchStatus(true);
             }
 
             if (debouncedInputValue === '' && selectedTag !== '모든 주제') {
                 query = `?tags=${selectedTag}`;
-                console.log('??', query);
+                // console.log('??', query);
             }
 
             try {
@@ -134,7 +129,6 @@ export default function SearchBook() {
         };
 
         fetchResults();
-        // handleTagClick(selectedTag);
     }, [debouncedInputValue, selectedTag]);
 
     return (

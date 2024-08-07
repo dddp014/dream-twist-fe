@@ -47,13 +47,13 @@ export default function Nav() {
                 </Link>
             </div>
             <div className="pt-1 space-x-4">
-                {/* <Link
+                <Link
                     href="/login"
                     className="bg-main py-2 px-4 rounded-[7px] text-white cursor-pointer text-base"
                 >
                     로그인
-                </Link> */}
-                <LoginNav />
+                </Link>
+                {/* <LoginNav /> */}
             </div>
         </nav>
     );
