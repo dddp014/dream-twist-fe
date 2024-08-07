@@ -5,8 +5,9 @@ Author : 임도헌
 
 History
 Date        Author   Status    Description
-2024.07.25  임도헌   Create  StoryBlock 컴포넌트 분리
-2024.07.26  임도헌   Create  StoryBlock 컴포넌트 색상 변경
+2024.07.25  임도헌   Create  
+2024.07.25  임도헌   Modified  StoryBlock 컴포넌트 분리
+2024.07.26  임도헌   Create    StoryBlock 컴포넌트 색상 변경
 */
 
 import { IFairyTaleFormInputs } from '@/hooks/useFairytailForm';

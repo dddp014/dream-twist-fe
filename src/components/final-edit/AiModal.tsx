@@ -6,6 +6,7 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.07.26  임도헌   Created
+2024.07.26  임도헌   Modified  AI 모달 디자인만 생성
 2024.08.01  임도헌   Modified  AI 모달 기능 추가
 2024.08.05  임도헌   Modified  ai 이미지 받아오기 추가
 2024.08.07  임도헌   Modified  fetchAiImage api 분리

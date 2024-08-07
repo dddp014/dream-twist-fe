@@ -5,7 +5,8 @@ Author : 임도헌
 
 History
 Date        Author   Status    Description
-2024.08.07  임도헌   Created   useAiImage 생성
+2024.08.07  임도헌   Created   
+2024.08.07  임도헌   Modified  useAiImage 생성
 */
 
 import { fetchAiImage } from '@/api/BookApi';
