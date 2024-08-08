@@ -22,6 +22,19 @@ export const getBookDetail = async (fairytaleId: string) => {
     return response.json();
 };
 
+export const postBookView = async (fairytaleId: string) => {
+    const response = await fetch(`${API_BASE_URL}/fairytale/view`, {
+        method: 'POST',
+        body: JSON.stringify({
+            fairytaleId: fairytaleId
+        })
+    });
+    if (!response.ok) {
+        throw new Error('동화 조회 요청 실패');
+    }
+    return response.json();
+};
+
 export const postBookLike = async (fairytaleId: string) => {
     const accessToken = localStorage.getItem('accessToken');
 

@@ -65,10 +65,10 @@ export default function BookViewer({
                         className={`${step === 0 ? 'display' : 'hidden'} select-none absolute bottom-0 flex flex-col justify-center items-center bg-white w-full h-[7.5rem]`}
                     >
                         <p className="text-[1.8rem] text-slate-800 font-LaundryGothic mb-0.5">
-                            {info[0]}
+                            {info.title}
                         </p>
                         <p className="font-Hyemin text-slate-800 text-[1rem]">
-                            {info[1]} 작가
+                            {info.nickname} 작가
                         </p>
                     </div>
                 </div>
