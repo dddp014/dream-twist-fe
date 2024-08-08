@@ -28,11 +28,12 @@ import {
 } from '@/api/BookApi';
 import { useBookModal } from './useModal';
 import { removeFromLocalStorage } from '@/utils/localStorage';
-import { getMyPoint } from '@/api/MypageApi';
+import { getUserInfo } from '@/api/AuthApi';
 
 export type CreationMethod = 'default' | 'upload' | 'ai' | 'palette';
 
 export const useBook = (fairytaleId?: number) => {
+    const accessToken: string | null = localStorage.getItem('accessToken');
     // 페이지 이동(메인페이지)
     const router = useRouter();
     // 임시 유저아이디 1
@@ -51,7 +52,8 @@ export const useBook = (fairytaleId?: number) => {
         cover,
         title,
         theme,
-        nickname
+        nickname,
+        loading
     } = useBookForm(fairytaleId);
 
     // 현재 페이지 상태
@@ -66,8 +68,8 @@ export const useBook = (fairytaleId?: number) => {
     useEffect(() => {
         const getUserCredit = async () => {
             try {
-                const result = await getMyPoint();
-                setCredit(result.userPoints);
+                const result = await getUserInfo();
+                setCredit(result.points);
             } catch (error) {
                 throw error;
             }
@@ -103,8 +105,16 @@ export const useBook = (fairytaleId?: number) => {
 
     const UploadImageToS3 = async (file: File) => {
         try {
-            const { presignedURL } = await fetchPresignedURL(userId, file.name);
-            const fileUrl = await uploadFileToS3(presignedURL, file);
+            const { presignedURL } = await fetchPresignedURL(
+                userId,
+                file.name,
+                accessToken
+            );
+            const fileUrl = await uploadFileToS3(
+                presignedURL,
+                file,
+                accessToken
+            );
             return fileUrl;
         } catch (error) {
             throw error;
@@ -169,7 +179,11 @@ export const useBook = (fairytaleId?: number) => {
 
         try {
             if (fairytaleId) {
-                const result = await updateBookForm(formdata, fairytaleId);
+                const result = await updateBookForm(
+                    formdata,
+                    fairytaleId,
+                    accessToken
+                );
                 if (result.statusCode === 400) {
                     alert(result.message);
                 } else {
@@ -182,7 +196,7 @@ export const useBook = (fairytaleId?: number) => {
                     router.push('/');
                 }
             } else {
-                const result = await submitBookForm(formdata);
+                const result = await submitBookForm(formdata, accessToken);
                 if (result.statusCode === 400) {
                     alert(result.message);
                 } else {
@@ -260,6 +274,7 @@ export const useBook = (fairytaleId?: number) => {
         currentPage,
         nickname,
         credit,
+        loading,
         handlePrevPage,
         handleNextPage,
         handleImageSelect,

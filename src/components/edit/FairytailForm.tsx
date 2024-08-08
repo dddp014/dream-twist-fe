@@ -34,7 +34,7 @@ interface FairytailFormProps {
     fairytaleId?: number;
 }
 
-export default function FairytailForm({ fairytaleId }: FairytailFormProps) {
+export default function FairytailForm({ fairytaleId = 0 }: FairytailFormProps) {
     // 페이지 나갈때 체크
     usePageLeaveCheck();
     const {
@@ -133,7 +133,3 @@ export default function FairytailForm({ fairytaleId }: FairytailFormProps) {
         </form>
     );
 }
-
-FairytailForm.defaultProps = {
-    fairytaleId: null
-};

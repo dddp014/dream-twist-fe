@@ -32,6 +32,8 @@ export type FormData = {
 export const useBookForm = (fairytaleId?: number) => {
     // 유저 닉네임 불러오기
     const [nickname, setNickname] = useState<string>('');
+    // 로딩 상태 추가
+    const [loading, setLoading] = useState<boolean>(true);
 
     // 로컬 스토리지 데이터 불러오기
     const { title, theme, storys, isPublic } = useFairytailInfo();
@@ -88,6 +90,7 @@ export const useBookForm = (fairytaleId?: number) => {
                     pages: storys.map((story) => ({ image: null, story }))
                 });
             }
+            setLoading(false); // 데이터 로딩 완료 후 로딩 상태 해제
         };
         fairytaleData();
     }, [title, theme, storys, isPublic, reset]);
@@ -107,6 +110,7 @@ export const useBookForm = (fairytaleId?: number) => {
         cover,
         title,
         theme,
-        nickname
+        nickname,
+        loading
     };
 };

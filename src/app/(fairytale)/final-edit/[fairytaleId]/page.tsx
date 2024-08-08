@@ -23,11 +23,8 @@ interface IEditParams {
 
 // 동적 메타데이터 생성 함수
 export async function generateMetadata({
-    params
-}: {
-    params: { fairytaleId: string };
-}): Promise<Metadata> {
-    const fairytaleId = parseInt(params.fairytaleId, 10);
+    params: { fairytaleId }
+}: IEditParams): Promise<Metadata> {
     const response = await fetch(
         `http://localhost:4000/fairytale/${fairytaleId}`
     );

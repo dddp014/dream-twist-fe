@@ -32,12 +32,13 @@ import { themes } from '@/hooks/useFairytailForm';
 import { useBook } from '@/hooks/useBook';
 import { useBookModal } from '@/hooks/useModal';
 import usePageLeaveCheck from '@/hooks/usePageLeaveCheck';
+import Loading from '../common/Loading';
 
 interface FairytailFormProps {
     fairytaleId?: number;
 }
 
-export default function Book({ fairytaleId }: FairytailFormProps) {
+export default function Book({ fairytaleId = 0 }: FairytailFormProps) {
     const {
         register,
         handleSubmit,
@@ -49,6 +50,7 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
         currentPage,
         nickname,
         credit,
+        loading,
         handlePrevPage,
         handleNextPage,
         handleImageSelect,
@@ -67,6 +69,10 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
 
     // 페이지 나갈때 체크
     usePageLeaveCheck();
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -357,7 +363,3 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
         </form>
     );
 }
-
-Book.defaultProps = {
-    fairytaleId: null
-};

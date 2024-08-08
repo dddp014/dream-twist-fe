@@ -13,9 +13,12 @@ Date        Author   Status    Description
 */
 
 const API_BASE_URL = 'http://localhost:4000/fairytale';
-const accessToken = localStorage.getItem('accessToken');
 
-export const fetchPresignedURL = async (userId: number, fileName: string) => {
+export const fetchPresignedURL = async (
+    userId: number,
+    fileName: string,
+    accessToken: string | null
+) => {
     const response = await fetch(`${API_BASE_URL}/presigned-url`, {
         method: 'POST',
         headers: {
@@ -33,7 +36,11 @@ export const fetchPresignedURL = async (userId: number, fileName: string) => {
     return response.json();
 };
 
-export const uploadFileToS3 = async (presignedURL: string, file: File) => {
+export const uploadFileToS3 = async (
+    presignedURL: string,
+    file: File,
+    accessToken: string | null
+) => {
     const response = await fetch(presignedURL, {
         method: 'PUT',
         headers: {
@@ -50,7 +57,10 @@ export const uploadFileToS3 = async (presignedURL: string, file: File) => {
     return presignedURL.split('?')[0];
 };
 
-export const submitBookForm = async (formdata: FormData) => {
+export const submitBookForm = async (
+    formdata: FormData,
+    accessToken: string | null
+) => {
     const response = await fetch(API_BASE_URL, {
         method: 'POST',
         headers: {
@@ -70,7 +80,8 @@ export const submitBookForm = async (formdata: FormData) => {
 
 export const updateBookForm = async (
     formdata: FormData,
-    fairytailId: number
+    fairytailId: number,
+    accessToken: string | null
 ) => {
     const response = await fetch(`${API_BASE_URL}/${fairytailId}`, {
         method: 'PUT',
@@ -89,7 +100,10 @@ export const updateBookForm = async (
     return response.text();
 };
 
-export const fetchAiImage = async (prompt: string): Promise<string> => {
+export const fetchAiImage = async (
+    prompt: string,
+    accessToken: string | null
+): Promise<string> => {
     const response = await fetch(`http://localhost:4000/ai-fairytale/image`, {
         method: 'POST',
         headers: {
