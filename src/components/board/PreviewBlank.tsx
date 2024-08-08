@@ -101,10 +101,10 @@ export default function PreviewBlank({
                                         className={`${index === 0 ? 'display' : 'hidden'} select-none absolute bottom-0 flex flex-col justify-center items-center bg-white w-full h-[2rem]`}
                                     >
                                         <p className="text-[0.4rem] text-slate-800 font-LaundryGothic">
-                                            {info[0]}
+                                            {info.title}
                                         </p>
                                         <p className="font-Hyemin text-slate-800 text-[0.3rem]">
-                                            {info[1]} 작가
+                                            {info.nickname} 작가
                                         </p>
                                     </div>
                                 </div>
