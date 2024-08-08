@@ -41,7 +41,7 @@ export default function EditDeleteBtn({
     };
 
     return (
-        <>
+        <div className="flex flex-row z-1">
             <button
                 type="button"
                 onClick={modalType === 'book' ? handleEditClick : onEditClick}
@@ -64,6 +64,6 @@ export default function EditDeleteBtn({
                     cancelClick={handleCancelClick}
                 />
             )}
-        </>
+        </div>
     );
 }

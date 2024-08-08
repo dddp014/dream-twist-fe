@@ -48,6 +48,7 @@ export default function SearchBook() {
                     createdAt: item.createdAt.split('T')[0]
                 }));
                 setInitData(formattedData);
+                console.log(data);
                 setSearchResults(formattedData);
             } catch (error) {
                 console.error(error);

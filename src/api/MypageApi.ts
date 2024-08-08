@@ -46,6 +46,24 @@ export const getMyBookList = async () => {
     return response.json();
 };
 
+export const getMyLikeBook = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const response = await fetch(`${API_BASE_URL}/users/my-likes`, {
+        cache: 'reload',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('나의 좋아요 동화 조회 실패');
+    }
+
+    return response.json();
+};
+
 export const getMyCommentList = async () => {
     const accessToken = localStorage.getItem('accessToken');
 

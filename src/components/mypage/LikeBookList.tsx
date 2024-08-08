@@ -11,21 +11,35 @@ Date        Author   Status    Description
 'use client';
 
 import { useEffect, useState } from 'react';
-import { sampleImages } from '@/utils/dummyBooks';
+import { getMyLikeBook } from '@/api/MypageApi';
 
 export default function LikeBookList() {
     const [bookCount, setBookCount] = useState(6);
     const [viewClick, setViewClick] = useState(false);
     const [myBooks, setMyBooks] = useState([]);
 
+    useEffect(() => {
+        const fetchMyBook = async () => {
+            try {
+                const data = await getMyLikeBook();
+                const bookData = data.myLikes.map((item) => ({
+                    ...item,
+                    createdAt: item.createdAt.split('T')[0]
+                }));
+                setMyBooks(bookData);
+                console.log('좋아요 동화', data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchMyBook();
+    }, []);
+
     const handleLoadMore = () => {
-        viewClick ? setBookCount(6) : setBookCount(sampleImages.length);
+        viewClick ? setBookCount(6) : setBookCount(myBooks.length);
         setViewClick(!viewClick);
     };
-
-    // useEffect(() => {
-
-    // }, []);
 
     return (
         <div className="flex flex-col justify-between mt-6">
@@ -45,7 +59,7 @@ export default function LikeBookList() {
                                 <div
                                     className="absolute top-0 w-full h-full overflow-hidden"
                                     style={{
-                                        backgroundImage: `url(${item.title})`,
+                                        backgroundImage: `url(${item.coverImage})`,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'top',
                                         height: '80%'
