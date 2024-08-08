@@ -1,4 +1,13 @@
-// src/components/common/Modal.tsx
+/**
+File Name : mypage/Modal
+Description : 마이페이지 - 나의 결제 리스트
+Author : 김민규
+
+History
+Date        Author   Status    Description
+2024.08.08  김민규    Created   환불 요청 폼 
+*/
+
 import { ReactNode } from 'react';
 import Portal from '@/components/common/Portal';
 

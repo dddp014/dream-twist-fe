@@ -35,7 +35,7 @@ export default function MyPayList({ payInfo }: MyPayProps) {
                     },
                     body: JSON.stringify({
                         id: paymentId,
-                        cancelReason
+                        cancelReason : cancelReason
                     })
                 }
             );

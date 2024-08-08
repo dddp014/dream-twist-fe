@@ -1,3 +1,14 @@
+/**
+File Name : mypage/RefundForm
+Description : 마이페이지 - 나의 결제 리스트
+Author : 김민규
+
+History
+Date        Author   Status    Description
+2024.08.08  김민규    Created   환불 요청 폼 
+*/
+
+
 import { useState } from 'react';
 
 interface RefundFormProps {
