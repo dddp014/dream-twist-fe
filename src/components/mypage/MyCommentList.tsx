@@ -13,14 +13,22 @@ Date        Author   Status    Description
 import { useEffect, useState } from 'react';
 import { getMyCommentList } from '@/api/MypageApi';
 
+interface Book {
+    id: string;
+    coverImage: string;
+    title: string;
+    createdAt: string;
+    content: string;
+}
+
 export default function MyCommentList() {
-    const [commentInfo, setCommentInfo] = useState([]);
+    const [commentInfo, setCommentInfo] = useState<Book[]>([]);
 
     useEffect(() => {
         const fetchMyComment = async () => {
             try {
                 const data = await getMyCommentList();
-                const commentData = data.myComments.map((item) => ({
+                const commentData = data.myComments.map((item: Book) => ({
                     ...item,
                     createdAt: item.createdAt.split('T')[0]
                 }));

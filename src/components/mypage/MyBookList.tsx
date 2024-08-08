@@ -13,16 +13,23 @@ Date        Author   Status    Description
 import { useEffect, useState } from 'react';
 import { getMyBookList } from '@/api/MypageApi';
 
+interface Book {
+    id: string;
+    coverImage: string;
+    title: string;
+    createdAt: string;
+}
+
 export default function MyBookList() {
     const [bookCount, setBookCount] = useState(6);
     const [viewClick, setViewClick] = useState(false);
-    const [myBooks, setMyBooks] = useState([]);
+    const [myBooks, setMyBooks] = useState<Book[]>([]);
 
     useEffect(() => {
         const fetchMyBook = async () => {
             try {
                 const data = await getMyBookList();
-                const myBookData = data.myFairytales.map((item) => ({
+                const myBookData = data.myFairytales.map((item: Book) => ({
                     ...item,
                     createdAt: item.createdAt.split('T')[0]
                 }));

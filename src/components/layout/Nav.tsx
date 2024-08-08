@@ -21,10 +21,15 @@ import { getUserInfo } from '@/api/AuthApi';
 const JWT_EXPIRY_TIME = 15 * 60 * 1000;
 const API_BASE_URL = 'http://localhost:4000';
 
+interface UserInfo {
+    nickname: string;
+    profileImage: string;
+}
+
 export default function Nav() {
     const pathname = usePathname();
     const router = useRouter();
-    const [userInfo, setUserInfo] = useState({
+    const [userInfo, setUserInfo] = useState<UserInfo>({
         nickname: '',
         profileImage: ''
     });
@@ -59,9 +64,9 @@ export default function Nav() {
         const tokenExpiry = localStorage.getItem('tokenExpiry');
 
         // 토큰 유효성 확인
-        if (token && tokenExpiry && Date.now() < tokenExpiry) {
+        if (token && tokenExpiry && Date.now() < Number(tokenExpiry)) {
             setIsAuth(true);
-            setTimeout(refreshToken, tokenExpiry - Date.now() - 60000); // 만료 1분 전에 재발급
+            setTimeout(refreshToken, Number(tokenExpiry) - Date.now() - 60000); // 만료 1분 전에 재발급
         } else {
             setIsAuth(false);
             // localStorage.removeItem('accessToken');
@@ -112,10 +117,10 @@ export default function Nav() {
         }
     };
 
-    const onLoginSuccess = async (token) => {
+    const onLoginSuccess = async (token: string) => {
         const expiryTime = Date.now() + JWT_EXPIRY_TIME;
         localStorage.setItem('accessToken', token);
-        localStorage.setItem('tokenExpiry', expiryTime);
+        localStorage.setItem('tokenExpiry', expiryTime.toString());
         setIsAuth(true);
         setTimeout(refreshToken, JWT_EXPIRY_TIME - 60000); // 만료 1분 전에 재발급
         // console.log('로그인');
