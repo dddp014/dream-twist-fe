@@ -18,7 +18,7 @@ import Link from 'next/link';
 import React from 'react';
 
 const MakestoryAiPage: React.FC = () => {
-    const { storys } = useFairytailInfo();
+    const { storys, title, theme } = useFairytailInfo();
 
     return (
         <div
@@ -36,6 +36,11 @@ const MakestoryAiPage: React.FC = () => {
                 <p className="text-l mb-10 text-center">
                     동화책 각 페이지에 들어갈 이야기를 수정할 수 있어요.
                 </p>
+                <div className="p-3 bg-main-100 text-black-500 rounded-md mb-1">
+                    <h1 className="text-xl font-bold mb-2">제목 : {title}</h1>
+                    <h2>주제 : {theme}</h2>
+                </div>
+
                 <div className="flex overflow-x-auto w-full space-x-4">
                     {storys.map((story: string, index: number) => (
                         <div

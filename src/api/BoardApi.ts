@@ -71,3 +71,79 @@ export const deleteBook = async (fairytaleId: string) => {
         throw new Error('동화 삭제 실패');
     }
 };
+
+export const postComment = async (id: string, text: string) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const response = await fetch(`${API_BASE_URL}/comments`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+            fairytaleId: id,
+            content: text
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error('댓글 생성 실패');
+    }
+
+    return response.json();
+};
+
+export const getComment = async (id: string) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const response = await fetch(`${API_BASE_URL}/comments/${id}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('댓글 조회 실패');
+    }
+
+    return response.json();
+};
+
+export const putComment = async (id: string, comtId: string, text: string) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const response = await fetch(`${API_BASE_URL}/comments/${id}/${comtId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+            content: text
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error('댓글 수정 실패');
+    }
+
+    return response.json();
+};
+
+export const deleteComment = async (comId: string) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const response = await fetch(`${API_BASE_URL}/comments/${comId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('댓글 삭제 실패');
+    }
+};

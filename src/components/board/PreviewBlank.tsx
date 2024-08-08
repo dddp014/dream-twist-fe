@@ -14,12 +14,17 @@ Date        Author   Status    Description
 import { useRef, useEffect, useMemo } from 'react';
 import useTextToImage from '@/hooks/useTextToImage';
 
+interface Info {
+    title: string;
+    nickname: string;
+}
+
 interface PreviewProps {
     step: number;
     getTextForStep: (step: number) => string;
     getCurrentImage: (step: number) => [string, string];
     handlePreview: (index: number) => void;
-    info: string[];
+    info: Info;
 }
 
 const pageCount: number = 8;
