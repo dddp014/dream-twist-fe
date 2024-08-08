@@ -12,12 +12,14 @@ Date        Author   Status    Description
 */
 
 const API_BASE_URL = 'http://localhost:4000/fairytale';
+const accessToken = localStorage.getItem('accessToken');
 
 export const fetchPresignedURL = async (userId: number, fileName: string) => {
     const response = await fetch(`${API_BASE_URL}/presigned-url`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
         },
         body: JSON.stringify({
             userId,
@@ -33,6 +35,10 @@ export const fetchPresignedURL = async (userId: number, fileName: string) => {
 export const uploadFileToS3 = async (presignedURL: string, file: File) => {
     const response = await fetch(presignedURL, {
         method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        },
         body: file
     });
 
@@ -46,6 +52,10 @@ export const uploadFileToS3 = async (presignedURL: string, file: File) => {
 export const submitBookForm = async (formdata: FormData) => {
     const response = await fetch(API_BASE_URL, {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        },
         body: formdata,
         credentials: 'include'
     });
@@ -63,6 +73,10 @@ export const updateBookForm = async (
 ) => {
     const response = await fetch(`${API_BASE_URL}/${fairytailId}`, {
         method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        },
         body: formdata,
         credentials: 'include'
     });
@@ -78,9 +92,10 @@ export const fetchAiImage = async (prompt: string): Promise<string> => {
     const response = await fetch(`http://localhost:4000/ai-fairytale/image`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
         },
-        body: JSON.stringify({ prompt: prompt }),
+        body: JSON.stringify({ prompt }),
         credentials: 'include'
     });
 

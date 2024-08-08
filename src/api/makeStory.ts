@@ -16,6 +16,8 @@ export interface StoryResponse {
     story: string[];
 }
 
+const accessToken = localStorage.getItem('accessToken');
+
 export const generatePlot = async (
     storyInput: string
 ): Promise<StoryResponse> => {
@@ -23,7 +25,8 @@ export const generatePlot = async (
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            Accept: 'application/json'
+            Accept: 'application/json',
+            Authorization: `Bearer ${accessToken}`
         },
         body: JSON.stringify({ prompt: storyInput }),
         credentials: 'include'

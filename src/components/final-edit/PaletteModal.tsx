@@ -13,6 +13,7 @@ Date        Author   Status      Description
 2024.08.02  임도헌   Modified    creationWays 코드 추가 및 이미지를 File로 변경 후 File 형태 폼제출 할 수 있도록 수정
 2024.08.03  임도헌   Modified    코드 분리
 2024.08.05  임도헌   Modified    colorOptions 분리
+2024.08.08  임도헌   Modified    eslint 에러 처리
 */
 
 import React from 'react';
@@ -72,6 +73,7 @@ export default function PalleteModal({
                 <div className="flex justify-center items-center">
                     <div className="flex h-[66px] space-x-4 mb-4">
                         <button
+                            type="button"
                             className="p-4 bg-gray-200 rounded-md flex-none"
                             onClick={handleModeClick}
                         >
@@ -92,6 +94,7 @@ export default function PalleteModal({
                             )}
                         </button>
                         <button
+                            type="button"
                             className="p-4 bg-gray-200 rounded-md flex-none"
                             onClick={handleEraserClick}
                         >
@@ -121,15 +124,26 @@ export default function PalleteModal({
                                 className="w-[50px] h-10 border-none mr-4"
                             />
                             <div className="grid grid-cols-5 gap-5">
-                                {colorOptions.map((color, index) => (
+                                {colorOptions.map((colorOption) => (
                                     <div
-                                        key={index}
+                                        key={colorOption}
+                                        role="button"
+                                        tabIndex={0}
+                                        aria-label={`Select color ${colorOption}`}
                                         className="w-8 h-8 rounded-lg border-[1px]"
-                                        style={{ backgroundColor: color }}
+                                        style={{ backgroundColor: colorOption }}
                                         onClick={() => {
-                                            setColor(color);
+                                            setColor(colorOption);
                                         }}
-                                    ></div>
+                                        onKeyPress={(e) => {
+                                            if (
+                                                e.key === 'Enter' ||
+                                                e.key === ' '
+                                            ) {
+                                                setColor(colorOption);
+                                            }
+                                        }}
+                                    />
                                 ))}
                             </div>
                         </div>
@@ -155,6 +169,7 @@ export default function PalleteModal({
                             </button>
                         </div>
                         <button
+                            type="button"
                             onClick={handleClearClick}
                             className="p-4 bg-gray-200 rounded-md flex-none"
                         >
@@ -190,6 +205,7 @@ export default function PalleteModal({
                         />
                     </div>
                     <button
+                        type="button"
                         onClick={() =>
                             handleDrawingComplete(handleDrawingUpload)
                         }

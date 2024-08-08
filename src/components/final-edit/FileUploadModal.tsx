@@ -12,8 +12,8 @@ Date        Author   Status     Description
 */
 
 import React from 'react';
-import Portal from '../common/Portal';
 import Image from 'next/image';
+import Portal from '../common/Portal';
 import { useFileUploadModal } from '@/hooks/useFileUploadModal';
 
 interface FileUploadModalProps {
@@ -29,72 +29,70 @@ export default function FileUploadModal({
         useFileUploadModal();
 
     return (
-        <>
-            <Portal>
-                <div className="fixed left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-dark/90 z-10 bg-black bg-opacity-50">
-                    <div className="w-full max-w-[900px] rounded-lg bg-white text-center first-line: border-[1px] border-main px-8">
+        <Portal>
+            <div className="fixed left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-dark/90 z-10 bg-black bg-opacity-50">
+                <div className="w-full max-w-[900px] rounded-lg bg-white text-center first-line: border-[1px] border-main px-8">
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="ml-[800px] mt-[20px]"
+                    >
+                        <Image
+                            src="/images/cancleIcon.svg"
+                            width={40}
+                            height={40}
+                            alt="cancle"
+                        />
+                    </button>
+
+                    <input
+                        className="hidden"
+                        type="file"
+                        accept="image/*"
+                        ref={fileRef}
+                        onChange={handleFileChange}
+                    />
+                    <div className="w-18 h-18">
                         <button
-                            onClick={onClose}
-                            className="ml-[800px] mt-[20px]"
+                            className="p-8 bg-gray-200 rounded-md flex-none"
+                            type="button"
+                            onClick={handleClick}
                         >
                             <Image
-                                src={'/images/cancleIcon.svg'}
-                                width={40}
-                                height={40}
-                                alt="cancle"
+                                src="/images/PalettePicture.svg"
+                                width={60}
+                                height={60}
+                                alt="picture"
                             />
                         </button>
-
-                        <label htmlFor="file">사진 첨부</label>
-                        <input
-                            className="hidden"
-                            type="file"
-                            accept="image/*"
-                            ref={fileRef}
-                            onChange={handleFileChange}
-                        />
-                        <div className="w-18 h-18">
-                            <button
-                                className="p-8 bg-gray-200 rounded-md flex-none"
-                                type="button"
-                                onClick={handleClick}
-                            >
-                                <Image
-                                    src="/images/PalettePicture.svg"
-                                    width={60}
-                                    height={60}
-                                    alt="picture"
-                                />
-                            </button>
-                        </div>
-                        <div className="flex justify-center m-10">
-                            {image ? ( // 이미지가 있을 때만 렌더링
-                                <div className="flex justify-center m-10 border-[3px] border-gray-400">
-                                    <img
-                                        src={image}
-                                        width={400}
-                                        height={400}
-                                        alt="image preview"
-                                        className="object-fit w-[400px] h-[400px]"
-                                    />
-                                </div>
-                            ) : (
-                                // 이미지가 없으면 빈 div 보여준다.
-                                <div className="flex justify-center items-center font-bold w-[400px] h-[400px] border-[3px] border-gray-400">
-                                    빈 이미지
-                                </div>
-                            )}
-                        </div>
-                        <button
-                            type="button"
-                            onClick={() => handleSubmit(onFileSelect)}
-                            className="px-6 py-2 bg-main text-white rounded-md mb-10"
-                        >
-                            확인
-                        </button>
                     </div>
+                    <div className="flex justify-center m-10">
+                        {image ? ( // 이미지가 있을 때만 렌더링
+                            <div className="flex justify-center m-10 border-[3px] border-gray-400">
+                                <Image
+                                    src={image}
+                                    width={400}
+                                    height={400}
+                                    alt="image preview"
+                                    className="object-fit w-[400px] h-[400px]"
+                                />
+                            </div>
+                        ) : (
+                            // 이미지가 없으면 빈 div 보여준다.
+                            <div className="flex justify-center items-center font-bold w-[400px] h-[400px] border-[3px] border-gray-400">
+                                빈 이미지
+                            </div>
+                        )}
+                    </div>
+                    <button
+                        type="button"
+                        onClick={() => handleSubmit(onFileSelect)}
+                        className="px-6 py-2 bg-main text-white rounded-md mb-10"
+                    >
+                        확인
+                    </button>
                 </div>
-            </Portal>
-        </>
+            </div>
+        </Portal>
     );
 }

@@ -8,6 +8,7 @@ Date        Author   Status    Description
 2024.08.03  임도헌   Created
 2024.08.05  임도헌   Modified   ai로 생성한 데이터 로컬스토리지에서 불러와서 반영
 2024.08.07  임도헌   Modified   fairytaleId를 기준으로 id가 있다면 fetch 사용, 아니라면 생성이므로 localstorage를 사용
+2024.08.08  임도헌   Modified   privateAt이 null이라면 isPublic을 true로 변경해서 값 저장하는 코드 추가
 */
 
 import { loadFromLocalStorage, saveToLocalStorage } from '@/utils/localStorage';
@@ -72,11 +73,13 @@ export const useFairytailForm = (fairytaleId?: number) => {
                     const savedStorys = Object.values(
                         data[0].content
                     ) as string[];
+                    const savedIsPublic =
+                        data[0].privatedAt === null ? true : false;
                     reset({
                         title: savedTitle,
                         theme: savedTheme,
                         storys: savedStorys,
-                        isPublic: false // 나중에 isPublic 오면 수정해야됨
+                        isPublic: savedIsPublic
                     });
                 } catch (error) {
                     console.error(`Error fetching fairytale data: ${error}`);

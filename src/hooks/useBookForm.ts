@@ -11,16 +11,16 @@ Date        Author   Status    Description
 2024.08.07  임도헌   Modified  유저 닉네임 추가(작가 명)
 */
 
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useFairytailInfo } from './useFairytailInfo';
-import { useEffect, useState } from 'react';
 
-type PageData = {
+export type PageData = {
     image: File | string | null;
     story: string;
 };
 
-type FormData = {
+export type FormData = {
     title: string;
     theme: string;
     cover: File | string | null;
@@ -39,8 +39,8 @@ export const useBookForm = (fairytaleId?: number) => {
         useForm<FormData>({
             defaultValues: {
                 cover: null,
-                theme: theme,
-                isPublic: isPublic,
+                theme,
+                isPublic,
                 pages:
                     storys.length > 0
                         ? storys.map((story) => ({ image: null, story }))
@@ -69,21 +69,21 @@ export const useBookForm = (fairytaleId?: number) => {
                     }));
 
                     reset({
-                        title: title,
-                        theme: theme,
+                        title,
+                        theme,
                         cover: savedCover,
                         isPublic: savedIsPublic,
-                        pages: pages
+                        pages
                     });
                 } catch (error) {
                     console.error(`Error fetching fairytale data: ${error}`);
                 }
             } else {
                 reset({
-                    title: title,
-                    theme: theme,
+                    title,
+                    theme,
                     cover: null,
-                    isPublic: isPublic,
+                    isPublic,
                     pages: storys.map((story) => ({ image: null, story }))
                 });
             }
