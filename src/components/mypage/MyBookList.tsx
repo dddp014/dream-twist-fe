@@ -11,18 +11,12 @@ Date        Author   Status    Description
 'use client';
 
 import { useEffect, useState } from 'react';
-import { sampleImages } from '@/utils/dummyBooks';
 import { getMyBookList } from '@/api/MypageApi';
 
 export default function MyBookList() {
     const [bookCount, setBookCount] = useState(6);
     const [viewClick, setViewClick] = useState(false);
     const [myBooks, setMyBooks] = useState([]);
-
-    const handleLoadMore = () => {
-        viewClick ? setBookCount(6) : setBookCount(sampleImages.length);
-        setViewClick(!viewClick);
-    };
 
     useEffect(() => {
         const fetchMyBook = async () => {
@@ -40,6 +34,11 @@ export default function MyBookList() {
 
         fetchMyBook();
     }, []);
+
+    const handleLoadMore = () => {
+        viewClick ? setBookCount(6) : setBookCount(myBooks.length);
+        setViewClick(!viewClick);
+    };
 
     return (
         <div className="flex flex-col justify-between mt-6">

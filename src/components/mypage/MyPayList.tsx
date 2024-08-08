@@ -9,17 +9,16 @@ Date        Author   Status    Description
 2024.08.08  김민규    Created   환불 요청 폼 
 */
 
-
 'use client';
 
 import { useEffect, useState } from 'react';
 import { getMyPayList } from '@/api/MypageApi';
-import { payInfo } from '@/types/mypage';
 import Modal from '@/components/mypage/Modal';
 import RefundForm from '@/components/mypage/RefundForm';
 
 export default function MyPayList() {
     const [payInfo, setPayInfo] = useState([]);
+    const [showForm, setShowForm] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchMyPay = async () => {
@@ -29,6 +28,7 @@ export default function MyPayList() {
                     ...item
                 }));
                 setPayInfo(payData);
+                console.log('rufwp', payData);
             } catch (error) {
                 console.error(error);
             }
@@ -36,15 +36,6 @@ export default function MyPayList() {
 
         fetchMyPay();
     }, []);
-
-
-
-interface MyPayProps {
-    payInfo: payInfo[];
-}
-
-export default function MyPayList({ payInfo }: MyPayProps) {
-    const [showForm, setShowForm] = useState<string | null>(null);
 
     const handleRefund = async (paymentId: string, cancelReason: string) => {
         console.log(`환불 상품 ID: ${paymentId} 환불 사유 : ${cancelReason}`);
@@ -58,7 +49,7 @@ export default function MyPayList({ payInfo }: MyPayProps) {
                     },
                     body: JSON.stringify({
                         id: paymentId,
-                        cancelReason : cancelReason
+                        cancelReason: cancelReason
                     })
                 }
             );
