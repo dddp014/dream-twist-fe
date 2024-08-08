@@ -8,13 +8,30 @@ Date        Author   Status    Description
 2024.08.05  나경윤    Created
 */
 
-import { payInfo } from '@/types/mypage';
+'use client';
 
-interface MyPayProps {
-    payInfo: payInfo[];
-}
+import { useEffect, useState } from 'react';
+import { getMyPayList } from '@/api/MypageApi';
 
-export default function MyPayList({ payInfo }: MyPayProps) {
+export default function MyPayList() {
+    const [payInfo, setPayInfo] = useState([]);
+
+    useEffect(() => {
+        const fetchMyPay = async () => {
+            try {
+                const data = await getMyPayList();
+                const payData = data.map((item) => ({
+                    ...item
+                }));
+                setPayInfo(payData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchMyPay();
+    }, []);
+
     return (
         <div className="flex flex-col justify-start w-full mt-8 h-72 ">
             <div className="overflow-y-auto thin-scrollbar">

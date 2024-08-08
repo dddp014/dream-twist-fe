@@ -32,15 +32,13 @@ export const getUserInfo = async () => {
 export const postLogout = async () => {
     const accessToken = localStorage.getItem('accessToken');
 
-    const options = {
+    const response = await fetch(`${API_BASE_URL}/users/logout`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`
         }
-    };
-
-    const response = await fetch(`${API_BASE_URL}/users/logout`, options);
+    });
 
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
@@ -53,11 +51,14 @@ export const postLogout = async () => {
     return response.json();
 };
 
-export const postUserPresigned = async (fileName: string) => {
+export const postUserPresignedURL = async (fileName: string) => {
+    const accessToken = localStorage.getItem('accessToken');
+
     const response = await fetch(`${API_BASE_URL}/users/presigned-url`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
         },
         body: JSON.stringify({
             fileName
@@ -69,18 +70,36 @@ export const postUserPresigned = async (fileName: string) => {
     return response.json();
 };
 
+export const patchProfile = async (nickname: string, url: string) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const response = await fetch(`${API_BASE_URL}/users/update`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+            nickname: nickname,
+            profileImageURL: url
+        })
+    });
+    if (!response.ok) {
+        throw new Error('프로필 수정 실패');
+    }
+    return response.json();
+};
+
 export const deleteAuth = async () => {
     const accessToken = localStorage.getItem('accessToken');
 
-    const options = {
+    const response = await fetch(`${API_BASE_URL}/users/delete`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`
         }
-    };
-
-    const response = await fetch(`${API_BASE_URL}/users/delete`, options);
+    });
 
     if (!response.ok) {
         throw new Error('회원 탈퇴 실패');
