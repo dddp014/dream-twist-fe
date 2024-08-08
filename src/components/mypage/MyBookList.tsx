@@ -33,7 +33,6 @@ export default function MyBookList() {
                     createdAt: item.createdAt.split('T')[0]
                 }));
                 setMyBooks(myBookData);
-                console.log('내책', myBookData);
             } catch (error) {
                 console.error(error);
             }

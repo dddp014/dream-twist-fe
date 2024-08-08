@@ -10,22 +10,11 @@ Date        Author   Status    Description
 
 const API_BASE_URL = 'http://localhost:4000';
 
-export const getMyPayList = async (userId: string) => {
-    const response = await fetch(`${API_BASE_URL}/billing/${userId}`, {
-        cache: 'reload'
-    });
-
-    if (!response.ok) {
-        throw new Error('나의 결제 내역 조회 실패');
-    }
-
-    return response.json();
-};
-
-export const getMyPoint = async () => {
+export const getMyPayList = async () => {
     const accessToken = localStorage.getItem('accessToken');
 
-    const response = await fetch(`${API_BASE_URL}/billing/user/points`, {
+    const response = await fetch(`${API_BASE_URL}/billing`, {
+        cache: 'reload',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`
@@ -33,7 +22,7 @@ export const getMyPoint = async () => {
     });
 
     if (!response.ok) {
-        throw new Error('나의 포인트 조회 실패');
+        throw new Error('나의 결제 내역 조회 실패');
     }
 
     return response.json();
@@ -52,6 +41,24 @@ export const getMyBookList = async () => {
 
     if (!response.ok) {
         throw new Error('나의 동화 조회 실패');
+    }
+
+    return response.json();
+};
+
+export const getMyCommentList = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const response = await fetch(`${API_BASE_URL}/users/my-comments`, {
+        cache: 'reload',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('나의 댓글 조회 실패');
     }
 
     return response.json();

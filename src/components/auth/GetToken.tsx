@@ -12,8 +12,9 @@ Date        Author   Status    Description
 'use client';
 
 import { useEffect } from 'react';
+import { getUserInfo } from '@/api/AuthApi';
 
-const JWT_EXPIRY_TIME = 5 * 24 * 60 * 60 * 1000;
+const JWT_EXPIRY_TIME = 15 * 60 * 1000;
 
 export default function GetToken() {
     useEffect(() => {
@@ -36,6 +37,17 @@ export default function GetToken() {
             // URL 해시 제거
             window.history.replaceState(null, '', window.location.pathname);
         }
+
+        const fetchUserInfo = async () => {
+            try {
+                const data = await getUserInfo();
+                console.log('유저', data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchUserInfo();
     }, []);
 
     return null;
