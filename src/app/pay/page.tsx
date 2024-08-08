@@ -35,6 +35,7 @@ const Page: React.FC = () => {
         orderName: string,
         addPoint: number
     ) => {
+        if (isLoading) return; // 중복 요청 방지
         try {
             setIsLoading(true);
 

@@ -60,7 +60,7 @@ export default function MyPayList() {
                 throw new Error('서버 응답 오류');
             }
 
-            return await response.json();
+            await response.json();
         } catch (error) {
             console.error('환불 요청 실패:', error);
             throw error;
