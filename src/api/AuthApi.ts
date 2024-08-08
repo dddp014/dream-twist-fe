@@ -43,6 +43,9 @@ export const postLogout = async () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('tokenExpiry');
+    localStorage.removeItem('nickname');
+    localStorage.removeItem('email');
+    localStorage.removeItem('profileImage');
 
     if (!response.ok) {
         throw new Error('로그아웃 실패');
