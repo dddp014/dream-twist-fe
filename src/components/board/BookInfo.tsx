@@ -32,9 +32,12 @@ export default function BookInfo({ id }: { id: string }) {
     const [bookImages, setBookImages] = useState<string[]>([]);
     const [contents, setContents] = useState<string[]>([]);
     const [myLikeBooks, setMyLikeBooks] = useState<string[]>([]);
-    const userName = localStorage.getItem('nickname');
+    const [userName, setUserName] = useState<string | null>(null);
 
     useEffect(() => {
+        const storedUserName = localStorage.getItem('nickname');
+        setUserName(storedUserName);
+
         const fetchMyLikeBook = async () => {
             try {
                 const data = await getMyLikeBook();
@@ -113,7 +116,7 @@ export default function BookInfo({ id }: { id: string }) {
                 <RenderBook
                     bookImages={bookImages}
                     contents={contents}
-                    info={Object.values(bookInfo)}
+                    info={bookInfo}
                 />
             </div>
         </>

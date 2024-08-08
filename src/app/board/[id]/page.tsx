@@ -27,7 +27,7 @@ export default function Board({ params: { id } }: IBoardParams) {
         <div className="flex flex-col justify-center items-center mx-24 pb-28 pt-12">
             <BookInfo id={id} />
             <div className="flex flex-col w-full h-full justify-center items-center mt-16">
-                <CommentList />
+                <CommentList id={id} />
             </div>
         </div>
     );
