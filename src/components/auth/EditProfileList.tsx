@@ -19,16 +19,20 @@ import { patchProfile } from '@/api/AuthApi';
 export default function EditProfileList() {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [profileImg, setProfileImg] = useState<string>('');
-    const [Imgfile, setImgFile] = useState<File>();
+    const [Imgfile, setImgFile] = useState<File | null>(null);
     const [nickname, setNickname] = useState('');
-    const email = localStorage.getItem('email');
+    const [email, setEmail] = useState<string | null>(null);
 
     useEffect(() => {
-        const defaultName = localStorage.getItem('nickname');
-        const defaultImg = localStorage.getItem('profileImage');
+        if (typeof window !== 'undefined') {
+            const storedEmail = localStorage.getItem('email');
+            const defaultName = localStorage.getItem('nickname');
+            const defaultImg = localStorage.getItem('profileImage');
 
-        setNickname(defaultName || '');
-        setProfileImg(defaultImg || '');
+            setEmail(storedEmail);
+            setNickname(defaultName || '');
+            setProfileImg(defaultImg || '');
+        }
     }, []);
 
     const UploadImageToS3 = async (file: File) => {

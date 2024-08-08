@@ -11,6 +11,8 @@ Date        Author   Status    Description
 interface CommentBoxProps {
     editStatus: boolean;
     initialContent: string;
+    commentId?: string;  // editStatus가 true일 때만 필요한 속성
+    fairytaleId: string;
     onCancel?: () => void;
 }
 

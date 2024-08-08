@@ -110,7 +110,7 @@ export default function BookInfo({ id }: { id: string }) {
                 <RenderBook
                     bookImages={bookImages}
                     contents={contents}
-                    info={Object.values(bookInfo)}
+                    info={bookInfo}
                 />
             </div>
         </>

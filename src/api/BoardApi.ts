@@ -56,6 +56,23 @@ export const postBookLike = async (fairytaleId: string) => {
     return response.json();
 };
 
+export const getComment = async (id: string) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const response = await fetch(`${API_BASE_URL}/comments/${id}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('댓글 조회 실패');
+    }
+
+    return response.json();
+};
+
 export const deleteBook = async (fairytaleId: string) => {
     const accessToken = localStorage.getItem('accessToken');
 
