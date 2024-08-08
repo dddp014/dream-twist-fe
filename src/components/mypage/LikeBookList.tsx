@@ -1,20 +1,19 @@
 /**
-File Name : mypage/MyBookList
-Description : 마이페이지 동화 리스트 컴포넌트
+File Name : mypage/LikeBookList
+Description : 마이페이지 좋아요한 동화 리스트 
 Author : 나경윤
 
 History
 Date        Author   Status    Description
-2024.08.03  나경윤    Created
+2024.08.08  나경윤    Created
 */
 
 'use client';
 
 import { useEffect, useState } from 'react';
 import { sampleImages } from '@/utils/dummyBooks';
-import { getMyBookList } from '@/api/MypageApi';
 
-export default function MyBookList() {
+export default function LikeBookList() {
     const [bookCount, setBookCount] = useState(6);
     const [viewClick, setViewClick] = useState(false);
     const [myBooks, setMyBooks] = useState([]);
@@ -24,23 +23,9 @@ export default function MyBookList() {
         setViewClick(!viewClick);
     };
 
-    useEffect(() => {
-        const fetchMyBook = async () => {
-            try {
-                const data = await getMyBookList();
-                const myBookData = data.myFairytales.map((item) => ({
-                    ...item,
-                    createdAt: item.createdAt.split('T')[0]
-                }));
-                setMyBooks(myBookData);
-                console.log('내책', myBookData);
-            } catch (error) {
-                console.error(error);
-            }
-        };
+    // useEffect(() => {
 
-        fetchMyBook();
-    }, []);
+    // }, []);
 
     return (
         <div className="flex flex-col justify-between mt-6">
@@ -60,7 +45,7 @@ export default function MyBookList() {
                                 <div
                                     className="absolute top-0 w-full h-full overflow-hidden"
                                     style={{
-                                        backgroundImage: `url(${item.coverImage})`,
+                                        backgroundImage: `url(${item.title})`,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'top',
                                         height: '80%'

@@ -10,7 +10,7 @@ Date        Author   Status    Description
 
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Tag from '../common/Tag';
 import SortDropdown from './SortDropdown';
@@ -64,7 +64,7 @@ export default function SearchBook() {
 
         if (label === '모든 주제') {
             setSearchResults(initData);
-            console.log(initData);
+            // console.log(initData);
             return;
         }
 

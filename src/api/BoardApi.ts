@@ -22,6 +22,18 @@ export const getBookDetail = async (fairytaleId: string) => {
     return response.json();
 };
 
+export const postBookLike = async (fairytaleId: string) => {
+    const response = await fetch(`${API_BASE_URL}/${fairytaleId}`, {
+        cache: 'reload'
+    });
+
+    if (!response.ok) {
+        throw new Error('동화 세부 정보 조회 실패');
+    }
+
+    return response.json();
+};
+
 export const deleteBook = async (fairytaleId: string) => {
     const response = await fetch(`${API_BASE_URL}/${fairytaleId}`, {
         method: 'DELETE'
