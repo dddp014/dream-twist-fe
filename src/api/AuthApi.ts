@@ -7,6 +7,7 @@ History
 Date        Author   Status    Description
 2024.08.07  나경윤    Created
 2024.08.08  나경윤    Modified  로그아웃, 탈퇴 추가
+2024.08.09  임도헌   Modified  탈퇴 기능 수정
 */
 
 const API_BASE_URL = 'http://localhost:4000';
@@ -90,20 +91,23 @@ export const patchProfile = async (nickname: string, url: string) => {
     return response.json();
 };
 
-export const deleteAuth = async () => {
+export const deleteAuth = async (email: string | null): Promise<void> => {
     const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken || !email) {
+        throw new Error('유효한 접근 토큰 또는 이메일을 찾을 수 없습니다.');
+    }
 
     const response = await fetch(`${API_BASE_URL}/users/delete`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`
-        }
+        },
+        body: JSON.stringify({ email })
     });
 
     if (!response.ok) {
         throw new Error('회원 탈퇴 실패');
     }
-
-    return response.json();
 };
