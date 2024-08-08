@@ -12,33 +12,31 @@ Date        Author   Status    Description
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+
+const JWT_EXPIRY_TIME = 5 * 24 * 60 * 60 * 1000;
 
 export default function GetToken() {
-    const router = useRouter();
-
     useEffect(() => {
         // 현재 URL 해시 부분에서 토큰 추출
         const hash = window.location.hash.substring(1);
         const params = new URLSearchParams(hash);
-        const queryParams = new URLSearchParams(window.location.search);
 
-        const error = queryParams.get('error');
         const accessToken = params.get('accessToken');
         const refreshToken = params.get('refreshToken');
-        console.log('Error:', error);
 
-        if (error === 'access_denied') {
-            router.push('/login');
-        } else if (accessToken && refreshToken) {
+        if (accessToken && refreshToken) {
             // 토큰을 로컬 스토리지에 저장
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
+
+            // 만료 시간 설정 및 저장
+            const expiryTime = Date.now() + JWT_EXPIRY_TIME;
+            localStorage.setItem('tokenExpiry', expiryTime.toString());
 
             // URL 해시 제거
             window.history.replaceState(null, '', window.location.pathname);
         }
     }, []);
 
-    return <div style={{ display: 'none' }} />;
+    return null;
 }

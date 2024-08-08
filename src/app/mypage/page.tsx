@@ -14,12 +14,11 @@ import Link from 'next/link';
 import MyBookList from '@/components/mypage/MyBookList';
 import MyCommentList from '@/components/mypage/MyCommentList';
 import { getMyPayList } from '@/api/MypageApi';
-import { sampleImages } from '@/utils/dummyBooks';
 import { dummyMyComments } from '@/utils/dummyBooks';
 import { payInfo } from '@/types/mypage';
 import MyPayList from '@/components/mypage/MyPayList';
-import { getMyPoint } from '@/api/MypageApi';
 import MyInfoList from '@/components/mypage/MyInfoList';
+import LikeBookList from '@/components/mypage/LikeBookList';
 
 export const metadata: Metadata = {
     title: '꿈틀 마이페이지',
@@ -27,8 +26,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Mypage() {
-    const coverImage = sampleImages;
-
     const myCommentInfo = dummyMyComments.map((item) => {
         return { ...item };
     });
@@ -53,15 +50,7 @@ export default async function Mypage() {
         <div className="flex flex-col justify-center items-center mx-24 mt-16 mb-7">
             <div className="bg-main-100 h-64 w-full mb-16 rounded-xl flex justify-center items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 2xl:px-44">
                 <div className="flex flex-row">
-                    <Image
-                        src={'/images/default-profile.svg'}
-                        alt="profile"
-                        width={125}
-                        height={0}
-                    />
-                    <div className="flex flex-col mx-12 mt-1">
-                        <MyInfoList />
-                    </div>
+                    <MyInfoList />
                 </div>
                 <div className="flex flex-row text-lg justify-center items-center ml-28 mt-16">
                     <div className="w-px h-14 bg-main mr-5" />
@@ -98,11 +87,11 @@ export default async function Mypage() {
             </div>
             <div className="flex flex-col self-start mb-16 w-full">
                 <p className="text-[1.3rem] font-semibold">나의 동화</p>
-                <MyBookList bookInfo={coverImage} />
+                <MyBookList />
                 <p className="text-[1.3rem] font-semibold mt-16">
                     좋아요한 동화
                 </p>
-                <MyBookList bookInfo={coverImage} />
+                <LikeBookList />
                 <div className="flex flex-row w-full space-x-20 mt-6">
                     <div className="flex flex-col flex-1">
                         <p className="text-[1.3rem] font-semibold mt-16">

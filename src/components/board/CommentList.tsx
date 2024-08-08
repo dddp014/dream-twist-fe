@@ -10,8 +10,8 @@ Date        Author   Status    Description
 
 'use client';
 
-import { dummyComments } from '@/utils/dummyBooks';
 import { useState } from 'react';
+import { dummyComments } from '@/utils/dummyBooks';
 import EditDeleteBtn from './EditDeleteBtn';
 import CommentBox from './CommentBox';
 

@@ -38,3 +38,21 @@ export const getMyPoint = async () => {
 
     return response.json();
 };
+
+export const getMyBookList = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const response = await fetch(`${API_BASE_URL}/users/my-fairytales`, {
+        cache: 'reload',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('나의 동화 조회 실패');
+    }
+
+    return response.json();
+};
