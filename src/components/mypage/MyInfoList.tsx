@@ -13,6 +13,7 @@ Date        Author   Status    Description
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getMyPoint } from '@/api/MypageApi';
+import { getUserInfo } from '@/api/AuthApi';
 
 export default function MyInfoList() {
     const [myPoint, setMyPoint] = useState('0');
@@ -22,7 +23,16 @@ export default function MyInfoList() {
     });
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchUserInfo = async () => {
+            try {
+                const data = await getUserInfo();
+                console.log('유저', data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        const fetchPoint = async () => {
             try {
                 const data = await getMyPoint();
                 setMyPoint(data.userPoints);
@@ -31,7 +41,8 @@ export default function MyInfoList() {
             }
         };
 
-        fetchData();
+        fetchPoint();
+        fetchUserInfo();
     }, []);
 
     return (

@@ -53,6 +53,22 @@ export const postLogout = async () => {
     return response.json();
 };
 
+export const postUserPresigned = async (fileName: string) => {
+    const response = await fetch(`${API_BASE_URL}/users/presigned-url`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            fileName
+        })
+    });
+    if (!response.ok) {
+        throw new Error('AWS S3 에서 presigned URL 응답 실패');
+    }
+    return response.json();
+};
+
 export const deleteAuth = async () => {
     const accessToken = localStorage.getItem('accessToken');
 
