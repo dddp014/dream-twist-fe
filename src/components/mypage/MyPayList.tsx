@@ -11,19 +11,29 @@ Date        Author   Status    Description
 
 'use client';
 
+interface PayInfo {
+    id: string;
+    description: string;
+    amount: number;
+    method: string;
+    status: 'DONE' | 'CANCEL'; // 상태는 'DONE' 또는 'CANCELLED'
+    createdAt: string;
+    isRefundable: 'T' | 'F'; // 환불 가능 여부는 'T' 또는 'F'
+}
+
 import { useEffect, useState } from 'react';
 import { getMyPayList } from '@/api/MypageApi';
 import Modal from '@/components/mypage/Modal';
 import RefundForm from '@/components/mypage/RefundForm';
 
 export default function MyPayList() {
-    const [payInfo, setPayInfo] = useState([]);
+    const [payInfo, setPayInfo] = useState<PayInfo[]>([]); // payInfo는 PayInfo 타입의 배열
     const [showForm, setShowForm] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchMyPay = async () => {
             try {
-                const data = await getMyPayList();
+                const data: PayInfo[] = await getMyPayList(); // getMyPayList의 반환값을 PayInfo 배열로 가정
                 const payData = data.map((item) => ({
                     ...item
                 }));
@@ -37,6 +47,7 @@ export default function MyPayList() {
     }, []);
 
     const handleRefund = async (paymentId: string, cancelReason: string) => {
+        const accessToken = localStorage.getItem('accessToken');
         console.log(`환불 상품 ID: ${paymentId} 환불 사유 : ${cancelReason}`);
         try {
             const response = await fetch(
@@ -44,7 +55,8 @@ export default function MyPayList() {
                 {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${accessToken}`
                     },
                     body: JSON.stringify({
                         id: paymentId,
@@ -57,7 +69,7 @@ export default function MyPayList() {
                 throw new Error('서버 응답 오류');
             }
 
-            return await response.json();
+            await response.json();
         } catch (error) {
             console.error('환불 요청 실패:', error);
             throw error;
@@ -125,18 +137,18 @@ export default function MyPayList() {
                                     </div>
                                 </div>
                             </div>
-                            <Modal
-                                isOpen={showForm !== null}
-                                onClose={() => setShowForm(null)}
-                            >
-                                {showForm === item.id && (
+                            {item.id === showForm && (
+                                <Modal
+                                    isOpen={showForm !== null}
+                                    onClose={() => setShowForm(null)}
+                                >
                                     <RefundForm
                                         Id={item.id}
                                         onSubmit={handleRefund}
                                         onCancel={() => setShowForm(null)}
                                     />
-                                )}
-                            </Modal>
+                                </Modal>
+                            )}
                             {index < payInfo.length - 1 && (
                                 <hr className="border-[0.5px] border-gray-200 w-full my-4" />
                             )}

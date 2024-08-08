@@ -16,7 +16,12 @@ import Image from 'next/image';
 import MyDropdown from '../auth/MyDropDown';
 import { useDropdown } from '@/hooks/useDropdown';
 
-export default function LoginNav({ userInfo }) {
+interface UserInfo {
+    nickname: string;
+    profileImage: string;
+}
+
+export default function LoginNav({ userInfo }: { userInfo: UserInfo }) {
     const pathname = usePathname();
     const { isDropDown, dropdownRef, handleDropdown, setIsDropDown } =
         useDropdown();
