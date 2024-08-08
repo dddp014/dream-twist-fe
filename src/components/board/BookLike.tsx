@@ -13,25 +13,22 @@ Date        Author   Status    Description
 import { useState, useEffect } from 'react';
 import { LikeIcon } from '../icons/LikeIcon';
 
-export default function BookLike() {
-    const likeCount = 5;
+export default function BookLike({ likeCount }: string) {
     const [likeClick, setLikeClick] = useState(false);
     const [currentCount, setCurrentCount] = useState(likeCount);
 
-    useEffect(() => {
-        setCurrentCount((prevCount) =>
-            likeClick ? prevCount + 1 : prevCount - 1
-        );
-    }, [likeClick]);
-
     const handleLikeClick = () => {
-        setLikeClick((prevLike) => !prevLike);
+        const newLikeClick = !likeClick;
+        setLikeClick(newLikeClick);
+        setCurrentCount((prevCount) =>
+            newLikeClick ? prevCount + 1 : prevCount - 1
+        );
     };
 
     return (
-        <button onClick={handleLikeClick}>
+        <button type="button" onClick={handleLikeClick}>
             <div className="flex flex-col items-center">
-                <LikeIcon fill={likeClick ? true : false} />
+                <LikeIcon fill={likeClick} />
                 <p className="text-like text-xs -mt-1 mr-[1px]">
                     {currentCount}
                 </p>

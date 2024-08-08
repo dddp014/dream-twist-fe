@@ -10,9 +10,9 @@ Date        Author   Status    Description
 
 'use client';
 
+import { useRouter } from 'next/navigation';
 import DeleteModal from './DeleteModal';
 import { useConfirmModal } from '@/hooks/useModal';
-import CommentBox from './CommentBox';
 
 interface EditDeleteBtnProps {
     id: string;
@@ -25,6 +25,7 @@ export default function EditDeleteBtn({
     modalType,
     onEditClick
 }: EditDeleteBtnProps) {
+    const router = useRouter();
     const { isOpenModal, openModal, closeModal } = useConfirmModal();
 
     const handleDeleteClick = () => {
@@ -35,13 +36,15 @@ export default function EditDeleteBtn({
         closeModal();
     };
 
-    const handleEditClick = () => {};
+    const handleEditClick = () => {
+        router.push(`/edit/${id}`);
+    };
 
     return (
         <>
             <button
                 type="button"
-                onClick={onEditClick}
+                onClick={modalType === 'book' ? handleEditClick : onEditClick}
                 className="text-gray-400 text-[13px]"
             >
                 수정

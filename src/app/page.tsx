@@ -10,17 +10,14 @@ Date        Author   Status    Description
 */
 
 import SearchBook from '@/components/main/SearchBook';
-import BookList from '@/components/main/BookList';
 import ScrollUpButton from '@/components/main/ScrollUpButton';
-import { FairytaleInfo } from '@/types/fairytale';
-import { getBookList } from '@/api/MainApi';
 import GetToken from '@/components/auth/GetToken';
 
 export default function Home() {
     return (
         <main className="flex flex-col justify-center items-center mx-24 mt-16">
             <GetToken />
-            <div className="bg-main-100 h-80 w-full mb-16 rounded-xl"/>
+            <div className="bg-main-100 h-80 w-full mb-16 rounded-xl" />
             <div className="flex flex-col justify-center items-center w-full">
                 <SearchBook />
             </div>

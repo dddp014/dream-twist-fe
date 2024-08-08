@@ -11,14 +11,17 @@ Date        Author   Status    Description
 
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { postLogout } from '@/api/AuthApi';
 
 const options = ['마이페이지', '로그아웃'];
 
 export default function MyDropdown() {
+    const router = useRouter();
+
     const handleOptionClick = async (index: number) => {
         if (index === 0) {
-            window.location.href = '/mypage';
+            router.push('/mypage');
         }
         if (index === 1) {
             try {

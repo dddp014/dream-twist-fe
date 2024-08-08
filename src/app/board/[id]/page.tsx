@@ -27,6 +27,7 @@ export default async function Board({ params }: { params: { id: string } }) {
 
     try {
         const data = await getBookDetail(id);
+        console.log('동화 세부 데이터: ', data);
 
         if (!data || data.length === 0) {
             notFound();
@@ -60,7 +61,7 @@ export default async function Board({ params }: { params: { id: string } }) {
                             조회 {data[0].views}
                         </p>
                         <div className="self-end">
-                            <BookLike />
+                            <BookLike likeCount={data[0].likes} />
                         </div>
                     </div>
                 </div>
