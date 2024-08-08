@@ -40,8 +40,7 @@ export default function GetToken() {
 
         const fetchUserInfo = async () => {
             try {
-                const data = await getUserInfo();
-                console.log('유저', data);
+                await getUserInfo();
             } catch (error) {
                 console.log(error);
             }
