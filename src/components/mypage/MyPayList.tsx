@@ -9,12 +9,14 @@ Date        Author   Status    Description
 2024.08.08  김민규    Created   환불 요청 폼 
 */
 
-'use client';
 
 'use client';
 
 import { useEffect, useState } from 'react';
 import { getMyPayList } from '@/api/MypageApi';
+import { payInfo } from '@/types/mypage';
+import Modal from '@/components/mypage/Modal';
+import RefundForm from '@/components/mypage/RefundForm';
 
 export default function MyPayList() {
     const [payInfo, setPayInfo] = useState([]);
@@ -35,10 +37,7 @@ export default function MyPayList() {
         fetchMyPay();
     }, []);
 
-import { payInfo } from '@/types/mypage';
-import { useState } from 'react';
-import Modal from '@/components/mypage/Modal';
-import RefundForm from '@/components/mypage/RefundForm';
+
 
 interface MyPayProps {
     payInfo: payInfo[];
