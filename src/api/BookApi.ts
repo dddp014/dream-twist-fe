@@ -14,16 +14,11 @@ Date        Author   Status    Description
 
 const API_BASE_URL = 'http://localhost:4000/fairytale';
 
-export const fetchPresignedURL = async (
-    userId: number,
-    fileName: string,
-    accessToken: string | null
-) => {
+export const fetchPresignedURL = async (userId: number, fileName: string) => {
     const response = await fetch(`${API_BASE_URL}/presigned-url`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             userId,
@@ -36,17 +31,9 @@ export const fetchPresignedURL = async (
     return response.json();
 };
 
-export const uploadFileToS3 = async (
-    presignedURL: string,
-    file: File,
-    accessToken: string | null
-) => {
+export const uploadFileToS3 = async (presignedURL: string, file: File) => {
     const response = await fetch(presignedURL, {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`
-        },
         body: file
     });
 
@@ -64,7 +51,6 @@ export const submitBookForm = async (
     const response = await fetch(API_BASE_URL, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`
         },
         body: formdata,
@@ -86,7 +72,6 @@ export const updateBookForm = async (
     const response = await fetch(`${API_BASE_URL}/${fairytailId}`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`
         },
         body: formdata,

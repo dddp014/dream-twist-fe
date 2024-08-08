@@ -43,8 +43,6 @@ export default function StoryBlock({
                     handleClick(index);
                 }
             }}
-            tabIndex={0} // 요소를 포커스 가능하게 만듭니다.
-            role="button" // 요소에 버튼 역할을 부여합니다.
         >
             <label
                 htmlFor={`story${index}`}
@@ -54,6 +52,7 @@ export default function StoryBlock({
             </label>
             <div className="w-full my-[1%] border-[1px] border-lightGray-300" />
             <textarea
+                tabIndex={0} // 요소를 포커스 가능하게 만듭니다.
                 id={`story${index}`}
                 {...register(`storys.${index}`, { required: true })}
                 className={`resize-none h-[200px] w-full overflow-auto focus:outline-none focus:border-none hover:bg-green-50 active:bg-green-100

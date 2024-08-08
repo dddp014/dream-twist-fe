@@ -16,7 +16,7 @@ import { postBookLike } from '@/api/BoardApi';
 
 interface BookLikeProps {
     id: string;
-    likeCount: string;
+    likeCount: number;
 }
 
 export default function BookLike({ id, likeCount }: BookLikeProps) {

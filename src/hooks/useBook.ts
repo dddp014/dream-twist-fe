@@ -105,16 +105,8 @@ export const useBook = (fairytaleId?: number) => {
 
     const UploadImageToS3 = async (file: File) => {
         try {
-            const { presignedURL } = await fetchPresignedURL(
-                userId,
-                file.name,
-                accessToken
-            );
-            const fileUrl = await uploadFileToS3(
-                presignedURL,
-                file,
-                accessToken
-            );
+            const { presignedURL } = await fetchPresignedURL(userId, file.name);
+            const fileUrl = await uploadFileToS3(presignedURL, file);
             return fileUrl;
         } catch (error) {
             throw error;
