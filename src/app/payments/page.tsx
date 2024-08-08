@@ -60,7 +60,7 @@ const Page: React.FC = () => {
                 꿈틀 포인트 구매
             </h1>
             <p className="mt-2 mb-10 text-gray-600">
-                포인트를 구매하고 꿈틀의 AI 동화 생성 서비스를 마음껏
+                나뭇잎을 구매하고 꿈틀의 AI 동화 생성 서비스를 마음껏
                 즐겨보세요!
             </p>
             <div className="flex justify-between flex-wrap gap-4 mt-6 w-full max-w-6xl">

@@ -56,7 +56,7 @@ export default async function Mypage() {
                                     height={0}
                                 />
                                 <p className="ml-3 hover:text-main">
-                                    포인트 충전
+                                    나뭇잎 충전
                                 </p>
                             </div>
                         </Link>
