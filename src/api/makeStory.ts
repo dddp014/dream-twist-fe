@@ -19,11 +19,13 @@ export interface StoryResponse {
 export const generatePlot = async (
     storyInput: string
 ): Promise<StoryResponse> => {
+    const accessToken = localStorage.getItem('accessToken');
     const response = await fetch('http://localhost:4000/ai-fairytale/story', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            Accept: 'application/json'
+            Accept: 'application/json',
+            Authorization: `Bearer ${accessToken}`
         },
         body: JSON.stringify({ prompt: storyInput }),
         credentials: 'include'

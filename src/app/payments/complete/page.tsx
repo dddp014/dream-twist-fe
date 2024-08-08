@@ -1,17 +1,9 @@
-/**
-File Name : app/payments/complete
-Description : 결제완료 페이지
-Author : 김민규
+'use client';
 
-History
-Date        Author   Status    Description
-2024.08.04  김민규    Created
-
-*/
-
+import { useState, useEffect } from 'react';
 import { notFound } from 'next/navigation';
-import { FC } from 'react';
 import Link from 'next/link';
+import { fetchPaymentData } from '@/api/Payment'; // API 함수 임포트
 
 interface PaymentPageProps {
     searchParams: {
@@ -22,36 +14,42 @@ interface PaymentPageProps {
     };
 }
 
-const PaymentCompletePage: FC<PaymentPageProps> = async ({ searchParams }) => {
-    if (!searchParams.orderId) {
-        notFound();
+const PaymentCompletePage: React.FC<PaymentPageProps> = ({ searchParams }) => {
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [paymentData, setPaymentData] = useState<any>(null);
+
+    useEffect(() => {
+        const accessToken = localStorage.getItem('accessToken'); // 유저 토큰 가져오기
+
+        const getPaymentData = async () => {
+            try {
+                const data = await fetchPaymentData(
+                    searchParams,
+                    accessToken || ''
+                );
+                setPaymentData(data);
+            } catch (error: any) {
+                console.error(error);
+                setError(
+                    error.message ||
+                        '결제 정보 조회에 실패했습니다. 다시 시도해 주세요.'
+                );
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getPaymentData();
+    }, [searchParams]);
+
+    if (loading) {
+        return <div>로딩 중...</div>;
     }
-    console.log(searchParams);
 
-    // const secretKey = process.env.TOSS_SECRET_KEY || '';
-    // const basicToken = Buffer.from(`${secretKey}:`, 'utf-8').toString('base64');
-
-    const response = await fetch('http://localhost:4000/billing', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            orderId: searchParams.orderId,
-            paymentKey: searchParams.paymentKey,
-            amount: searchParams.amount,
-            addPoint: searchParams.addPoint
-        })
-    });
-    console.log(response);
-
-    if (!response.ok) {
-        console.error('fetch 실패 ', response.status, response.statusText);
-        return <div>결제 정보 조회에 실패했습니다.</div>;
+    if (error) {
+        return <div>{error}</div>;
     }
-
-    const payments = await response.json();
-    console.log(payments);
 
     return (
         <div className="flex flex-col items-center p-8">
@@ -65,7 +63,8 @@ const PaymentCompletePage: FC<PaymentPageProps> = async ({ searchParams }) => {
                     </li>
                     <li className="mb-2">주문번호: {searchParams.orderId}</li>
                     <li className="mb-2">
-                        결제승인날짜: {Intl.DateTimeFormat().format(new Date())}
+                        결제 승인 날짜:{' '}
+                        {Intl.DateTimeFormat().format(new Date())}
                     </li>
                 </ul>
             </div>
