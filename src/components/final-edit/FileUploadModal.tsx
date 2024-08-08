@@ -6,6 +6,7 @@ Author : 임도헌
 History
 Date        Author   Status     Description
 2024.07.26  임도헌   Created
+2024.07.26  임도헌   Modified   파일 업로드 컴포넌트 추가
 2024.07.31  임도헌   Modified   portal 수정 및 react-hook-form으로 코드 변경
 2024.08.02  임도헌   Modified   creationWays 코드 추가 및 File 형태 폼제출 할 수 있도록 수정
 2024.08.03  임도헌   Modified   코드 분리

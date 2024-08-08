@@ -6,6 +6,7 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.07.22  임도헌    Created
+2024.07.22  임도헌   Modified  동화 편집 페이지 추가
 2024.07.25  임도헌   Modified  FairytaleInfo 컴포넌트 삭제
 2024.08.07  임도헌   Modified  fairytaleForm 컴포넌트에 props 추가
 2024.08.07  임도헌   Modified  동적 메타데이터 추가

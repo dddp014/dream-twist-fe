@@ -6,6 +6,7 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.07.24  임도헌   Created
+2024.07.24  임도헌   Modified   그림판 모달 추가
 2024.07.27  임도헌   Modified   portal 적용
 2024.07.29  임도헌   Modified   필요없는 코드 삭제
 2024.07.31  임도헌   Modified   portal 수정 및 react-hook-form으로 코드 변경

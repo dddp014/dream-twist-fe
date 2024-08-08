@@ -6,6 +6,7 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.08.03  임도헌   Created
+2024.08.03  임도헌   Modified  캔버스훅 추가
 2024.08.05  임도헌   Modified  colorOptions 분리
 */
 
