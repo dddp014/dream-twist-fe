@@ -28,7 +28,6 @@ export default function MyPayList() {
                     ...item
                 }));
                 setPayInfo(payData);
-                console.log(payData);
             } catch (error) {
                 console.error(error);
             }

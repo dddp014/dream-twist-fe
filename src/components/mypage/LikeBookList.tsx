@@ -27,7 +27,7 @@ export default function LikeBookList() {
                     createdAt: item.createdAt.split('T')[0]
                 }));
                 setMyBooks(bookData);
-                console.log('좋아요 동화', data);
+                // console.log('좋아요 동화', data);
             } catch (error) {
                 console.error(error);
             }

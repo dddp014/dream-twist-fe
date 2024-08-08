@@ -18,9 +18,11 @@ export const metadata: Metadata = {
     description: 'AI로 생성된 꿈틀의 동화 갤러리'
 };
 
-export default function Board({ params }: { params: { id: string } }) {
-    const { id } = params;
+interface IBoardParams {
+    params: { id: string };
+}
 
+export default function Board({ params: { id } }: IBoardParams) {
     return (
         <div className="flex flex-col justify-center items-center mx-24 pb-28 pt-12">
             <BookInfo id={id} />

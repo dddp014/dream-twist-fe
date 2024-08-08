@@ -12,23 +12,38 @@ Date        Author   Status    Description
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getBookDetail } from '@/api/BoardApi';
-import { postBookView } from '@/api/BoardApi';
+import { getBookDetail, postBookView } from '@/api/BoardApi';
+import { getMyLikeBook } from '@/api/MypageApi';
 import EditDeleteBtn from './EditDeleteBtn';
 import BookLike from './BookLike';
 import RenderBook from './RenderBook';
 
-export default function BookInfo({ id }: string) {
+interface LikeId {
+    id: string;
+}
+
+export default function BookInfo({ id }: { id: string }) {
     const [bookInfo, setBookInfo] = useState({
         nickname: '',
         title: '',
         likes: '',
         views: ''
     });
-    const [bookImages, setBookImages] = useState([]);
-    const [contents, setContents] = useState([]);
+    const [bookImages, setBookImages] = useState<string[]>([]);
+    const [contents, setContents] = useState<string[]>([]);
+    const [myLikeBooks, setMyLikeBooks] = useState<string[]>([]);
 
     useEffect(() => {
+        const fetchMyLikeBook = async () => {
+            try {
+                const data = await getMyLikeBook();
+                const likeData = data.myLikes.map((item: LikeId) => item.id);
+                setMyLikeBooks(likeData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
         const fetchView = async () => {
             try {
                 const data = await postBookView(id);
@@ -47,23 +62,22 @@ export default function BookInfo({ id }: string) {
                     likes: data[0].likes,
                     views: data[0].views
                 });
-                console.log('세부', data);
+
+                // console.log('전체', data);
 
                 const coverImg = data[0].coverImage;
-                const images = data[0].images.map((item) => item);
+                const images = data[0].images.map((item: string) => item);
                 const imageData = [coverImg, ...images];
-                const contentData = Object.values(data[0].content);
+                const contentData = Object.values(data[0].content) as string[];
 
                 setBookImages(imageData);
                 setContents(contentData);
-
-                console.log('이미지', imageData);
-                console.log('내용', contentData);
             } catch (error) {
                 console.error(error);
             }
         };
 
+        fetchMyLikeBook();
         fetchMyBook();
         fetchView();
     }, []);
@@ -84,7 +98,11 @@ export default function BookInfo({ id }: string) {
                         조회 {bookInfo.views}
                     </p>
                     <div className="self-end">
-                        <BookLike id={id} likeCount={bookInfo.likes} />
+                        <BookLike
+                            id={id}
+                            likeCount={bookInfo.likes}
+                            mybooks={myLikeBooks}
+                        />
                     </div>
                 </div>
             </div>
@@ -92,7 +110,7 @@ export default function BookInfo({ id }: string) {
                 <RenderBook
                     bookImages={bookImages}
                     contents={contents}
-                    info={bookInfo}
+                    info={Object.values(bookInfo)}
                 />
             </div>
         </>
