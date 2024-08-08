@@ -124,6 +124,12 @@ export default function EditProfileList() {
             >
                 저장
             </button>
+            <button
+                type="button"
+                className="absolute bottom-4 right-6 text-gray-400 text-[0.9rem] hover:text-gray-300"
+            >
+                회원 탈퇴
+            </button>
         </>
     );
 }
