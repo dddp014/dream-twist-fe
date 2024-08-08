@@ -11,6 +11,7 @@ Date        Author   Status    Description
 2024.08.05  임도헌   Modified   ai로 생성한 데이터 로컬스토리지에 저장
 
 **/
+
 'use client';
 
 import React, { useState } from 'react';
