@@ -22,7 +22,7 @@ interface BookListProps {
 
 const itemsPerPage: number = 10;
 
-const BookList = ({ fairytaleInfo }: BookListProps) => {
+export default function BookList({ fairytaleInfo }: BookListProps) {
     const router = useRouter();
     const [items, setItems] = useState(fairytaleInfo.slice(0, itemsPerPage));
     const pageIndexRef = useRef<number>(2);
@@ -102,6 +102,4 @@ const BookList = ({ fairytaleInfo }: BookListProps) => {
             )}
         </div>
     );
-};
-
-export default BookList;
+}

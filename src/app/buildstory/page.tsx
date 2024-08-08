@@ -26,14 +26,14 @@ const BuildStoryPage: React.FC = () => {
             }}
         >
             <div className="text-center w-full max-w-4xl">
-                <h1 className="text-2xl font-bold mb-4">
+                <h1 className="text-2xl font-bold mb-8">
                     이야기를 어떻게 쓸까요?
                 </h1>
-                <p className="mb-20">
+                <p className="mb-10">
                     AI를 활용해서 글을 쓰거나 도움없이 직접 쓸 수 있어요.
                 </p>
 
-                <div className="flex gap-12 items-center">
+                <div className="flex gap-12 items-center mb-10">
                     <div className="relative bg-white p-8 rounded-lg shadow-md shadow-neutral-200 w-full max-w-md h-auto text-center border border-gray-200 flex flex-col items-center justify-center">
                         <div className="flex justify-center items-center text-green-500 text-4xl mb-7">
                             <Image

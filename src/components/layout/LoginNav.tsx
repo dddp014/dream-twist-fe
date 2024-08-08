@@ -48,7 +48,7 @@ export default function LoginNav({ userInfo }) {
                 </button>
             </div>
             {isDropDown && (
-                <div className="absolute -right-6 top-full mt-2">
+                <div className="absolute -right-6 top-full mt-2 z-50">
                     <MyDropdown />
                 </div>
             )}

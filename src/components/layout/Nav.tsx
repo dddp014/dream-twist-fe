@@ -18,7 +18,7 @@ import Image from 'next/image';
 import LoginNav from './LoginNav';
 import { getUserInfo } from '@/api/AuthApi';
 
-const JWT_EXPIRY_TIME = 5 * 24 * 60 * 60 * 1000;
+const JWT_EXPIRY_TIME = 15 * 60 * 1000;
 const API_BASE_URL = 'http://localhost:4000';
 
 export default function Nav() {
@@ -33,22 +33,26 @@ export default function Nav() {
     const isBuild = pathname.startsWith('/buildstory');
     const isMain = pathname === '/';
 
-    const fetchUserInfo = async () => {
-        try {
-            const data = await getUserInfo();
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const data = await getUserInfo();
 
-            setUserInfo({
-                nickname: data.nickname,
-                profileImage: data.profileImage
-            });
+                setUserInfo({
+                    nickname: data.nickname,
+                    profileImage: data.profileImage
+                });
 
-            localStorage.setItem('email', data.email);
-            localStorage.setItem('nickname', data.nickname);
-            localStorage.setItem('profileImage', data.profileImage);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+                localStorage.setItem('email', data.email);
+                localStorage.setItem('nickname', data.nickname);
+                localStorage.setItem('profileImage', data.profileImage);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchUserInfo();
+    }, []);
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
@@ -71,11 +75,6 @@ export default function Nav() {
             }
         }
     }, [pathname, router]);
-
-    useEffect(() => {
-        fetchUserInfo();
-        console.log('엥..', userInfo);
-    }, []);
 
     const refreshToken = async () => {
         const token = localStorage.getItem('refreshToken');

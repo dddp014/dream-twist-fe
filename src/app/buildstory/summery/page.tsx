@@ -93,7 +93,7 @@ const SummeryPage: React.FC = () => {
                                 type="submit"
                                 className="mt-10 bg-main text-white py-2.5 px-6 rounded-md"
                             >
-                                줄거리 생성하기
+                                줄거리 생성하기 -10 나뭇잎
                             </button>
                         </div>
                     </form>

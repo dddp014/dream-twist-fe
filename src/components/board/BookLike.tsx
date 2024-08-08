@@ -12,17 +12,36 @@ Date        Author   Status    Description
 
 import { useState, useEffect } from 'react';
 import { LikeIcon } from '../icons/LikeIcon';
+import { postBookLike } from '@/api/BoardApi';
 
-export default function BookLike(likeCount: any) {
+interface BookLikeProps {
+    id: string;
+    likeCount: string;
+}
+
+export default function BookLike({ id, likeCount }: BookLikeProps) {
     const [likeClick, setLikeClick] = useState(false);
     const [currentCount, setCurrentCount] = useState(likeCount);
 
-    const handleLikeClick = () => {
+    const handleLikeClick = async () => {
         const newLikeClick = !likeClick;
         setLikeClick(newLikeClick);
         setCurrentCount((prevCount: any) =>
             newLikeClick ? prevCount + 1 : prevCount - 1
         );
+
+        try {
+            // 좋아요 상태 변경 요청
+            await postBookLike(id);
+            console.log('좋아요', id);
+        } catch (error) {
+            // 요청 실패 시 상태를 원래대로 복원
+            setLikeClick(likeClick);
+            setCurrentCount((prevCount) =>
+                newLikeClick ? prevCount - 1 : prevCount + 1
+            );
+            console.error('좋아요 요청 실패:', error);
+        }
     };
 
     return (
