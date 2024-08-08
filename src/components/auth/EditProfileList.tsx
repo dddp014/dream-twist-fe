@@ -10,14 +10,39 @@ Date        Author   Status    Description
 
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { postUserPresignedURL } from '@/api/AuthApi';
+import { uploadFileToS3 } from '@/api/BookApi';
+import { patchProfile } from '@/api/AuthApi';
 
 export default function EditProfileList() {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const [profileImg, setProfileImg] = useState<string>('/images/sample2.svg');
+    const [profileImg, setProfileImg] = useState<string>('');
     const [Imgfile, setImgFile] = useState<File>();
-    const [nickname, setNickname] = useState('경윤');
+    const [nickname, setNickname] = useState('');
+    const email = localStorage.getItem('email');
+
+    useEffect(() => {
+        const defaultName = localStorage.getItem('nickname');
+        const defaultImg = localStorage.getItem('profileImage');
+
+        setNickname(defaultName || '');
+        setProfileImg(defaultImg || '');
+    }, []);
+
+    const UploadImageToS3 = async (file: File) => {
+        try {
+            const { presignedURL } = await postUserPresignedURL(file.name);
+            console.log(`Presigned URL: ${presignedURL}`);
+            const fileUrl = await uploadFileToS3(presignedURL, file);
+            console.log(`파일 업로드 성공 -> s3 url: ${fileUrl}`);
+            return fileUrl;
+        } catch (error) {
+            console.error('파일 업로드 에러:', error);
+            throw error;
+        }
+    };
 
     const handleImgEditClick = () => {
         if (fileInputRef.current) {
@@ -25,18 +50,33 @@ export default function EditProfileList() {
         }
     };
 
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageUpload = async (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
         if (!e.target.files) return;
         const file = e.target.files[0];
         if (file) {
-            let image = window.URL.createObjectURL(file);
-            setProfileImg(image);
-            setImgFile(file);
+            try {
+                const fileUrl = await UploadImageToS3(file);
+                setProfileImg(fileUrl);
+                setImgFile(file);
+            } catch (error) {
+                console.error('이미지 업로드 중 오류 발생:', error);
+            }
         }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNickname(e.target.value);
+    };
+
+    const handleSaveClick = async () => {
+        try {
+            await patchProfile(nickname, profileImg);
+            window.location.href = '/mypage';
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -65,9 +105,7 @@ export default function EditProfileList() {
             <div>
                 <div className="flex flex-row space-x-6 mt-12 text-[1.1rem]">
                     <p className="text-gray-600">이메일</p>
-                    <p className="font-normal text-gray-600">
-                        aaaabbb123@gmail.com
-                    </p>
+                    <p className="font-normal text-gray-600">{email}</p>
                 </div>
                 <div className="flex flex-row space-x-6 mt-6 text-[1.1rem]">
                     <p className="text-gray-600 mt-0.5">닉네임</p>
@@ -79,7 +117,11 @@ export default function EditProfileList() {
                     />
                 </div>
             </div>
-            <button className="text-[1rem] text-white bg-main rounded-lg px-5 py-1 mt-12">
+            <button
+                type="button"
+                onClick={handleSaveClick}
+                className="text-[1rem] text-white bg-main rounded-lg px-5 py-1 mt-12"
+            >
                 저장
             </button>
         </>

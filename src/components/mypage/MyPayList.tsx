@@ -11,6 +11,30 @@ Date        Author   Status    Description
 
 'use client';
 
+'use client';
+
+import { useEffect, useState } from 'react';
+import { getMyPayList } from '@/api/MypageApi';
+
+export default function MyPayList() {
+    const [payInfo, setPayInfo] = useState([]);
+
+    useEffect(() => {
+        const fetchMyPay = async () => {
+            try {
+                const data = await getMyPayList();
+                const payData = data.map((item) => ({
+                    ...item
+                }));
+                setPayInfo(payData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchMyPay();
+    }, []);
+
 import { payInfo } from '@/types/mypage';
 import { useState } from 'react';
 import Modal from '@/components/mypage/Modal';
