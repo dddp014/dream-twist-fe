@@ -17,11 +17,22 @@ import { postBookLike } from '@/api/BoardApi';
 interface BookLikeProps {
     id: string;
     likeCount: string;
+    mybooks: string[];
 }
 
-export default function BookLike({ id, likeCount }: BookLikeProps) {
+export default function BookLike({ id, likeCount, mybooks }: BookLikeProps) {
     const [likeClick, setLikeClick] = useState(false);
-    const [currentCount, setCurrentCount] = useState(likeCount);
+    const [currentCount, setCurrentCount] = useState(0);
+
+    useEffect(() => {
+        setCurrentCount(Number(likeCount));
+    }, [likeCount]);
+
+    useEffect(() => {
+        if (mybooks.map(String).includes(id)) {
+            setLikeClick(true);
+        }
+    }, [mybooks, id]);
 
     const handleLikeClick = async () => {
         const newLikeClick = !likeClick;
@@ -33,7 +44,7 @@ export default function BookLike({ id, likeCount }: BookLikeProps) {
         try {
             // 좋아요 상태 변경 요청
             await postBookLike(id);
-            console.log('좋아요', id);
+            // console.log('좋아요', id);
         } catch (error) {
             // 요청 실패 시 상태를 원래대로 복원
             setLikeClick(likeClick);

@@ -28,7 +28,6 @@ export default function MyPayList() {
                     ...item
                 }));
                 setPayInfo(payData);
-                console.log('rufwp', payData);
             } catch (error) {
                 console.error(error);
             }
