@@ -9,47 +9,37 @@ Date        Author   Status    Description
 
 */
 
-// import { NextResponse } from 'next/server';
+export const fetchPaymentData = async (searchParams: {
+    orderId?: string;
+    paymentKey?: string;
+    amount?: string;
+    addPoint?: string;
+}, accessToken: string) => {
+    if (!accessToken) {
+        throw new Error('로그인이 필요합니다.');
+    }
 
-// export async function POST(request: Request) {
-//     try {
-//         const { orderId, paymentKey, amount } = await request.json();
-//         const secretKey = process.env.TOSS_SECRET_KEY;
+    if (!searchParams.orderId) {
+        throw new Error('주문 번호가 유효하지 않습니다.');
+    }
 
-//         const url = 'https://api.tosspayments.com/v1/payments/confirm';
-//         const basicToken = Buffer.from(`${secretKey}:`, 'utf-8').toString(
-//             'base64'
-//         );
+    const response = await fetch('http://localhost:4000/billing', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+            orderId: searchParams.orderId,
+            paymentKey: searchParams.paymentKey,
+            amount: searchParams.amount,
+            addPoint: searchParams.addPoint
+        })
+    });
 
-//         const response = await fetch(url, {
-//             method: 'POST',
-//             body: JSON.stringify({
-//                 amount,
-//                 orderId,
-//                 paymentKey
-//             }),
-//             headers: {
-//                 Authorization: `Basic ${basicToken}`,
-//                 'Content-Type': 'application/json'
-//             }
-//         });
+    if (!response.ok) {
+        throw new Error(`결제 정보 조회에 실패했습니다: ${response.statusText}`);
+    }
 
-//         if (!response.ok) {
-//             throw new Error('결제 요청 실패');
-//         }
-
-//         const responseData = await response.json();
-
-//         // TODO: DB 처리
-
-//         return NextResponse.json({
-//             redirectUrl: `/payments/complete?orderId=${orderId}`
-//         });
-//     } catch (error) {
-//         console.error('결제 서버 에러', error);
-//         return NextResponse.json(
-//             { error: '서버 에러' },
-//             { status: 500 }
-//         );
-//     }
-// }
+    return response.json();
+};

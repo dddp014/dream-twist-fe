@@ -37,6 +37,7 @@ export default function MyPayList() {
     }, []);
 
     const handleRefund = async (paymentId: string, cancelReason: string) => {
+        const accessToken = localStorage.getItem('accessToken');
         console.log(`환불 상품 ID: ${paymentId} 환불 사유 : ${cancelReason}`);
         try {
             const response = await fetch(
@@ -44,7 +45,8 @@ export default function MyPayList() {
                 {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${accessToken}`
                     },
                     body: JSON.stringify({
                         id: paymentId,
@@ -57,7 +59,7 @@ export default function MyPayList() {
                 throw new Error('서버 응답 오류');
             }
 
-            return await response.json();
+            await response.json();
         } catch (error) {
             console.error('환불 요청 실패:', error);
             throw error;

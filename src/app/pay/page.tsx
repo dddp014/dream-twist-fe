@@ -30,7 +30,12 @@ interface TossPayments {
 const Page: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleClick = async (amount: number, orderName: string, addPoint: number) => {
+    const handleClick = async (
+        amount: number,
+        orderName: string,
+        addPoint: number
+    ) => {
+        if (isLoading) return; // 중복 요청 방지
         try {
             setIsLoading(true);
 
@@ -77,7 +82,9 @@ const Page: React.FC = () => {
                         <p className="mt-2 text-lg text-green-500">1,000원</p>
                         <button
                             className="bg-green-500 text-white font-semibold py-2 px-4 mt-4 rounded-lg hover:bg-green-600 transition duration-300"
-                            onClick={() => handleClick(1000, '꿈틀 100 포인트 충전', 100)}
+                            onClick={() =>
+                                handleClick(1000, '꿈틀 100 포인트 충전', 100)
+                            }
                             disabled={isLoading}
                         >
                             {isLoading ? '처리 중...' : '구매하기'}
@@ -97,7 +104,9 @@ const Page: React.FC = () => {
                         <p className="mt-2 text-lg text-green-500">3,000원</p>
                         <button
                             className="bg-green-500 text-white font-semibold py-2 px-4 mt-4 rounded-lg hover:bg-green-600 transition duration-300"
-                            onClick={() => handleClick(3000, '꿈틀 300 포인트 충전', 300)}
+                            onClick={() =>
+                                handleClick(3000, '꿈틀 300 포인트 충전', 300)
+                            }
                             disabled={isLoading}
                         >
                             {isLoading ? '처리 중...' : '구매하기'}
@@ -119,7 +128,9 @@ const Page: React.FC = () => {
                         </p>
                         <button
                             className="bg-green-500 text-white font-semibold py-2 px-4 mt-4 rounded-lg hover:bg-green-600 transition duration-300"
-                            onClick={() => handleClick(5500, '꿈틀 700 포인트 충전', 700)}
+                            onClick={() =>
+                                handleClick(5500, '꿈틀 700 포인트 충전', 700)
+                            }
                             disabled={isLoading}
                         >
                             {isLoading ? '처리 중...' : '구매하기'}
@@ -143,7 +154,11 @@ const Page: React.FC = () => {
                         <button
                             className="bg-green-500 text-white font-semibold py-2 px-4 mt-4 rounded-lg hover:bg-green-600 transition duration-300"
                             onClick={() =>
-                                handleClick(10000, '꿈틀 1000 포인트 충전', 1200)
+                                handleClick(
+                                    10000,
+                                    '꿈틀 1200 포인트 충전',
+                                    1200
+                                )
                             }
                             disabled={isLoading}
                         >
