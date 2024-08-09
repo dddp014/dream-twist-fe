@@ -156,7 +156,7 @@ export default function Nav() {
     return (
         <nav className="relative flex items-center justify-between h-[80px] text-lg shadow-md shadow-neutral-90 z-40">
             {/* 로고: 왼쪽 고정 */}
-            <Link href="/" className="absolute left-20 cursor-pointer z-50">
+            <Link href="/" className="absolute left-20 cursor-pointer z-40">
                 <Image
                     src="/images/logo.svg"
                     alt="logo"
