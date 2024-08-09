@@ -14,7 +14,7 @@ Date        Author   Status    Description
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // App Router 환경에서의 라우터를 사용
 import Loading from '@/components/bulidstory/Loading';
 import { generatePlot, StoryResponse } from '@/api/makeStory';
@@ -36,6 +36,7 @@ const SummeryPage: React.FC = () => {
             console.log(result); // 서버 응답 확인
 
             // 로컬 스토리지에 데이터 저장
+            // 클라이언트 사이드에서만 실행됨
             saveToLocalStorage('title', result.title);
             saveToLocalStorage('theme', result.theme);
             saveToLocalStorage('storys', result.story);

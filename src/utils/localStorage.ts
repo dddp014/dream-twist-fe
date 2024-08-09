@@ -13,7 +13,9 @@ Date        Author   Status    Description
 // T? 코드에 선언한 타입을 변수화 하고, 나중에 타입을 정하는 식으로 유연하게 사용이 가능
 export function saveToLocalStorage<T>(key: string, value: T): void {
     try {
-        localStorage.setItem(key, JSON.stringify(value));
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
     } catch (error) {
         console.error(`Error saving to localStorage: ${error}`);
     }
