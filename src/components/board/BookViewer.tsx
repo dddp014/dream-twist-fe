@@ -50,8 +50,8 @@ export default function BookViewer({
         const [view, width] = useMemo(
             () =>
                 step === 0 || step === pageCount - 1
-                    ? ['hidden', 'w-4/12']
-                    : ['display', 'w-8/12'],
+                    ? ['hidden', 'w-[530px]']
+                    : ['display', 'w-[1050px]'],
             [step]
         );
 
@@ -60,8 +60,8 @@ export default function BookViewer({
 
         return (
             <div
-                className={`relative flex felx-row justify-center items-center ${width} h-[33rem] mx-8`}
-                style={{ width: '550px', height: '528px', margin: 'auto' }}
+                className={`relative flex felx-row justify-center h-[520px] items-center ${width} mx-8`}
+                style={{ margin: 'auto' }}
             >
                 <div
                     className="relative border-solid border border-gray-100 bg-[length:100%_100%] w-full h-full bg-cover bg-center bg-no-repeat shadow-lg"
