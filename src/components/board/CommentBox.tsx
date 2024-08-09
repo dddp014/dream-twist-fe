@@ -19,8 +19,6 @@ interface CommentBoxProps {
     commentId?: string;  // editStatus가 true일 때만 필요한 속성
     fairytaleId: string;
     onCancel?: () => void;
-    fairytaleId: string;
-    commentId?: string;
 }
 
 export default function CommentBox({

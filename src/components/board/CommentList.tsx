@@ -10,7 +10,7 @@ Date        Author   Status    Description
 
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import EditDeleteBtn from './EditDeleteBtn';
 import CommentBox from './CommentBox';
 import { getComment } from '@/api/BoardApi';
@@ -96,7 +96,7 @@ export default function CommentList({ id }: { id: string }) {
                     fairytaleId={id}
                 />
                 <div className="mt-16">
-                    {paginatedComments.map((item, index) => (
+                    {commentInfo.map((item, index) => (
                         <div key={item.id}>
                             <div className="flex flex-row justify-between items-center">
                                 <div className="flex flex-row items-center">
