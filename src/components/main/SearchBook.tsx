@@ -45,16 +45,25 @@ export default function SearchBook() {
     const debouncedInputValue = useDebounce(searchInputValue);
 
     useEffect(() => {
-        const fetchInitialData = async () => {
+        const fetchData = async () => {
+            setLoading(true);
+            let query = `?sortOrder=${label}&tags=${selectedTag}`;
+
+            if (debouncedInputValue) {
+                query += `&title=${debouncedInputValue}`;
+            }
+
             try {
-                const query = `?sortOrder=${label}&tags=${selectedTag}`;
                 const result = await getSearchBook(query);
                 const formattedResult = result.map((item: FairytaleInfo) => ({
                     ...item,
                     createdAt: item.createdAt.split('T')[0]
                 }));
-                setInitData(formattedResult);
                 setSearchResults(formattedResult);
+
+                if (selectedTag === '모든 주제' && debouncedInputValue === '') {
+                    setInitData(formattedResult);
+                }
             } catch (error) {
                 console.error(error);
                 setSearchResults([]);
@@ -63,89 +72,21 @@ export default function SearchBook() {
             }
         };
 
-        fetchInitialData();
-    }, [label, selectedTag]);
+        fetchData();
+    }, [debouncedInputValue, selectedTag, label]);
 
     const handleOptionClick = (value: string) => {
         setLabel(value);
         handleDropdown();
     };
 
-    const handleTagClick = async (label: string) => {
-        setSelectedTag(label);
-
-        let query = `?sortOrder=${label}`;
-
-        if (label === '모든 주제') {
-            setSearchResults(initData);
-            // console.log(initData);
-            return;
-        }
-
-        query = `?sortOrder=${label}&tags=${label}`;
-
-        if (debouncedInputValue) {
-            query += `&title=${debouncedInputValue}`;
-        }
-
-        try {
-            const result = await getSearchBook(query);
-            const fairytaleInfo = result.map((item: FairytaleInfo) => {
-                const date = item.createdAt.split('T')[0];
-                return {
-                    ...item,
-                    createdAt: date
-                };
-            });
-            setSearchResults(fairytaleInfo);
-        } catch (error) {
-            console.error(error);
-            setSearchResults([]);
-        }
+    const handleTagClick = (tag: string) => {
+        setSelectedTag(tag);
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInputValue(event.target.value);
     };
-
-    useEffect(() => {
-        if (debouncedInputValue === '' && selectedTag === '모든 주제') {
-            setSearchResults(initData);
-
-            return;
-        }
-
-        const fetchResults = async () => {
-            let query = `?sortOrder=${label}`;
-
-            if (debouncedInputValue && selectedTag) {
-                query += `&tags=${selectedTag}&title=${debouncedInputValue}`;
-            }
-
-            if (debouncedInputValue === '') {
-                query += `&tags=${selectedTag}`;
-            }
-
-            try {
-                console.log('검색 쿼리', query);
-                const result = await getSearchBook(query);
-                const formattedResult = result.map((item: FairytaleInfo) => ({
-                    ...item,
-                    createdAt: item.createdAt.split('T')[0]
-                }));
-                setSearchResults(formattedResult);
-            } catch (error) {
-                console.error(error);
-                setSearchResults([]);
-            }
-        };
-
-        if (debouncedInputValue === '' && selectedTag === '모든 주제') {
-            setSearchResults(initData);
-        } else {
-            fetchResults();
-        }
-    }, [debouncedInputValue, selectedTag, label]);
 
     return (
         <>
