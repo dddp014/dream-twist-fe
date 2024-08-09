@@ -8,7 +8,6 @@ Date        Author   Status    Description
 2024.08.08  김민규    Created   환불 요청 폼 
 */
 
-
 import { useState } from 'react';
 
 interface RefundFormProps {
@@ -17,7 +16,13 @@ interface RefundFormProps {
     onCancel: () => void;
 }
 
-const reasons = ['가격이 너무 비싸요', '동화를 만들기 싫어졌어요', '기타 사유'];
+const reasons = [
+    '생성된 동화가 기대에 미치지 않아요.',
+    '결제 금액이 잘못되었어요.',
+    '결제 후 서비스가 불편하여 사용을 중단하고 싶어요',
+    '의도하지 않은 결제가 이루어졌어요',
+    '기타 사유'
+];
 
 const RefundForm: React.FC<RefundFormProps> = ({ Id, onSubmit, onCancel }) => {
     const [selectedReason, setSelectedReason] = useState('');
@@ -34,6 +39,20 @@ const RefundForm: React.FC<RefundFormProps> = ({ Id, onSubmit, onCancel }) => {
 
     return (
         <div className="refund-form">
+            <div className="mb-6">
+                <h2 className="text-xl font-bold mb-2">꿈틀의 환불 규정</h2>
+                <ul className="list-disc pl-5 text-sm">
+                    <li>
+                        구매 후 15일 이내 환불 요청 시 전액 환불이 가능합니다.
+                    </li>
+                    <li>사용한 포인트에 대해서는 환불이 불가합니다.</li>
+                    <li>
+                        동화 생성에 기술적 문제가 있는 경우, 검토 후 환불이
+                        진행됩니다.
+                    </li>
+                    <li>결제 후 15일이 지난 경우 환불이 불가합니다.</li>
+                </ul>
+            </div>
             <div className="mb-4">
                 <label htmlFor="reason" className="block mb-2">
                     환불 사유 선택
