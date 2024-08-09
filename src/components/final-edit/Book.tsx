@@ -76,7 +76,7 @@ export default function Book({ fairytaleId = 0 }: FairytailFormProps) {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center mb-10">
                 <div className="relative w-[1260px] flex items-center justify-between">
                     <div className="absolute left-[260px]">
                         <DropIcon rotate="" />

@@ -59,28 +59,28 @@ export default function FairytailForm({ fairytaleId = 0 }: FairytailFormProps) {
         >
             <div className="">
                 <div className="max-w-xs mt-8 ml-8">
-                    <label htmlFor="title" className="m-4 text-2xl">
+                    <label htmlFor="title" className="m-4 ">
                         동화 제목
                         <input
                             id="title"
                             {...register('title', { required: true })}
-                            className="w-[280px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2"
+                            className="w-[280px] m-4 p-2 pl-1 border border-gray-300 rounded-lg shadow focus:outline-none focus:border-2"
                             placeholder="제목을 입력해주세요."
                         />
                     </label>
                     {errors.title && (
-                        <span className="block ml-4 mb-2 text-sm text-red-600 font-bold">
+                        <span className="block ml-4 mb-2 text-sm text-red-600">
                             동화 제목을 입력해주세요.
                         </span>
                     )}
-                    <label htmlFor="theme" className="m-4 text-2xl">
+                    <label htmlFor="theme" className="m-4">
                         주제
                         <div className="relative">
                             <div className="absolute top-[34px] left-[270px]">
                                 <DropIcon rotate="" />
                             </div>
                             <select
-                                className="w-[280px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2 appearance-none"
+                                className="w-[280px] m-4 p-2 pl-1 border border-gray-300 rounded-lg shadow focus:outline-none focus:border-2 appearance-none"
                                 id="theme"
                                 {...register('theme', { required: true })}
                             >
@@ -114,7 +114,7 @@ export default function FairytailForm({ fairytaleId = 0 }: FairytailFormProps) {
                     />
                     <button
                         type="submit"
-                        className="bg-main py-2 px-4 ml-2 rounded-[7px] text-white cursor-pointer text-base"
+                        className="bg-yellow-500 py-2 px-4 ml-2 rounded-[7px] text-white cursor-pointer"
                     >
                         다음 페이지로 가야 저장됩니다.
                     </button>
