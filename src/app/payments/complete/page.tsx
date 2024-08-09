@@ -10,10 +10,10 @@ Date        Author   Status    Description
 */
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { fetchPaymentData } from '@/api/Payment'; // API 함수 임포트
+import { fetchPaymentData } from '@/api/payment'; // API 함수 임포트
 
 const PaymentCompletePage = () => {
     const [paymentData, setPaymentData] = useState<any>(null);
@@ -40,9 +40,7 @@ const PaymentCompletePage = () => {
                     accessToken
                 );
                 setPaymentData(data);
-            } catch (err) {
-                
-            }
+            } catch (err) {}
         };
 
         fetchPayment();
@@ -88,4 +86,12 @@ const PaymentCompletePage = () => {
     );
 };
 
-export default PaymentCompletePage;
+const PageWrapper = () => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <PaymentCompletePage />
+        </Suspense>
+    );
+};
+
+export default PageWrapper;

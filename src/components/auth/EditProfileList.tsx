@@ -6,28 +6,38 @@ Author : 나경윤
 History
 Date        Author   Status    Description
 2024.08.05  나경윤    Created
+2024.08.09  임도헌   Modified  회원 탈퇴 기능 추가
 */
 
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { postUserPresignedURL, patchProfile } from '@/api/AuthApi';
+import {
+    deleteAuth,
+    postUserPresignedURL,
+    patchProfile,
+    postLogout
+} from '@/api/AuthApi';
 import { uploadFileToS3 } from '@/api/BookApi';
 
 export default function EditProfileList() {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [profileImg, setProfileImg] = useState<string>('');
-    const [Imgfile, setImgFile] = useState<File>();
+    const [Imgfile, setImgFile] = useState<File | null>(null);
     const [nickname, setNickname] = useState('');
-    const email = localStorage.getItem('email');
+    const [email, setEmail] = useState<string | null>(null);
 
     useEffect(() => {
-        const defaultName = localStorage.getItem('nickname');
-        const defaultImg = localStorage.getItem('profileImage');
+        if (typeof window !== 'undefined') {
+            const storedEmail = localStorage.getItem('email');
+            const defaultName = localStorage.getItem('nickname');
+            const defaultImg = localStorage.getItem('profileImage');
 
-        setNickname(defaultName || '');
-        setProfileImg(defaultImg || '');
+            setEmail(storedEmail);
+            setNickname(defaultName || '');
+            setProfileImg(defaultImg || '');
+        }
     }, []);
 
     const UploadImageToS3 = async (file: File) => {
@@ -75,6 +85,21 @@ export default function EditProfileList() {
             window.location.href = '/mypage';
         } catch (error) {
             console.error(error);
+        }
+    };
+
+    const handleDeleteUser = async () => {
+        console.log('테스트');
+        try {
+            // 유저 삭제
+            await deleteAuth(email);
+            // 유저 로그아웃
+            await postLogout();
+            alert('회원 탈퇴가 완료되었습니다.');
+            window.location.href = '/'; // 회원 탈퇴 후 메인 페이지로 리디렉션
+        } catch (error) {
+            console.error('회원 탈퇴 중 오류 발생:', error);
+            alert('회원 탈퇴 중 오류가 발생했습니다. 다시 시도해주세요.');
         }
     };
 
@@ -128,7 +153,8 @@ export default function EditProfileList() {
             </button>
             <button
                 type="button"
-                className="absolute bottom-4 right-6 text-gray-400 text-[0.9rem] hover:text-gray-300"
+                onClick={handleDeleteUser}
+                className="absolute bottom-4 right-6 text-gray-400 text-[0.9rem] hover:text-gray-300 z-[10]"
             >
                 회원 탈퇴
             </button>
