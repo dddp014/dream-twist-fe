@@ -41,7 +41,7 @@ export const postBookView = async (id: string) => {
     return response.json();
 };
 
-export const postBookLike = async (fairytaleId: string) => {
+export const postBookLike = async (id: string) => {
     const accessToken = localStorage.getItem('accessToken');
 
     const response = await fetch(`${API_BASE_URL}/fairytale/like`, {
@@ -51,7 +51,7 @@ export const postBookLike = async (fairytaleId: string) => {
             Authorization: `Bearer ${accessToken}`
         },
         body: JSON.stringify({
-            fairytaleId: fairytaleId
+            fairytaleId: id
         })
     });
 

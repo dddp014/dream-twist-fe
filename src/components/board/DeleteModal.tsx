@@ -56,6 +56,7 @@ export default function DeleteModal({
                         </p>
                         <div className="space-x-3 mt-2">
                             <button
+                                type="button"
                                 onClick={handleBookDelete}
                                 className="bg-red-600 text-white px-4 py-1 border rounded-md"
                             >

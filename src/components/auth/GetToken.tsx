@@ -42,7 +42,7 @@ export default function GetToken() {
             try {
                 await getUserInfo();
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         };
 

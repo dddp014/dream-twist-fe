@@ -14,17 +14,26 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getMyLikeBook } from '@/api/MypageApi';
 
+interface BookProps {
+    coverImage: string;
+    createdAt: string;
+    title: string;
+    id: number;
+    nickname: string;
+    privatedAt: string | null;
+}
+
 export default function LikeBookList() {
     const router = useRouter();
     const [bookCount, setBookCount] = useState(6);
     const [viewClick, setViewClick] = useState(false);
-    const [myBooks, setMyBooks] = useState([]);
+    const [myBooks, setMyBooks] = useState<BookProps[]>([]);
 
     useEffect(() => {
         const fetchMyBook = async () => {
             try {
                 const data = await getMyLikeBook();
-                const bookData = data.myLikes.map((item) => ({
+                const bookData = data.myLikes.map((item: BookProps) => ({
                     ...item,
                     createdAt: item.createdAt.split('T')[0]
                 }));
