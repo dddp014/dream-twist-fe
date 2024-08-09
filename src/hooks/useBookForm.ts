@@ -10,6 +10,7 @@ Date        Author   Status    Description
 2024.08.07  임도헌   Modified  fairytaleId props 추가
 2024.08.07  임도헌   Modified  fairytaleId가 있다면 데이터 불러와서 폼에 적용
 2024.08.07  임도헌   Modified  유저 닉네임 추가(작가 명)
+2024.08.10  임도헌   Modified   유저 접근 권한 코드 추가
 */
 
 import { useEffect, useState } from 'react';
@@ -32,6 +33,9 @@ export type FormData = {
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const useBookForm = (fairytaleId?: number) => {
+    // 유저 Id 불러오기
+    const [userId, setUserId] = useState<number>(0);
+
     // 유저 닉네임 불러오기
     const [nickname, setNickname] = useState<string>('');
     // 로딩 상태 추가
@@ -66,6 +70,7 @@ export const useBookForm = (fairytaleId?: number) => {
                     const savedImages = data[0].images;
                     const savedStorys = storys;
                     const savedIsPublic = isPublic;
+                    setUserId(data[0].userId);
                     setNickname(data[0].nickname);
 
                     const pages = savedStorys.map((story, index) => ({
@@ -112,6 +117,7 @@ export const useBookForm = (fairytaleId?: number) => {
         cover,
         title,
         theme,
+        userId,
         nickname,
         loading
     };

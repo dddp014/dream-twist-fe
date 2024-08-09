@@ -10,6 +10,7 @@ Date        Author   Status    Description
 2024.08.05  임도헌   Modified   ai로 생성한 데이터 로컬스토리지에서 불러와서 반영
 2024.08.07  임도헌   Modified   fairytaleId를 기준으로 id가 있다면 fetch 사용, 아니라면 생성이므로 localstorage를 사용
 2024.08.08  임도헌   Modified   privateAt이 null이라면 isPublic을 true로 변경해서 값 저장하는 코드 추가
+2024.08.10  임도헌   Modified   유저 접근 권한 코드 추가
 */
 
 import { loadFromLocalStorage, saveToLocalStorage } from '@/utils/localStorage';
@@ -40,6 +41,12 @@ export const themes: theme[] = [
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const useFairytailForm = (fairytaleId?: number) => {
+    // 동화 유저 닉네임
+    const [nickname, setNickname] = useState<string>('');
+    //로컬스토리지 유저 닉네임
+    const [localstorageNickName, setLocalstorageNickName] =
+        useState<string>('');
+
     // 페이지 이동(preview)
     const router = useRouter();
     // block 클릭 상태
@@ -64,6 +71,21 @@ export const useFairytailForm = (fairytaleId?: number) => {
     });
 
     useEffect(() => {
+        // 페이지 로드 시 로컬 스토리지에서 닉네임 가져오기
+        const storedNickName = localStorage.getItem('nickname');
+        if (storedNickName) {
+            setLocalstorageNickName(storedNickName);
+        }
+    }, []); // 초기 렌더링 시에만 실행
+
+    useEffect(() => {
+        if (localstorageNickName && nickname !== localstorageNickName) {
+            alert('허용되지 않은 권한입니다.');
+            router.push(`/board/${fairytaleId}`);
+        }
+    }, [nickname]);
+
+    useEffect(() => {
         const fairytaleData = async () => {
             if (fairytaleId) {
                 try {
@@ -71,6 +93,7 @@ export const useFairytailForm = (fairytaleId?: number) => {
                         `${API_BASE_URL}/fairytale/${fairytaleId}`
                     );
                     const data = await response.json();
+                    setNickname(data[0].nickname);
                     const savedTitle = data[0].title;
                     const savedTheme = data[0].theme;
                     const savedStorys = Object.values(
