@@ -8,7 +8,7 @@ Date        Author   Status    Description
 2024.08.05  나경윤    Created
 */
 
-const API_BASE_URL = 'http://localhost:4000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const getMyPayList = async () => {
     const accessToken = localStorage.getItem('accessToken');

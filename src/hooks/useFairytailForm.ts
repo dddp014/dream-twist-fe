@@ -37,6 +37,8 @@ export const themes: theme[] = [
     { name: '기타' }
 ];
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export const useFairytailForm = (fairytaleId?: number) => {
     // 페이지 이동(preview)
     const router = useRouter();
@@ -66,7 +68,7 @@ export const useFairytailForm = (fairytaleId?: number) => {
             if (fairytaleId) {
                 try {
                     const response = await fetch(
-                        `http://localhost:4000/fairytale/${fairytaleId}`
+                        `${API_BASE_URL}/fairytale/${fairytaleId}`
                     );
                     const data = await response.json();
                     const savedTitle = data[0].title;

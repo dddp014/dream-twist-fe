@@ -29,6 +29,8 @@ export type FormData = {
     pages: PageData[];
 };
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export const useBookForm = (fairytaleId?: number) => {
     // 유저 닉네임 불러오기
     const [nickname, setNickname] = useState<string>('');
@@ -57,7 +59,7 @@ export const useBookForm = (fairytaleId?: number) => {
             if (fairytaleId) {
                 try {
                     const response = await fetch(
-                        `http://localhost:4000/fairytale/${fairytaleId}`
+                        `${API_BASE_URL}/fairytale/${fairytaleId}`
                     );
                     const data = await response.json();
                     const savedCover = data[0].coverImage;

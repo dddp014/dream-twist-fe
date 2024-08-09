@@ -14,9 +14,11 @@ Date        Author   Status     Description
 
 import Image from 'next/image';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export default function GoogleLoginButton() {
     const googleLogin = () => {
-        window.location.href = `http://localhost:4000/auth/google/login`;
+        window.location.href = `${API_BASE_URL}/auth/google/login`;
     };
 
     return (

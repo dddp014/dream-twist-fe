@@ -19,13 +19,13 @@ interface IEditParams {
     params: { fairytaleId: number };
 }
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 // 동적 메타데이터 생성 함수
 export async function generateMetadata({
     params: { fairytaleId }
 }: IEditParams): Promise<Metadata> {
-    const response = await fetch(
-        `http://localhost:4000/fairytale/${fairytaleId}`
-    );
+    const response = await fetch(`${API_BASE_URL}/fairytale/${fairytaleId}`);
     const data = await response.json();
     const title = data[0].title;
 

@@ -10,7 +10,7 @@ Date        Author   Status    Description
 2024.08.09  임도헌   Modified  탈퇴 기능 수정
 */
 
-const API_BASE_URL = 'http://localhost:4000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const getUserInfo = async () => {
     const accessToken = localStorage.getItem('accessToken');

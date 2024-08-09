@@ -8,13 +8,17 @@ Date        Author   Status    Description
 2024.08.04  김민규    Created
 
 */
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export const fetchPaymentData = async (searchParams: {
-    orderId?: string;
-    paymentKey?: string;
-    amount?: string;
-    addPoint?: string;
-}, accessToken: string) => {
+export const fetchPaymentData = async (
+    searchParams: {
+        orderId?: string;
+        paymentKey?: string;
+        amount?: string;
+        addPoint?: string;
+    },
+    accessToken: string
+) => {
     if (!accessToken) {
         throw new Error('로그인이 필요합니다.');
     }
@@ -23,7 +27,7 @@ export const fetchPaymentData = async (searchParams: {
         throw new Error('주문 번호가 유효하지 않습니다.');
     }
 
-    const response = await fetch('http://localhost:4000/billing', {
+    const response = await fetch(`${API_BASE_URL}/billing`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -38,7 +42,9 @@ export const fetchPaymentData = async (searchParams: {
     });
 
     if (!response.ok) {
-        throw new Error(`결제 정보 조회에 실패했습니다: ${response.statusText}`);
+        throw new Error(
+            `결제 정보 조회에 실패했습니다: ${response.statusText}`
+        );
     }
 
     return response.json();

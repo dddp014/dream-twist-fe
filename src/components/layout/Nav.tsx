@@ -19,7 +19,7 @@ import LoginNav from './LoginNav';
 import { getUserInfo } from '@/api/AuthApi';
 
 const JWT_EXPIRY_TIME = 15 * 60 * 1000;
-const API_BASE_URL = 'http://localhost:4000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function Nav() {
     const pathname = usePathname();
