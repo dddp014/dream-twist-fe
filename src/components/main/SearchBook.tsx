@@ -6,6 +6,7 @@ Author : 나경윤
 History
 Date        Author   Status    Description
 2024.08.06  나경윤    Created
+2024.08.10  임도헌   Modified  동화 생성하다 나가고 다른 페이지 갔을 때 로컬 스토리지 비우기
 */
 
 'use client';
@@ -20,6 +21,7 @@ import { LoadingIcon } from '../icons/LoadingIcon';
 import useDebounce from '@/hooks/useDebouce';
 import { useDropdown } from '@/hooks/useDropdown';
 import { DropIcon } from '../icons/DropIcon';
+import { removeFromLocalStorage } from '@/utils/localStorage';
 
 const tags: string[] = [
     '모든 주제',
@@ -43,6 +45,13 @@ export default function SearchBook() {
     const { isDropDown, dropdownRef, handleDropdown } = useDropdown();
 
     const debouncedInputValue = useDebounce(searchInputValue);
+
+    useEffect(() => {
+        removeFromLocalStorage('title');
+        removeFromLocalStorage('theme');
+        removeFromLocalStorage('storys');
+        removeFromLocalStorage('isPublic');
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {

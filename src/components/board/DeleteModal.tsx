@@ -42,7 +42,7 @@ export default function DeleteModal({
 
     return (
         <Portal>
-            <div className="fixed left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-dark/90 z-10 bg-black bg-opacity-50">
+            <div className="fixed left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-dark/90 z-50 bg-black bg-opacity-50">
                 <div className="flex flex-col fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 bg-white w-96 h-fit p-4 py-8 rounded-md shadow shadow-stone-300">
                     <div className="flex flex-col justify-center items-center">
                         <Image
