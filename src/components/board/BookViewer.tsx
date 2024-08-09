@@ -17,13 +17,18 @@ import { useMemo } from 'react';
 import { ArrowIcon } from '../icons/ArrowIcon';
 import useTextToImage from '@/hooks/useTextToImage';
 
+interface Info {
+    title: string;
+    nickname: string;
+}
+
 interface ViewerProps {
     step: number;
     nextStep: () => void;
     prevStep: () => void;
     getTextForStep: (step: number) => string;
     getCurrentImage: (step: number) => [string, string];
-    info: string[];
+    info: Info;
 }
 
 const pageCount: number = 8;

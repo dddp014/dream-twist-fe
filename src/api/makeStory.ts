@@ -21,6 +21,7 @@ const accessToken = localStorage.getItem('accessToken');
 export const generatePlot = async (
     storyInput: string
 ): Promise<StoryResponse> => {
+    const accessToken = localStorage.getItem('accessToken');
     const response = await fetch('http://localhost:4000/ai-fairytale/story', {
         method: 'POST',
         headers: {

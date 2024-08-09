@@ -15,10 +15,15 @@ import BookViewer from './BookViewer';
 import PreviewBlank from './PreviewBlank';
 import Logo from '../../../public/images/logo.svg';
 
+interface Info {
+    title: string;
+    nickname: string;
+}
+
 interface BookInfoProps {
     contents: string[];
     bookImages: string[];
-    info: string[];
+    info: Info;
 }
 
 const pageCount: number = 8;

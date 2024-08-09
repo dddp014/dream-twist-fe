@@ -23,18 +23,26 @@ interface BookLikeProps {
 export default function BookLike({ id, likeCount, mybooks }: BookLikeProps) {
     const [likeClick, setLikeClick] = useState(false);
     const [currentCount, setCurrentCount] = useState(0);
+    const [userName, setUserName] = useState<string | null>(null);
 
     useEffect(() => {
         setCurrentCount(Number(likeCount));
     }, [likeCount]);
 
     useEffect(() => {
+        const storedUserName = localStorage.getItem('nickname');
+        setUserName(storedUserName);
+
         if (mybooks.map(String).includes(id)) {
             setLikeClick(true);
         }
     }, [mybooks, id]);
 
     const handleLikeClick = async () => {
+        if (!userName) {
+            window.location.href = '/login';
+            return;
+        }
         const newLikeClick = !likeClick;
         setLikeClick(newLikeClick);
         setCurrentCount((prevCount: any) =>
@@ -42,7 +50,6 @@ export default function BookLike({ id, likeCount, mybooks }: BookLikeProps) {
         );
 
         try {
-            // 좋아요 상태 변경 요청
             await postBookLike(id);
             // console.log('좋아요', id);
         } catch (error) {

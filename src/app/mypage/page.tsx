@@ -13,8 +13,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import MyBookList from '@/components/mypage/MyBookList';
 import MyCommentList from '@/components/mypage/MyCommentList';
-import { getMyPayList } from '@/api/MypageApi';
-import { payInfo } from '@/types/mypage';
 import MyPayList from '@/components/mypage/MyPayList';
 import MyInfoList from '@/components/mypage/MyInfoList';
 import LikeBookList from '@/components/mypage/LikeBookList';
@@ -47,7 +45,7 @@ export default async function Mypage() {
                                 </p>
                             </div>
                         </Link>
-                        <Link href={'/payments'}>
+                        <Link href={'/pay'}>
                             <div className="flex flex-row">
                                 <Image
                                     src={'/images/credit.svg'}

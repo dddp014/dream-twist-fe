@@ -32,8 +32,12 @@ export default function BookInfo({ id }: { id: string }) {
     const [bookImages, setBookImages] = useState<string[]>([]);
     const [contents, setContents] = useState<string[]>([]);
     const [myLikeBooks, setMyLikeBooks] = useState<string[]>([]);
+    const [userName, setUserName] = useState<string | null>(null);
 
     useEffect(() => {
+        const storedUserName = localStorage.getItem('nickname');
+        setUserName(storedUserName);
+
         const fetchMyLikeBook = async () => {
             try {
                 const data = await getMyLikeBook();
@@ -80,7 +84,7 @@ export default function BookInfo({ id }: { id: string }) {
         fetchMyLikeBook();
         fetchMyBook();
         fetchView();
-    }, []);
+    }, [id]);
 
     return (
         <>
@@ -88,9 +92,11 @@ export default function BookInfo({ id }: { id: string }) {
                 <div className="flex flex-row justify-center items-center mb-3 m-auto">
                     <p className="text-2xl font-semibold">{bookInfo.title}</p>
                     <p className="text-[17px] ml-5">{bookInfo.nickname} 작가</p>
-                    <div className="flex flex-row items-center absolute right-0 bottom-14">
-                        <EditDeleteBtn id={id} modalType="book" />
-                    </div>
+                    {userName === bookInfo.nickname && (
+                        <div className="flex flex-row items-center absolute right-0 bottom-14">
+                            <EditDeleteBtn id={id} modalType="book" />
+                        </div>
+                    )}
                 </div>
                 <hr className="border border-zinc-200 opacity-70" />
                 <div className="flex flex-row mt-2 justify-between">
@@ -110,7 +116,7 @@ export default function BookInfo({ id }: { id: string }) {
                 <RenderBook
                     bookImages={bookImages}
                     contents={contents}
-                    info={Object.values(bookInfo)}
+                    info={bookInfo}
                 />
             </div>
         </>
