@@ -22,13 +22,6 @@ const nextConfig = {
         // your project has ESLint errors.
         ignoreDuringBuilds: true
     },
-    redirects: async () => [
-        {
-            source: '/auth/google/callback',
-            destination: '/callback', // 콜백 페이지로 리디렉션
-            permanent: false
-        }
-    ],
     reactStrictMode: false
 };
 
