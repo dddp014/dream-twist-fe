@@ -154,9 +154,9 @@ export default function Nav() {
     }
 
     return (
-        <nav className="relative flex items-center justify-between h-[80px] text-lg shadow-md shadow-neutral-100">
+        <nav className="relative flex items-center justify-between h-[80px] text-lg shadow-md shadow-neutral-100 z-40">
             {/* 로고: 왼쪽 고정 */}
-            <Link href="/" className="absolute left-20 cursor-pointer">
+            <Link href="/" className="absolute left-20 cursor-pointer z-50">
                 <Image
                     src="/images/logo.svg"
                     alt="logo"
@@ -166,7 +166,7 @@ export default function Nav() {
             </Link>
 
             {/* 중앙의 링크들: 중앙 고정 */}
-            <div className="absolute inset-x-0 flex justify-center">
+            <div className="absolute inset-x-0 flex justify-center z-40">
                 <div className="space-x-20">
                     <Link
                         href="/"
@@ -184,7 +184,7 @@ export default function Nav() {
             </div>
 
             {/* 로그인 버튼 또는 LoginNav: 오른쪽 고정 */}
-            <div className="absolute right-20 space-x-4">
+            <div className="absolute right-20 space-x-4 z-40">
                 {isAuth ? (
                     <LoginNav userInfo={userInfo} />
                 ) : (
