@@ -28,6 +28,7 @@ export default function EditProfileList() {
     const [nickname, setNickname] = useState<string>('');
     const [email, setEmail] = useState<string | null>(null);
     const [storedName, setStoredName] = useState<string>('');
+    const [storedImg, setStoredImg] = useState<string>('');
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -35,6 +36,7 @@ export default function EditProfileList() {
             const defaultName = localStorage.getItem('nickname');
             const defaultImg = localStorage.getItem('profileImage');
 
+            setStoredImg(defaultImg || '');
             setStoredName(defaultName || '');
             setEmail(storedEmail);
             setNickname(defaultName || '');
@@ -83,8 +85,10 @@ export default function EditProfileList() {
 
     const handleSaveClick = async () => {
         try {
-            if (nickname === storedName) {
+            if (nickname === storedName && profileImg !== storedImg) {
                 await patchProfile('', profileImg);
+            } else if (nickname === '') {
+                alert('변경할 닉네임을 입력하세요.');
             } else {
                 await patchProfile(nickname, profileImg);
             }

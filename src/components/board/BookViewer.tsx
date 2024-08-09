@@ -61,6 +61,7 @@ export default function BookViewer({
         return (
             <div
                 className={`relative flex felx-row justify-center items-center ${width} h-[33rem] mx-8`}
+                style={{ width: '550px', height: '528px', margin: 'auto' }}
             >
                 <div
                     className="relative border-solid border border-gray-100 bg-[length:100%_100%] w-full h-full bg-cover bg-center bg-no-repeat shadow-lg"
