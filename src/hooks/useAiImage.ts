@@ -13,13 +13,14 @@ import { useState } from 'react';
 import { fetchAiImage } from '@/api/BookApi';
 
 export default function useAiImage() {
-    const accessToken: string | null = localStorage.getItem('accessToken');
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
 
     const generateImage = async (prompt: string) => {
         setLoading(true);
         try {
+            const accessToken: string | null =
+                localStorage.getItem('accessToken');
             const fetchImageUrl = await fetchAiImage(prompt, accessToken); // API 호출
             setImageUrl(fetchImageUrl);
         } catch (error) {

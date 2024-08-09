@@ -33,7 +33,6 @@ import { getUserInfo } from '@/api/AuthApi';
 export type CreationMethod = 'default' | 'upload' | 'ai' | 'palette';
 
 export const useBook = (fairytaleId?: number) => {
-    const accessToken: string | null = localStorage.getItem('accessToken');
     // 페이지 이동(메인페이지)
     const router = useRouter();
     // 임시 유저아이디 1
@@ -123,6 +122,8 @@ export const useBook = (fairytaleId?: number) => {
             story: string;
         }>;
     }) => {
+        // 엑세스토큰 가져옴
+        const accessToken: string | null = localStorage.getItem('accessToken');
         // 폼 데이터를 백엔드에 보낼수 있게 객체로 변환
         const content: { [key: string]: string } = {};
         const images: { [key: string]: File | null } = {};
@@ -156,8 +157,9 @@ export const useBook = (fairytaleId?: number) => {
             imageUrlsObject[(index + 1).toString()] = url;
         });
 
+        console.log(String(coverUrl));
+
         const formdata = new FormData();
-        // formdata.append('userid', String(userId));
         formdata.append('title', String(data.title));
         formdata.append('theme', String(data.theme));
         formdata.append('content', JSON.stringify(content));
@@ -198,7 +200,7 @@ export const useBook = (fairytaleId?: number) => {
                     removeFromLocalStorage('theme');
                     removeFromLocalStorage('storys');
                     removeFromLocalStorage('isPublic');
-                    router.push('/');
+                    // router.push('/');
                 }
             }
         } catch (error) {

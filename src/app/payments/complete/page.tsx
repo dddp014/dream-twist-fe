@@ -13,7 +13,7 @@ Date        Author   Status    Description
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { fetchPaymentData } from '@/api/Payment'; // API 함수 임포트
+import { fetchPaymentData } from '@/api/payment'; // API 함수 임포트
 
 const PaymentCompletePage = () => {
     const [paymentData, setPaymentData] = useState<any>(null);
@@ -40,9 +40,7 @@ const PaymentCompletePage = () => {
                     accessToken
                 );
                 setPaymentData(data);
-            } catch (err) {
-                
-            }
+            } catch (err) {}
         };
 
         fetchPayment();
