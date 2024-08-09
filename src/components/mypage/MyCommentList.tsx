@@ -11,19 +11,41 @@ Date        Author   Status    Description
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { getMyCommentList } from '@/api/MypageApi';
 
+interface CommentInfo {
+    fairytaleId: number;
+    content: string;
+    title: string;
+    createdAt: string;
+    privatedAt: string;
+}
+
 export default function MyCommentList() {
-    const [commentInfo, setCommentInfo] = useState([]);
+    const [commentInfo, setCommentInfo] = useState<CommentInfo[]>([]);
+    const router = useRouter();
+
+    const handleCommentClick = (id: number, privatedAt: string) => {
+        if (id !== null && privatedAt === null) {
+            router.push(`/board/${id}`);
+        }
+        if (id !== null && privatedAt !== null) {
+            alert('비공개 동화입니다.');
+        }
+    };
 
     useEffect(() => {
         const fetchMyComment = async () => {
             try {
                 const data = await getMyCommentList();
-                const commentData = data.myComments.map((item) => ({
-                    ...item,
-                    createdAt: item.createdAt.split('T')[0]
-                }));
+                const commentData = data.myComments.map(
+                    (item: CommentInfo) => ({
+                        ...item,
+                        createdAt: item.createdAt.split('T')[0]
+                    })
+                );
+
                 setCommentInfo(commentData);
             } catch (error) {
                 console.error(error);
@@ -38,7 +60,16 @@ export default function MyCommentList() {
             <div className="overflow-y-auto thin-scrollbar">
                 {commentInfo.length > 0 ? (
                     commentInfo.map((item, index) => (
-                        <div key={item.id}>
+                        <div
+                            key={item.title}
+                            className="cursor-pointer"
+                            onClick={() =>
+                                handleCommentClick(
+                                    item.fairytaleId,
+                                    item.privatedAt
+                                )
+                            }
+                        >
                             <div className="flex flex-row justify-between">
                                 <div>
                                     <p className="text-[1.05rem]">

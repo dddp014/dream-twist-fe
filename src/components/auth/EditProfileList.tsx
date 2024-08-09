@@ -15,29 +15,32 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { deleteAuth, postLogout, postUserPresignedURL } from '@/api/AuthApi';
 import { uploadFileToS3 } from '@/api/BookApi';
-import { patchProfile } from '@/api/AuthApi';
 
 export default function EditProfileList() {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [profileImg, setProfileImg] = useState<string>('');
-    const [Imgfile, setImgFile] = useState<File>();
+    const [Imgfile, setImgFile] = useState<File | null>(null);
     const [nickname, setNickname] = useState('');
     const email: string | null = localStorage.getItem('email');
 
     useEffect(() => {
-        const defaultName = localStorage.getItem('nickname');
-        const defaultImg = localStorage.getItem('profileImage');
+        if (typeof window !== 'undefined') {
+            const storedEmail = localStorage.getItem('email');
+            const defaultName = localStorage.getItem('nickname');
+            const defaultImg = localStorage.getItem('profileImage');
 
-        setNickname(defaultName || '');
-        setProfileImg(defaultImg || '');
+            setEmail(storedEmail);
+            setNickname(defaultName || '');
+            setProfileImg(defaultImg || '');
+        }
     }, []);
 
     const UploadImageToS3 = async (file: File) => {
         try {
             const { presignedURL } = await postUserPresignedURL(file.name);
-            console.log(`Presigned URL: ${presignedURL}`);
+            // console.log(`Presigned URL: ${presignedURL}`);
             const fileUrl = await uploadFileToS3(presignedURL, file);
-            console.log(`파일 업로드 성공 -> s3 url: ${fileUrl}`);
+            // console.log(`파일 업로드 성공 -> s3 url: ${fileUrl}`);
             return fileUrl;
         } catch (error) {
             console.error('파일 업로드 에러:', error);
@@ -102,12 +105,15 @@ export default function EditProfileList() {
                 onClick={handleImgEditClick}
                 style={{ width: 130, height: 130 }}
             >
-                <Image
-                    src={profileImg}
-                    alt="profile"
-                    className="object-cover rounded-full border border-gray-200"
-                    layout="fill"
-                />
+                {profileImg && (
+                    <Image
+                        src={profileImg}
+                        alt="profile"
+                        className="object-cover rounded-full border border-gray-200"
+                        layout="fill"
+                    />
+                )}
+
                 <div className="absolute inset-0 flex items-center justify-center text-white transition duration-200 opacity-0 hover:opacity-100 hover:bg-black hover:bg-opacity-25 rounded-full z-10 cursor-pointer">
                     편집
                 </div>

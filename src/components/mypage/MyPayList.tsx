@@ -48,7 +48,7 @@ export default function MyPayList() {
 
     const handleRefund = async (paymentId: string, cancelReason: string) => {
         const accessToken = localStorage.getItem('accessToken');
-        console.log(`환불 상품 ID: ${paymentId} 환불 사유 : ${cancelReason}`);
+        // console.log(`환불 상품 ID: ${paymentId} 환불 사유 : ${cancelReason}`);
         try {
             const response = await fetch(
                 'http://localhost:4000/billing/cancel',

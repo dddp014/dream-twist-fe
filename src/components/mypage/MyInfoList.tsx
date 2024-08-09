@@ -37,7 +37,7 @@ export default function MyInfoList() {
                     points: data.points
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
             } finally {
                 setLoading(false);
             }

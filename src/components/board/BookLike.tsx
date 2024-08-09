@@ -11,7 +11,7 @@ Date        Author   Status    Description
 'use client';
 
 import { useState, useEffect } from 'react';
-import { LikeIcon } from '../icons/LikeIcon';
+import LikeIcon from '../icons/LikeIcon';
 import { postBookLike } from '@/api/BoardApi';
 
 interface BookLikeProps {

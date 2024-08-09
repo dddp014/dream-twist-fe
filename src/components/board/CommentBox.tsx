@@ -16,9 +16,9 @@ import { postComment, putComment } from '@/api/BoardApi';
 interface CommentBoxProps {
     editStatus: boolean;
     initialContent: string;
-    onCancel?: () => void;
+    commentId?: string;  // editStatus가 true일 때만 필요한 속성
     fairytaleId: string;
-    commentId?: string;
+    onCancel?: () => void;
 }
 
 export default function CommentBox({
