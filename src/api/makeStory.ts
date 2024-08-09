@@ -16,6 +16,8 @@ export interface StoryResponse {
     story: string[];
 }
 
+const accessToken = localStorage.getItem('accessToken');
+
 export const generatePlot = async (
     storyInput: string
 ): Promise<StoryResponse> => {

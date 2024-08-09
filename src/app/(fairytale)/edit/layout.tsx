@@ -6,6 +6,7 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.07.25  임도헌    Created
+2024.07.25  임도헌   Modified  동화 편집 레이아웃 추가
 */
 
 import type { Metadata } from 'next';

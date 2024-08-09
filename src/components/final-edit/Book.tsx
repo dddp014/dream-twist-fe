@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable no-nested-ternary */
 /**
 File Name : final-edit/Book
 Description : 동화 편집 - 스토리를 책 모양으로 볼 수 있고 편집도 가능한 컴포넌트
@@ -14,27 +16,29 @@ Date        Author   Status    Description
 2024.08.02  임도헌   Modified  File 형태 폼제출 할 수 있도록 수정
 2024.08.03  임도헌   Modified  코드 분리
 2024.08.07  임도헌   Modified  fairytailId props 추가
+2024.08.08  임도헌   Modified  eslint 에러 처리
 */
 
 'use client';
 
+import Image from 'next/image';
+import { Controller } from 'react-hook-form';
 import ImageModal from './ImageModal';
 import StoryModal from './StoryModal';
 import Toggle from '../common/Toggle';
-import Image from 'next/image';
 import { ArrowIcon } from '../icons/ArrowIcon';
-import { Controller } from 'react-hook-form';
 import { DropIcon } from '../icons/DropIcon';
 import { themes } from '@/hooks/useFairytailForm';
 import { useBook } from '@/hooks/useBook';
 import { useBookModal } from '@/hooks/useModal';
 import usePageLeaveCheck from '@/hooks/usePageLeaveCheck';
+import Loading from '../common/Loading';
 
 interface FairytailFormProps {
     fairytaleId?: number;
 }
 
-export default function Book({ fairytaleId }: FairytailFormProps) {
+export default function Book({ fairytaleId = 0 }: FairytailFormProps) {
     const {
         register,
         handleSubmit,
@@ -45,6 +49,8 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
         theme,
         currentPage,
         nickname,
+        credit,
+        loading,
         handlePrevPage,
         handleNextPage,
         handleImageSelect,
@@ -61,8 +67,12 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
         setStoryModalOpen
     } = useBookModal();
 
-    //페이지 나갈때 체크
+    // 페이지 나갈때 체크
     usePageLeaveCheck();
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -99,6 +109,13 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
                         </div>
                         <div
                             onClick={handleBackButtonClick}
+                            onKeyPress={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    handleBackButtonClick(e);
+                                }
+                            }}
+                            role="button"
+                            tabIndex={0}
                             className="flex justify-center items-center ml-2 w-[80px] h-[36px] text-base bg-main rounded-md font-bold text-white hover:bg-green-600"
                         >
                             뒤로가기
@@ -140,7 +157,7 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
                                 <button
                                     type="button"
                                     onClick={() => setImageModalOpen(true)}
-                                    className={`relative flex justify-center items-center group w-[300px] h-[300px] bg-[#D9D9D9] rounded-[2px] text-main font-bold hover:opacity-60 hover:bg-gray-300`}
+                                    className="relative flex justify-center items-center group w-[300px] h-[300px] bg-[#D9D9D9] rounded-[2px] text-main font-bold hover:opacity-60 hover:bg-gray-300"
                                 >
                                     {cover ? (
                                         typeof cover === 'string' ? (
@@ -163,7 +180,7 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
                                     ) : (
                                         <div className="w-[300px] h-[300px] flex flex-col items-center justify-center">
                                             <Image
-                                                src={'/images/BiImageAlt.svg'}
+                                                src="/images/BiImageAlt.svg"
                                                 width={200}
                                                 height={200}
                                                 alt="defaultBookCover"
@@ -182,7 +199,7 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
                             <button
                                 type="button"
                                 onClick={() => setImageModalOpen(true)}
-                                className={`relative flex justify-center items-center group w-[600px] h-[600px] bg-[#D9D9D9] rounded-[2px] text-main font-bold hover:opacity-60 hover:bg-gray-300`}
+                                className="relative flex justify-center items-center group w-[600px] h-[600px] bg-[#D9D9D9] rounded-[2px] text-main font-bold hover:opacity-60 hover:bg-gray-300"
                             >
                                 {pages[currentPage - 1]?.image ? (
                                     <div className="absolute top-0 left-0 w-full h-full">
@@ -214,7 +231,7 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
                                 ) : (
                                     <div className="flex flex-col">
                                         <Image
-                                            src={'/images/BiImageAlt.svg'}
+                                            src="/images/BiImageAlt.svg"
                                             width={300}
                                             height={300}
                                             alt={`Default Page ${currentPage}`}
@@ -233,7 +250,7 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
                         <p className="texto mt-10 text-xl">{title}</p>
                         <p className="texto text-lg">{nickname} 지음</p>
                         <Image
-                            src={'/images/logo.svg'}
+                            src="/images/logo.svg"
                             alt="logo"
                             width={50}
                             height={50}
@@ -247,7 +264,7 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
                                 <button
                                     type="button"
                                     onClick={() => setImageModalOpen(true)}
-                                    className={`relative flex justify-center items-center group w-[600px] h-[500px] bg-[#D9D9D9] rounded-[2px] text-main font-bold hover:opacity-60 hover:bg-gray-300 overflow-hidden`}
+                                    className="relative flex justify-center items-center group w-[600px] h-[500px] bg-[#D9D9D9] rounded-[2px] text-main font-bold hover:opacity-60 hover:bg-gray-300 overflow-hidden"
                                 >
                                     {cover ? (
                                         <div className="absolute top-0 left-0 w-full h-full">
@@ -274,7 +291,7 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
                                     ) : (
                                         <div className="flex flex-col items-center">
                                             <Image
-                                                src={'/images/BiImageAlt.svg'}
+                                                src="/images/BiImageAlt.svg"
                                                 width={300}
                                                 height={300}
                                                 alt="Default BookCover"
@@ -327,6 +344,7 @@ export default function Book({ fairytaleId }: FairytailFormProps) {
             </div>
             {imageModalOpen && (
                 <ImageModal
+                    credit={credit}
                     title={title}
                     currentPage={currentPage}
                     updateCreationWay={updateCreationWay}

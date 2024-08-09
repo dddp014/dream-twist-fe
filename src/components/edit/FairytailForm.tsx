@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /**
 File Name : components/edit/FairytailStoryForm
 Description : 동화 내용 폼 컴포넌트
@@ -6,6 +7,7 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.07.22  임도헌   Created
+2024.07.22  임도헌   Modified  동화 내용 컴포넌트 추가
 2024.07.24  임도헌   Modified  Toggle 컴포넌트 분리
 2024.07.25  임도헌   Modified  StoryBlock 컴포넌트 분리
 2024.07.25  임도헌   Modified  FairytailInfo 컴포넌트와 병합
@@ -20,9 +22,9 @@ Date        Author   Status    Description
 
 'use client';
 
+import { Controller } from 'react-hook-form';
 import Toggle from '../common/Toggle';
 import StoryBlock from './StoryBlock';
-import { Controller } from 'react-hook-form';
 import { DropIcon } from '../icons/DropIcon';
 import useFairytailForm, { themes } from '@/hooks/useFairytailForm';
 import Loading from '../common/Loading';
@@ -32,8 +34,8 @@ interface FairytailFormProps {
     fairytaleId?: number;
 }
 
-export default function FairytailForm({ fairytaleId }: FairytailFormProps) {
-    //페이지 나갈때 체크
+export default function FairytailForm({ fairytaleId = 0 }: FairytailFormProps) {
+    // 페이지 나갈때 체크
     usePageLeaveCheck();
     const {
         register,
@@ -59,13 +61,13 @@ export default function FairytailForm({ fairytaleId }: FairytailFormProps) {
                 <div className="max-w-xs mt-8 ml-8">
                     <label htmlFor="title" className="m-4 text-2xl">
                         동화 제목
+                        <input
+                            id="title"
+                            {...register('title', { required: true })}
+                            className="w-[280px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2"
+                            placeholder="제목을 입력해주세요."
+                        />
                     </label>
-                    <input
-                        id="title"
-                        {...register('title', { required: true })}
-                        className="w-[280px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2"
-                        placeholder="제목을 입력해주세요."
-                    />
                     {errors.title && (
                         <span className="block ml-4 mb-2 text-sm text-red-600 font-bold">
                             동화 제목을 입력해주세요.
@@ -73,24 +75,29 @@ export default function FairytailForm({ fairytaleId }: FairytailFormProps) {
                     )}
                     <label htmlFor="theme" className="m-4 text-2xl">
                         주제
-                    </label>
-                    <div className="relative">
-                        <div className="absolute top-[34px] left-[270px]">
-                            <DropIcon rotate="" />
+                        <div className="relative">
+                            <div className="absolute top-[34px] left-[270px]">
+                                <DropIcon rotate="" />
+                            </div>
+                            <select
+                                className="w-[280px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2 appearance-none"
+                                id="theme"
+                                {...register('theme', { required: true })}
+                            >
+                                <option value="">주제를 선택해주세요.</option>
+                                {themes.map(({ name }) => (
+                                    <option key={name} value={name}>
+                                        {name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
-                        <select
-                            className="w-[280px] m-4 p-2 pl-1 border border-green-300 rounded-lg shadow focus:outline-none focus:border-2 appearance-none"
-                            id="theme"
-                            {...register('theme', { required: true })}
-                        >
-                            <option value="">주제를 선택해주세요.</option>
-                            {themes.map(({ name }) => (
-                                <option key={name} value={name}>
-                                    {name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                    </label>
+                    {errors.theme && (
+                        <span className="block ml-4 mb-2 text-sm text-red-600 font-bold">
+                            주제를 선택해 주세요.
+                        </span>
+                    )}
                 </div>
             </div>
             <div className="flex-1">

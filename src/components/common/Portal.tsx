@@ -6,6 +6,7 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.07.27  임도헌    Created
+2024.07.27  임도헌   Modified  포탈 기능 추가
 */
 
 import { ReactElement, useEffect, useState } from 'react';

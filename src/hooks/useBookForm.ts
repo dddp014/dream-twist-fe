@@ -6,21 +6,22 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.08.03  임도헌   Created
+2024.08.03  임도헌   Modified  북폼 커스텀 훅 추가
 2024.08.07  임도헌   Modified  fairytaleId props 추가
 2024.08.07  임도헌   Modified  fairytaleId가 있다면 데이터 불러와서 폼에 적용
 2024.08.07  임도헌   Modified  유저 닉네임 추가(작가 명)
 */
 
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useFairytailInfo } from './useFairytailInfo';
-import { useEffect, useState } from 'react';
 
-type PageData = {
+export type PageData = {
     image: File | string | null;
     story: string;
 };
 
-type FormData = {
+export type FormData = {
     title: string;
     theme: string;
     cover: File | string | null;
@@ -31,6 +32,8 @@ type FormData = {
 export const useBookForm = (fairytaleId?: number) => {
     // 유저 닉네임 불러오기
     const [nickname, setNickname] = useState<string>('');
+    // 로딩 상태 추가
+    const [loading, setLoading] = useState<boolean>(true);
 
     // 로컬 스토리지 데이터 불러오기
     const { title, theme, storys, isPublic } = useFairytailInfo();
@@ -39,8 +42,8 @@ export const useBookForm = (fairytaleId?: number) => {
         useForm<FormData>({
             defaultValues: {
                 cover: null,
-                theme: theme,
-                isPublic: isPublic,
+                theme,
+                isPublic,
                 pages:
                     storys.length > 0
                         ? storys.map((story) => ({ image: null, story }))
@@ -69,24 +72,25 @@ export const useBookForm = (fairytaleId?: number) => {
                     }));
 
                     reset({
-                        title: title,
-                        theme: theme,
+                        title,
+                        theme,
                         cover: savedCover,
                         isPublic: savedIsPublic,
-                        pages: pages
+                        pages
                     });
                 } catch (error) {
                     console.error(`Error fetching fairytale data: ${error}`);
                 }
             } else {
                 reset({
-                    title: title,
-                    theme: theme,
+                    title,
+                    theme,
                     cover: null,
-                    isPublic: isPublic,
+                    isPublic,
                     pages: storys.map((story) => ({ image: null, story }))
                 });
             }
+            setLoading(false); // 데이터 로딩 완료 후 로딩 상태 해제
         };
         fairytaleData();
     }, [title, theme, storys, isPublic, reset]);
@@ -106,6 +110,7 @@ export const useBookForm = (fairytaleId?: number) => {
         cover,
         title,
         theme,
-        nickname
+        nickname,
+        loading
     };
 };

@@ -6,6 +6,7 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.08.03  임도헌   Created
+2024.08.03  임도헌   Modified   fetchPresignedURL,uploadFileToS3,submitBookForm 추가
 2024.08.07  임도헌   Modified   updateBookForm 추가
 2024.08.07  임도헌   Modified   fetchAiImage 추가
 2024.08.07  임도헌   Modified   금지어 json으로 반환
@@ -43,9 +44,15 @@ export const uploadFileToS3 = async (presignedURL: string, file: File) => {
     return presignedURL.split('?')[0];
 };
 
-export const submitBookForm = async (formdata: FormData) => {
+export const submitBookForm = async (
+    formdata: FormData,
+    accessToken: string | null
+) => {
     const response = await fetch(API_BASE_URL, {
         method: 'POST',
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        },
         body: formdata,
         credentials: 'include'
     });
@@ -59,10 +66,14 @@ export const submitBookForm = async (formdata: FormData) => {
 
 export const updateBookForm = async (
     formdata: FormData,
-    fairytailId: number
+    fairytailId: number,
+    accessToken: string | null
 ) => {
     const response = await fetch(`${API_BASE_URL}/${fairytailId}`, {
         method: 'PUT',
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        },
         body: formdata,
         credentials: 'include'
     });
@@ -74,13 +85,17 @@ export const updateBookForm = async (
     return response.text();
 };
 
-export const fetchAiImage = async (prompt: string): Promise<string> => {
+export const fetchAiImage = async (
+    prompt: string,
+    accessToken: string | null
+): Promise<string> => {
     const response = await fetch(`http://localhost:4000/ai-fairytale/image`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
         },
-        body: JSON.stringify({ prompt: prompt }),
+        body: JSON.stringify({ prompt }),
         credentials: 'include'
     });
 

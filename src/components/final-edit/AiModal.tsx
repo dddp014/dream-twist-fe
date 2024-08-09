@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /**
 File Name : compoenents/final-edit/AiModal
 Description : 이미지 첨부에서 ai 사용 시
@@ -6,6 +7,7 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.07.26  임도헌   Created
+2024.07.26  임도헌   Modified  AI 모달 디자인만 생성
 2024.08.01  임도헌   Modified  AI 모달 기능 추가
 2024.08.05  임도헌   Modified  ai 이미지 받아오기 추가
 2024.08.07  임도헌   Modified  fetchAiImage api 분리
@@ -13,14 +15,15 @@ Date        Author   Status    Description
 */
 
 import { useState } from 'react';
-import Portal from '../common/Portal';
 import Image from 'next/image';
+import Portal from '../common/Portal';
 import LoadingSpinner from '../common/LoadingSpinner';
-import { useAiImage } from '@/hooks/useAiImage'; // 훅 가져오기
+import useAiImage from '@/hooks/useAiImage'; // 훅 가져오기
 
 interface AiModalProps {
     onClose: () => void;
     handleAiUpload: (imageUrl: string) => void;
+    credit: string;
     currentPage: number;
     title: string;
     initialText: string;
@@ -29,6 +32,7 @@ interface AiModalProps {
 export default function AiModal({
     onClose,
     handleAiUpload,
+    credit,
     currentPage,
     title,
     initialText
@@ -55,9 +59,13 @@ export default function AiModal({
         <Portal>
             <div className="fixed left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-dark/90 z-10 bg-black bg-opacity-50">
                 <div className="w-full max-w-[900px] rounded-lg bg-white text-center first-line: border-[1px] border-main px-8">
-                    <button onClick={onClose} className="ml-[800px] mt-[20px]">
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="ml-[800px] mt-[20px]"
+                    >
                         <Image
-                            src={'/images/cancleIcon.svg'}
+                            src="/images/cancleIcon.svg"
                             width={40}
                             height={40}
                             alt="cancel"
@@ -77,7 +85,7 @@ export default function AiModal({
                     </div>
 
                     <input
-                        placeholder="여기에 원하는 장면들 단어로 끊어서 적어주세요."
+                        placeholder="여기에 원하는 장면들을 묘사해주세요(예시: 강아지가 헤엄치는 모습)"
                         value={prompt}
                         onChange={handlePromptChange}
                         className="bg-yellow-200 w-full h-[40px] rounded-lg mb-4 p-4"
@@ -97,11 +105,15 @@ export default function AiModal({
                         </div>
                     )}
 
-                    <div className="flex justify-end">
+                    <div className="flex justify-end items-center mb-10">
+                        <p className="font-bold text-lg mr-4 text-gray-600">
+                            잔여 나뭇잎 : {credit}
+                        </p>
+
                         <button
                             type="button"
                             onClick={imageUrl ? handleConfirm : handleSubmit}
-                            className="px-6 py-2 bg-main text-white rounded-md mb-10"
+                            className="px-6 py-2 bg-main text-white rounded-md"
                             disabled={loading}
                         >
                             {loading

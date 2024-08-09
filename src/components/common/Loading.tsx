@@ -6,6 +6,7 @@ Author : 임도헌
 History
 Date        Author   Status    Description
 2024.08.07  임도헌    Created
+2024.08.07  임도헌   Modified  로딩 컴포넌트 추가
 */
 
 import Image from 'next/image';

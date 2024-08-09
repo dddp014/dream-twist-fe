@@ -13,7 +13,7 @@ Date        Author   Status    Description
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { fetchPaymentData } from '@/api/Payment'; // API 함수 임포트
+import { fetchPaymentData } from '@/api/payment'; // API 함수 임포트
 
 const PaymentCompletePage = () => {
     const [paymentData, setPaymentData] = useState<any>(null);

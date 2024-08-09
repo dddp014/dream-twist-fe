@@ -45,7 +45,7 @@ export default function BookLike({ id, likeCount, mybooks }: BookLikeProps) {
         }
         const newLikeClick = !likeClick;
         setLikeClick(newLikeClick);
-        setCurrentCount((prevCount) =>
+        setCurrentCount((prevCount: any) =>
             newLikeClick ? prevCount + 1 : prevCount - 1
         );
 
