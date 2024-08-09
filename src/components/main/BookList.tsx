@@ -29,6 +29,12 @@ export default function BookList({ fairytaleInfo }: BookListProps) {
     const [isEnd, setIsEnd] = useState<boolean>(false);
 
     useEffect(() => {
+        setItems(fairytaleInfo.slice(0, itemsPerPage));
+        pageIndexRef.current = 2;
+        setIsEnd(false);
+    }, [fairytaleInfo]);
+
+    useEffect(() => {
         const savedItems = sessionStorage.getItem('BOOKLIST_ITEMS');
         const savedPageIndex = sessionStorage.getItem('BOOKLIST_PAGE_INDEX');
         const savedScrollY = sessionStorage.getItem('BOOKLIST_SCROLL_Y');

@@ -127,7 +127,7 @@ export default function SearchBook() {
             }
 
             try {
-                // console.log('검색 쿼리', query);
+                console.log('검색 쿼리', query);
                 const result = await getSearchBook(query);
                 const formattedResult = result.map((item: FairytaleInfo) => ({
                     ...item,
