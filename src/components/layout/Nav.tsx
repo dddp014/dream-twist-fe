@@ -7,7 +7,7 @@ History
 Date        Author   Status    Description
 2024.07.21  나경윤    Created
 2024.08.07  나경윤    Modified    로그인 연결
-2024.08.10  나경윤    Modified    네브바에서 토큰 처리
+2024.08.10  임도헌    Modified  nav바 fixed로 변경
 */
 
 'use client';
@@ -35,45 +35,18 @@ export default function Nav() {
     const isMain = pathname === '/';
 
     useEffect(() => {
-        // 현재 URL 해시 부분에서 토큰 추출
-        const hash = window.location.hash.substring(1);
-        const params = new URLSearchParams(hash);
-
-        const accessToken = params.get('accessToken');
-        const refreshToken = params.get('refreshToken');
-
-        if (accessToken && refreshToken) {
-            // 토큰을 로컬 스토리지에 저장
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken);
-
-            // 만료 시간 설정 및 저장
-            const expiryTime = Date.now() + JWT_EXPIRY_TIME;
-            localStorage.setItem('tokenExpiry', expiryTime.toString());
-
-            // URL 해시 제거
-            window.history.replaceState(null, '', window.location.pathname);
-        }
-
         const fetchUserInfo = async () => {
             try {
                 const data = await getUserInfo();
 
+                setUserInfo({
+                    nickname: data.nickname,
+                    profileImage: data.profileImage
+                });
+
                 localStorage.setItem('email', data.email);
                 localStorage.setItem('nickname', data.nickname);
                 localStorage.setItem('profileImage', data.profileImage);
-
-                const storedNickName = localStorage.getItem('nickname') || '';
-                const storedProfileImage =
-                    localStorage.getItem('profileImage') || '';
-                if (storedNickName) {
-                    setIsAuth(true);
-
-                    setUserInfo({
-                        nickname: storedNickName,
-                        profileImage: storedProfileImage
-                    });
-                }
             } catch (error) {
                 console.error(error);
             }
@@ -94,6 +67,8 @@ export default function Nav() {
             setTimeout(refreshToken, tokenExpiryTime - Date.now() - 60000); // 만료 1분 전에 재발급
         } else {
             setIsAuth(false);
+            // localStorage.removeItem('accessToken');
+            // localStorage.removeItem('tokenExpiry');
             if (
                 pathname.startsWith('/buildstory') ||
                 pathname.startsWith('/edit') ||
@@ -146,6 +121,7 @@ export default function Nav() {
         localStorage.setItem('tokenExpiry', expiryTime.toString());
         setIsAuth(true);
         setTimeout(refreshToken, JWT_EXPIRY_TIME - 60000); // 만료 1분 전에 재발급
+        // console.log('로그인');
     };
 
     if (pathname === '/login') {
@@ -153,7 +129,7 @@ export default function Nav() {
     }
 
     return (
-        <nav className="flex flex-row items-center justify-between px-24 py-3 text-lg shadow-md shadow-neutral-100">
+        <nav className="relative flex flex-row items-center justify-between px-24 py-3 text-lg shadow-md shadow-neutral-100">
             <Link href="/" className="cursor-pointer">
                 <Image
                     src="/images/logo.svg"
@@ -162,19 +138,21 @@ export default function Nav() {
                     height={0}
                 />
             </Link>
-            <div className="space-x-20 pt-1">
-                <Link
-                    href="/"
-                    className={`hover:text-main cursor-pointer ${isMain ? 'text-main' : ''}`}
-                >
-                    동화 갤러리
-                </Link>
-                <Link
-                    href="/buildstory"
-                    className={`hover:text-main cursor-pointer ${isBuild ? 'text-main' : ''}`}
-                >
-                    동화 만들기
-                </Link>
+            <div className="absolute inset-x-0 flex justify-center">
+                <div className="space-x-20">
+                    <Link
+                        href="/"
+                        className={`hover:text-main cursor-pointer ${isMain ? 'text-main' : ''}`}
+                    >
+                        동화 갤러리
+                    </Link>
+                    <Link
+                        href="/buildstory"
+                        className={`hover:text-main cursor-pointer ${isBuild ? 'text-main' : ''}`}
+                    >
+                        동화 만들기
+                    </Link>
+                </div>
             </div>
             <div className="pt-1 space-x-4">
                 {isAuth ? (
