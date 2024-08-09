@@ -166,7 +166,7 @@ export default function Nav() {
             </Link>
 
             {/* 중앙의 링크들: 중앙 고정 */}
-            <div className="absolute inset-x-0 flex justify-center z-40">
+            <div className="absolute inset-x-0 flex justify-center z-30">
                 <div className="space-x-20">
                     <Link
                         href="/"
