@@ -12,7 +12,7 @@ Date        Author   Status    Description
 
 import Image from 'next/image';
 import Portal from '../common/Portal';
-import { deleteBook } from '@/api/BoardApi';
+import { deleteBook, deleteComment } from '@/api/BoardApi';
 
 interface DeleteModalProps {
     id: string;
@@ -27,8 +27,14 @@ export default function DeleteModal({
 }: DeleteModalProps) {
     const handleBookDelete = async () => {
         try {
-            await deleteBook(id);
-            window.location.href = '/';
+            if (modalType === 'book') {
+                await deleteBook(id);
+                window.location.href = '/';
+            }
+            if (modalType === 'comment') {
+                await deleteComment(id);
+                window.location.reload();
+            }
         } catch (error) {
             console.error(error);
         }
@@ -50,6 +56,7 @@ export default function DeleteModal({
                         </p>
                         <div className="space-x-3 mt-2">
                             <button
+                                type="button"
                                 onClick={handleBookDelete}
                                 className="bg-red-600 text-white px-4 py-1 border rounded-md"
                             >

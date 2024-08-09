@@ -43,6 +43,9 @@ export const postLogout = async () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('tokenExpiry');
+    localStorage.removeItem('nickname');
+    localStorage.removeItem('email');
+    localStorage.removeItem('profileImage');
 
     if (!response.ok) {
         throw new Error('로그아웃 실패');
@@ -70,7 +73,7 @@ export const postUserPresignedURL = async (fileName: string) => {
     return response.json();
 };
 
-export const patchProfile = async (nickname: string, url: string) => {
+export const patchProfile = async (name: string, url: string) => {
     const accessToken = localStorage.getItem('accessToken');
 
     const response = await fetch(`${API_BASE_URL}/users/update`, {
@@ -80,7 +83,7 @@ export const patchProfile = async (nickname: string, url: string) => {
             Authorization: `Bearer ${accessToken}`
         },
         body: JSON.stringify({
-            nickname: nickname,
+            nickname: name,
             profileImageURL: url
         })
     });

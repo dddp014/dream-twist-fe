@@ -11,30 +11,33 @@ Date        Author   Status    Description
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { getMyLikeBook } from '@/api/MypageApi';
 
-interface Book {
-    id: string;
+interface BookProps {
     coverImage: string;
-    title: string;
     createdAt: string;
+    title: string;
+    id: number;
+    nickname: string;
+    privatedAt: string | null;
 }
 
 export default function LikeBookList() {
+    const router = useRouter();
     const [bookCount, setBookCount] = useState(6);
     const [viewClick, setViewClick] = useState(false);
-    const [myBooks, setMyBooks] = useState<Book[]>([]);
+    const [myBooks, setMyBooks] = useState<BookProps[]>([]);
 
     useEffect(() => {
         const fetchMyBook = async () => {
             try {
                 const data = await getMyLikeBook();
-                const bookData = data.myLikes.map((item: Book) => ({
+                const bookData = data.myLikes.map((item: BookProps) => ({
                     ...item,
                     createdAt: item.createdAt.split('T')[0]
                 }));
                 setMyBooks(bookData);
-                // console.log('좋아요 동화', data);
             } catch (error) {
                 console.error(error);
             }
@@ -61,6 +64,13 @@ export default function LikeBookList() {
                             <button
                                 type="button"
                                 key={item.id}
+                                onClick={() => {
+                                    if (item.privatedAt === null) {
+                                        router.push(`/board/${item.id}`);
+                                    } else {
+                                        alert('비공개 동화입니다.');
+                                    }
+                                }}
                                 className="relative max-w-[15rem] w-full aspect-[4/5] border rounded-lg border-gray-200 overflow-hidden"
                             >
                                 <div
@@ -73,11 +83,14 @@ export default function LikeBookList() {
                                     }}
                                 />
                                 <div className="absolute bg-white bottom-0 w-full py-2 text-left pl-4">
-                                    <div className="flex flex-col">
-                                        <p className="text-[1.1rem] font-medium -mb-0.5 truncate">
-                                            {item.title}
+                                    <p className="text-[1.15rem] font-semibold truncate">
+                                        {item.title}
+                                    </p>
+                                    <div className="flex justify-between items-center">
+                                        <p className="text-[1rem] flex-grow truncate pr-4">
+                                            {item.nickname} 작가
                                         </p>
-                                        <p className="text-[0.7rem] text-gray-400">
+                                        <p className="text-[0.8rem] text-gray-400 mr-4 -mb-0.5 whitespace-nowrap">
                                             {item.createdAt}
                                         </p>
                                     </div>

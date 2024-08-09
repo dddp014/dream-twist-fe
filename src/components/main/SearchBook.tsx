@@ -13,12 +13,13 @@ Date        Author   Status    Description
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Tag from '../common/Tag';
-import SortDropdown from './SortDropdown';
 import BookList from './BookList';
-import { getSearchBook, getBookList } from '@/api/MainApi';
+import { getSearchBook } from '@/api/MainApi';
 import { FairytaleInfo } from '@/types/fairytale';
 import { LoadingIcon } from '../icons/LoadingIcon';
 import useDebounce from '@/hooks/useDebouce';
+import { useDropdown } from '@/hooks/useDropdown';
+import { DropIcon } from '../icons/DropIcon';
 
 const tags: string[] = [
     '모든 주제',
@@ -30,38 +31,50 @@ const tags: string[] = [
     '기타'
 ];
 
+const options: string[] = ['최신순', '인기순', '조회순'];
+
 export default function SearchBook() {
     const [selectedTag, setSelectedTag] = useState<string>('모든 주제');
     const [searchResults, setSearchResults] = useState<FairytaleInfo[]>([]);
     const [initData, setInitData] = useState<FairytaleInfo[]>([]);
     const [searchInputValue, setSearchInputValue] = useState<string>('');
     const [loading, setLoading] = useState(true);
+    const [label, setLabel] = useState<string>(options[0]);
+    const { isDropDown, dropdownRef, handleDropdown } = useDropdown();
 
     const debouncedInputValue = useDebounce(searchInputValue);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchInitialData = async () => {
             try {
-                const data = await getBookList();
-                const formattedData = data.map((item: FairytaleInfo) => ({
+                const query = `?sortOrder=${label}&tags=${selectedTag}`;
+                const result = await getSearchBook(query);
+                const formattedResult = result.map((item: FairytaleInfo) => ({
                     ...item,
                     createdAt: item.createdAt.split('T')[0]
                 }));
-                setInitData(formattedData);
-                // console.log(data);
-                setSearchResults(formattedData);
+                setInitData(formattedResult);
+                setSearchResults(formattedResult);
             } catch (error) {
                 console.error(error);
+                setSearchResults([]);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchData();
-    }, []);
+        fetchInitialData();
+    }, [label, selectedTag]);
+
+    const handleOptionClick = (value: string) => {
+        setLabel(value);
+        handleDropdown();
+    };
 
     const handleTagClick = async (label: string) => {
         setSelectedTag(label);
+
+        let query = `?sortOrder=${label}`;
 
         if (label === '모든 주제') {
             setSearchResults(initData);
@@ -69,7 +82,7 @@ export default function SearchBook() {
             return;
         }
 
-        let query = `?tags=${label}`;
+        query = `?sortOrder=${label}&tags=${label}`;
 
         if (debouncedInputValue) {
             query += `&title=${debouncedInputValue}`;
@@ -103,17 +116,14 @@ export default function SearchBook() {
         }
 
         const fetchResults = async () => {
-            let query = '';
-            if (debouncedInputValue && selectedTag === '모든 주제') {
-                query = `?title=${debouncedInputValue}`;
-            }
-            if (debouncedInputValue && selectedTag !== '모든 주제') {
-                query = `?tags=${selectedTag}&title=${debouncedInputValue}`;
+            let query = `?sortOrder=${label}`;
+
+            if (debouncedInputValue && selectedTag) {
+                query += `&tags=${selectedTag}&title=${debouncedInputValue}`;
             }
 
-            if (debouncedInputValue === '' && selectedTag !== '모든 주제') {
-                query = `?tags=${selectedTag}`;
-                // console.log('??', query);
+            if (debouncedInputValue === '') {
+                query += `&tags=${selectedTag}`;
             }
 
             try {
@@ -130,8 +140,12 @@ export default function SearchBook() {
             }
         };
 
-        fetchResults();
-    }, [debouncedInputValue, selectedTag]);
+        if (debouncedInputValue === '' && selectedTag === '모든 주제') {
+            setSearchResults(initData);
+        } else {
+            fetchResults();
+        }
+    }, [debouncedInputValue, selectedTag, label]);
 
     return (
         <>
@@ -169,7 +183,43 @@ export default function SearchBook() {
                         />
                     </button>
                 </div>
-                <SortDropdown />
+                <div ref={dropdownRef} className="relative z-10">
+                    <button
+                        type="button"
+                        className="flex items-center justify-between w-[10rem] h-[3.2rem] px-6 text-left border border-gray-200 rounded-lg"
+                        onClick={handleDropdown}
+                    >
+                        <p>{label}</p>
+                        {isDropDown ? (
+                            <DropIcon rotate="180" />
+                        ) : (
+                            <DropIcon rotate="0" />
+                        )}
+                    </button>
+                    {isDropDown && (
+                        <ul className="absolute bg-white w-[10rem] h-fit text-left border border-gray-200 rounded text-base">
+                            {options.map((option, index) => (
+                                <li
+                                    key={option}
+                                    className="hover:bg-gray-100 cursor-pointer"
+                                >
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            handleOptionClick(option)
+                                        }
+                                        className="w-full text-left px-6 py-2.5"
+                                    >
+                                        {option}
+                                    </button>
+                                    {index < options.length - 1 && (
+                                        <hr className="border-gray-200 mx-2" />
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
             </div>
             <div className="w-full">
                 {loading ? (

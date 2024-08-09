@@ -31,7 +31,10 @@ const config: Config = {
             },
             fontFamily: {
                 Hyemin: ['Hyemin'],
-                LaundryGothic: ['LaundryGothic']
+                LaundryGothic: ['LaundryGothic'],
+                Pretendard: ['Pretendard-Medium'],
+                'Pretendard-100': ['Pretendard-Regular'],
+                'Pretendard-200': ['Pretendard-SemiBold']
             }
         }
     },

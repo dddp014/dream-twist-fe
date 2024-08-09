@@ -32,22 +32,17 @@ export default function BookInfo({ id }: { id: string }) {
     const [bookImages, setBookImages] = useState<string[]>([]);
     const [contents, setContents] = useState<string[]>([]);
     const [myLikeBooks, setMyLikeBooks] = useState<string[]>([]);
+    const [userName, setUserName] = useState<string | null>(null);
 
     useEffect(() => {
+        const storedUserName = localStorage.getItem('nickname');
+        setUserName(storedUserName);
+
         const fetchMyLikeBook = async () => {
             try {
                 const data = await getMyLikeBook();
                 const likeData = data.myLikes.map((item: LikeId) => item.id);
                 setMyLikeBooks(likeData);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        const fetchView = async () => {
-            try {
-                const data = await postBookView(id);
-                console.log('조회요청', data);
             } catch (error) {
                 console.error(error);
             }
@@ -77,10 +72,20 @@ export default function BookInfo({ id }: { id: string }) {
             }
         };
 
+        if (storedUserName) {
+            const fetchView = async () => {
+                try {
+                    await postBookView(id);
+                } catch (error) {
+                    // console.error(error);
+                }
+            };
+            fetchView();
+        }
+
         fetchMyLikeBook();
         fetchMyBook();
-        fetchView();
-    }, []);
+    }, [id]);
 
     return (
         <>
@@ -88,9 +93,11 @@ export default function BookInfo({ id }: { id: string }) {
                 <div className="flex flex-row justify-center items-center mb-3 m-auto">
                     <p className="text-2xl font-semibold">{bookInfo.title}</p>
                     <p className="text-[17px] ml-5">{bookInfo.nickname} 작가</p>
-                    <div className="flex flex-row items-center absolute right-0 bottom-14">
-                        <EditDeleteBtn id={id} modalType="book" />
-                    </div>
+                    {userName === bookInfo.nickname && (
+                        <div className="flex flex-row items-center absolute right-0 bottom-14">
+                            <EditDeleteBtn id={id} modalType="book" />
+                        </div>
+                    )}
                 </div>
                 <hr className="border border-zinc-200 opacity-70" />
                 <div className="flex flex-row mt-2 justify-between">

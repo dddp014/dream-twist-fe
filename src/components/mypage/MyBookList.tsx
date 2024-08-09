@@ -10,29 +10,32 @@ Date        Author   Status    Description
 
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getMyBookList } from '@/api/MypageApi';
 
-interface Book {
-    id: string;
+interface BookProps {
     coverImage: string;
-    title: string;
     createdAt: string;
+    title: string;
+    id: number;
 }
 
 export default function MyBookList() {
+    const router = useRouter();
     const [bookCount, setBookCount] = useState(6);
     const [viewClick, setViewClick] = useState(false);
-    const [myBooks, setMyBooks] = useState<Book[]>([]);
+    const [myBooks, setMyBooks] = useState<BookProps[]>([]);
 
     useEffect(() => {
         const fetchMyBook = async () => {
             try {
                 const data = await getMyBookList();
-                const myBookData = data.myFairytales.map((item: Book) => ({
+                const myBookData = data.myFairytales.map((item: BookProps) => ({
                     ...item,
                     createdAt: item.createdAt.split('T')[0]
                 }));
+
                 setMyBooks(myBookData);
             } catch (error) {
                 console.error(error);
@@ -60,6 +63,7 @@ export default function MyBookList() {
                             <button
                                 type="button"
                                 key={item.id}
+                                onClick={() => router.push(`/board/${item.id}`)}
                                 className="relative max-w-[15rem] w-full aspect-[4/5] border rounded-lg border-gray-200 overflow-hidden"
                             >
                                 <div

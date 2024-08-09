@@ -21,15 +21,10 @@ import { getUserInfo } from '@/api/AuthApi';
 const JWT_EXPIRY_TIME = 15 * 60 * 1000;
 const API_BASE_URL = 'http://localhost:4000';
 
-interface UserInfo {
-    nickname: string;
-    profileImage: string;
-}
-
 export default function Nav() {
     const pathname = usePathname();
     const router = useRouter();
-    const [userInfo, setUserInfo] = useState<UserInfo>({
+    const [userInfo, setUserInfo] = useState({
         nickname: '',
         profileImage: ''
     });
@@ -60,34 +55,31 @@ export default function Nav() {
     }, []);
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const token = localStorage.getItem('accessToken');
-            const tokenExpiry = localStorage.getItem('tokenExpiry');
+        const token = localStorage.getItem('accessToken');
+        const tokenExpiry = localStorage.getItem('tokenExpiry');
 
-            // 토큰 유효성 확인
-            if (token && tokenExpiry && Date.now() < Number(tokenExpiry)) {
-                setIsAuth(true);
-                setTimeout(
-                    refreshToken,
-                    Number(tokenExpiry) - Date.now() - 60000
-                ); // 만료 1분 전에 재발급
-            } else {
-                setIsAuth(false);
-                if (
-                    pathname.startsWith('/buildstory') ||
-                    pathname.startsWith('/edit') ||
-                    pathname.startsWith('/mypage')
-                ) {
-                    router.push('/login');
-                }
+        const tokenExpiryTime = tokenExpiry ? parseInt(tokenExpiry, 10) : 0;
+
+        // 토큰 유효성 확인
+        if (token && tokenExpiry && Date.now() < tokenExpiryTime) {
+            setIsAuth(true);
+            setTimeout(refreshToken, tokenExpiryTime - Date.now() - 60000); // 만료 1분 전에 재발급
+        } else {
+            setIsAuth(false);
+            // localStorage.removeItem('accessToken');
+            // localStorage.removeItem('tokenExpiry');
+            if (
+                pathname.startsWith('/buildstory') ||
+                pathname.startsWith('/edit') ||
+                pathname.startsWith('/mypage')
+            ) {
+                router.push('/login');
             }
         }
     }, [pathname, router]);
+
     const refreshToken = async () => {
-        const token =
-            typeof window !== 'undefined'
-                ? localStorage.getItem('refreshToken')
-                : null;
+        const token = localStorage.getItem('refreshToken');
         try {
             const response = await fetch(
                 `${API_BASE_URL}/auth/regenerate-accesstoken`,
