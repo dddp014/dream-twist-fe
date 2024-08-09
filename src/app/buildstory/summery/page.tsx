@@ -26,21 +26,22 @@ const SummeryPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    useEffect(() => {
+        const setLocalStorage = async () => {
+            const result: StoryResponse = await generatePlot(storyInput);
+            saveToLocalStorage('title', result.title);
+            saveToLocalStorage('theme', result.theme);
+            saveToLocalStorage('storys', result.story);
+        };
+        setLocalStorage();
+    }, [isLoading]);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true); // 로딩 시작
         setError(null); // 이전 에러 상태 초기화
 
         try {
-            const result: StoryResponse = await generatePlot(storyInput);
-            console.log(result); // 서버 응답 확인
-
-            // 로컬 스토리지에 데이터 저장
-            // 클라이언트 사이드에서만 실행됨
-            saveToLocalStorage('title', result.title);
-            saveToLocalStorage('theme', result.theme);
-            saveToLocalStorage('storys', result.story);
-
             router.push('/buildstory/makestory-ai'); // 다음 페이지로 이동
         } catch (error: any) {
             console.error('네트워크 오류:', error);
