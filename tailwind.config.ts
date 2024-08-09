@@ -28,6 +28,13 @@ const config: Config = {
                     '0%': { transform: 'scale(0)' },
                     '100%': { transform: 'scale(1)' }
                 }
+            },
+            fontFamily: {
+                Hyemin: ['Hyemin'],
+                LaundryGothic: ['LaundryGothic'],
+                Pretendard: ['Pretendard-Medium'],
+                'Pretendard-100': ['Pretendard-Regular'],
+                'Pretendard-200': ['Pretendard-SemiBold']
             }
         }
     },

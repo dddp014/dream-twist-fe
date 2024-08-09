@@ -7,6 +7,26 @@
     src: url('/fonts/Hyemin.woff');
 }
 
+@font-face {
+    font-family: 'LaundryGothic';
+    src: url('/fonts/LaundryGothic.woff');
+}
+
+@font-face {
+    font-family: 'Pretendard-Medium';
+    src: url('/fonts/Pretendard-Medium.woff');
+}
+
+@font-face {
+    font-family: 'Pretendard-SemiBold';
+    src: url('/fonts/Pretendard-SemiBold.woff');
+}
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('/fonts/Pretendard-Regular.woff');
+}
+
 html,
 body {
     margin: 0;
@@ -35,6 +55,20 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb {
     background: #34d399;
     border-radius: 10px;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+    width: 0.3rem;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+    background: #e9e9e9;
+    border-radius: 5px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+    background: #66cf92;
+    border-radius: 5px;
 }
 
 .loader {

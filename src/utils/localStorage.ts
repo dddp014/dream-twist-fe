@@ -5,14 +5,17 @@ Author : 임도헌
 
 History
 Date        Author   Status    Description
-2024.07.30   임도헌  Create
+2024.07.30  임도헌    Create
+2024/08.06  임도헌    Create    로컬스토리지 삭제 함수 구현
 */
 
 // 데이터 타입을 명시적으로 지정
 // T? 코드에 선언한 타입을 변수화 하고, 나중에 타입을 정하는 식으로 유연하게 사용이 가능
 export function saveToLocalStorage<T>(key: string, value: T): void {
     try {
-        localStorage.setItem(key, JSON.stringify(value));
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
     } catch (error) {
         console.error(`Error saving to localStorage: ${error}`);
     }
@@ -28,4 +31,12 @@ export function loadFromLocalStorage<T>(key: string): T | null {
         console.error(`Error loading from localStorage: ${error}`);
     }
     return null;
+}
+
+export function removeFromLocalStorage(key: string): void {
+    try {
+        localStorage.removeItem(key);
+    } catch (error) {
+        console.error(`Error removing from localStorage: ${error}`);
+    }
 }

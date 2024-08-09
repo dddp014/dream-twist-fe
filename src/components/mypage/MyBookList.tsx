@@ -10,68 +10,97 @@ Date        Author   Status    Description
 
 'use client';
 
-import { useState } from 'react';
-import { sampleImages } from '@/utils/dummyBooks';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { getMyBookList } from '@/api/MypageApi';
 
-interface MyBookListProps {
-    bookInfo: {
-        // fairytaleId: number;
-        // title: string;
-        // nickname: string;
-        coverImage: string;
-    }[];
+interface BookProps {
+    coverImage: string;
+    createdAt: string;
+    title: string;
+    id: number;
 }
 
-export default function MyBookList({ bookInfo }: MyBookListProps) {
+export default function MyBookList() {
+    const router = useRouter();
     const [bookCount, setBookCount] = useState(6);
     const [viewClick, setViewClick] = useState(false);
+    const [myBooks, setMyBooks] = useState<BookProps[]>([]);
+
+    useEffect(() => {
+        const fetchMyBook = async () => {
+            try {
+                const data = await getMyBookList();
+                const myBookData = data.myFairytales.map((item: BookProps) => ({
+                    ...item,
+                    createdAt: item.createdAt.split('T')[0]
+                }));
+
+                setMyBooks(myBookData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchMyBook();
+    }, []);
 
     const handleLoadMore = () => {
-        viewClick ? setBookCount(6) : setBookCount(sampleImages.length);
+        viewClick ? setBookCount(6) : setBookCount(myBooks.length);
         setViewClick(!viewClick);
     };
 
     return (
-        <div className="flex flex-col justify-center mt-6">
-            <div className="grid grid-cols-6 gap-7">
-                {bookInfo.slice(0, bookCount).map((item, index) => (
-                    <button
-                        key={index}
-                        className="relative w-[15rem] h-[19rem] border rounded-lg border-gray-200 overflow-hidden"
-                    >
-                        <div
-                            className="absolute top-0 w-full overflow-hidden"
-                            style={{
-                                backgroundImage: `url(${item.coverImage})`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'top',
-                                height: '78%'
-                            }}
-                        />
-                        <div className="absolute bottom-0 w-full py-2 text-left pl-4">
-                            <p className="text-[1.05rem] font-medium">
-                                동화 제목
-                            </p>
-                            <div className="flex justify-between items-center pr-3">
-                                <p className="text-[0.9rem]">민규 작가</p>
-                                <p className="text-xs text-gray-400">
-                                    2024-08-02
-                                </p>
-                            </div>
+        <div className="flex flex-col justify-between mt-6">
+            {myBooks.length === 0 ? (
+                <p className="text-center text-gray-500 my-20 text-[1rem]">
+                    동화가 없습니다.
+                </p>
+            ) : (
+                <>
+                    <div className="grid md:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-6 gap-6">
+                        {myBooks.slice(0, bookCount).map((item) => (
+                            <button
+                                type="button"
+                                key={item.id}
+                                onClick={() => router.push(`/board/${item.id}`)}
+                                className="relative max-w-[15rem] w-full aspect-[4/5] border rounded-lg border-gray-200 overflow-hidden"
+                            >
+                                <div
+                                    className="absolute top-0 w-full h-full overflow-hidden"
+                                    style={{
+                                        backgroundImage: `url(${item.coverImage})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'top',
+                                        height: '80%'
+                                    }}
+                                />
+                                <div className="absolute bg-white bottom-0 w-full py-2 text-left pl-4">
+                                    <div className="flex flex-col">
+                                        <p className="text-[1.1rem] font-medium -mb-0.5 truncate">
+                                            {item.title}
+                                        </p>
+                                        <p className="text-[0.7rem] text-gray-400">
+                                            {item.createdAt}
+                                        </p>
+                                    </div>
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                    {myBooks.length > 6 && (
+                        <div className="text-center">
+                            <button
+                                type="button"
+                                onClick={handleLoadMore}
+                                className={`mt-10 w-24 h-[2.1rem] ${viewClick ? 'bg-main-200' : 'bg-main'} text-white rounded-3xl text-[0.95rem]`}
+                            >
+                                {viewClick ? '접기' : '전체 보기'}
+                            </button>
                         </div>
-                    </button>
-                ))}
-            </div>
-            <div className="text-center">
-                {bookInfo.length > 6 && (
-                    <button
-                        onClick={handleLoadMore}
-                        className={`mt-10 w-24 h-[2.1rem] ${viewClick ? 'bg-main-200' : 'bg-main'} text-white rounded-3xl text-[0.95rem]`}
-                    >
-                        {viewClick ? '접기' : '전체 보기'}
-                    </button>
-                )}
-            </div>
+                    )}
+                </>
+            )}
         </div>
     );
 }

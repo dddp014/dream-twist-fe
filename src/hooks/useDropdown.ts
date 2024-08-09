@@ -36,5 +36,5 @@ export const useDropdown = () => {
         setIsDropDown((prevIsOpen) => !prevIsOpen);
     };
 
-    return { isDropDown, dropdownRef, handleDropdown };
+    return { isDropDown, dropdownRef, handleDropdown, setIsDropDown };
 };

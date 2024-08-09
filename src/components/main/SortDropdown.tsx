@@ -14,7 +14,7 @@ import { useState } from 'react';
 import { useDropdown } from '@/hooks/useDropdown';
 import { DropIcon } from '../icons/DropIcon';
 
-const options = ['최신순', '인기순'];
+const options = ['최신순', '인기순', '조회순'];
 
 export default function SortDropdown() {
     const [label, setLabel] = useState<string>(options[0]);

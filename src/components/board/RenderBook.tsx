@@ -10,21 +10,30 @@ Date        Author   Status    Description
 
 'use client';
 
-import { StaticImageData } from 'next/image';
 import usePagination from '@/hooks/usePagination';
 import BookViewer from './BookViewer';
 import PreviewBlank from './PreviewBlank';
 import Logo from '../../../public/images/logo.svg';
 
+interface Info {
+    title: string;
+    nickname: string;
+}
+
 interface BookInfoProps {
     contents: string[];
-    bookImages: StaticImageData[];
+    bookImages: string[];
+    info: Info;
 }
 
 const pageCount: number = 8;
 const endImg = Logo;
 
-export default function RenderBook({ contents, bookImages }: BookInfoProps) {
+export default function RenderBook({
+    contents,
+    bookImages,
+    info
+}: BookInfoProps) {
     const { step, setStep, nextStep, prevStep } = usePagination();
 
     const handlePreviewClick = (index: number) => {
@@ -40,26 +49,28 @@ export default function RenderBook({ contents, bookImages }: BookInfoProps) {
         if (step === pageCount - 1) {
             return [`url(${endImg.src})`, '30% 30%'];
         }
-        return [`url(${bookImages[step].src})`, '110% 110%'];
+        return [`url(${bookImages[step]})`, '110% 110%'];
     };
 
     return (
         <>
-            <div className="flex flex-row w-full h-3/6 justify-center items-center mb-20 mt-2">
+            <div className="flex flex-row w-full h-full justify-center items-center mb-12">
                 <BookViewer
                     step={step}
                     nextStep={nextStep}
                     prevStep={prevStep}
                     getTextForStep={getTextForStep}
                     getCurrentImage={getCurrentImage}
+                    info={info}
                 />
             </div>
-            <div className="flex overflow-x-scroll w-4/6 custom-scrollbar">
+            <div className="flex overflow-x-scroll w-[66.5rem] h-full custom-scrollbar">
                 <PreviewBlank
                     step={step}
                     getTextForStep={getTextForStep}
                     getCurrentImage={getCurrentImage}
                     handlePreview={handlePreviewClick}
+                    info={info}
                 />
             </div>
         </>

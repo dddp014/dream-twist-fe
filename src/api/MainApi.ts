@@ -11,14 +11,25 @@ Date        Author   Status    Description
 const API_BASE_URL = 'http://localhost:4000/fairytale';
 
 export const getBookList = async () => {
-    try {
-        const response = await fetch(`${API_BASE_URL}`, {
-            cache: 'no-store'
-        });
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('error:', error);
-        return error;
+    const response = await fetch(`${API_BASE_URL}`, {
+        cache: 'reload'
+    });
+
+    if (!response.ok) {
+        throw new Error('전체 동화 리스트 조회 실패');
     }
+
+    return response.json();
+};
+
+export const getSearchBook = async (value: string) => {
+    const response = await fetch(`${API_BASE_URL}/byTitle/${value}`, {
+        cache: 'reload'
+    });
+
+    if (!response.ok) {
+        throw new Error('검색 동화 조회 실패');
+    }
+
+    return response.json();
 };

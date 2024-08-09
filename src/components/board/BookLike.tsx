@@ -10,23 +10,65 @@ Date        Author   Status    Description
 
 'use client';
 
-import { useState } from 'react';
-import { LikeIcon } from '../icons/LikeIcon';
+import { useState, useEffect } from 'react';
+import LikeIcon from '../icons/LikeIcon';
+import { postBookLike } from '@/api/BoardApi';
 
-export default function BookLike() {
-    const [like, setLike] = useState(false);
-    const [likeCount, setLikeCount] = useState(0);
+interface BookLikeProps {
+    id: string;
+    likeCount: string;
+    mybooks: string[];
+}
 
-    const handleLikeClick = () => {
-        setLike((prevLike) => !prevLike);
-        setLikeCount((prevCount) => prevCount + (like ? -1 : 1));
+export default function BookLike({ id, likeCount, mybooks }: BookLikeProps) {
+    const [likeClick, setLikeClick] = useState(false);
+    const [currentCount, setCurrentCount] = useState(0);
+    const [userName, setUserName] = useState<string | null>(null);
+
+    useEffect(() => {
+        setCurrentCount(Number(likeCount));
+    }, [likeCount]);
+
+    useEffect(() => {
+        const storedUserName = localStorage.getItem('nickname');
+        setUserName(storedUserName);
+
+        if (mybooks.map(String).includes(id)) {
+            setLikeClick(true);
+        }
+    }, [mybooks, id]);
+
+    const handleLikeClick = async () => {
+        if (!userName) {
+            window.location.href = '/login';
+            return;
+        }
+        const newLikeClick = !likeClick;
+        setLikeClick(newLikeClick);
+        setCurrentCount((prevCount: any) =>
+            newLikeClick ? prevCount + 1 : prevCount - 1
+        );
+
+        try {
+            await postBookLike(id);
+            // console.log('좋아요', id);
+        } catch (error) {
+            // 요청 실패 시 상태를 원래대로 복원
+            setLikeClick(likeClick);
+            setCurrentCount((prevCount) =>
+                newLikeClick ? prevCount - 1 : prevCount + 1
+            );
+            console.error('좋아요 요청 실패:', error);
+        }
     };
 
     return (
-        <button onClick={handleLikeClick}>
+        <button type="button" onClick={handleLikeClick}>
             <div className="flex flex-col items-center">
-                <LikeIcon fill={like ? true : false} />
-                <p className="text-like text-xs -mt-1 mr-[1px]">{likeCount}</p>
+                <LikeIcon fill={likeClick} />
+                <p className="text-like text-xs -mt-1 mr-[1px]">
+                    {currentCount}
+                </p>
             </div>
         </button>
     );

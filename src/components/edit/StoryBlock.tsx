@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
 File Name : components/edit/StoryBlock
 Description : 동화 내용 컴포넌트
@@ -5,12 +6,13 @@ Author : 임도헌
 
 History
 Date        Author   Status    Description
-2024.07.25  임도헌   Create  StoryBlock 컴포넌트 분리
-2024.07.26  임도헌   Create  StoryBlock 컴포넌트 색상 변경
+2024.07.25  임도헌   Create  
+2024.07.25  임도헌   Modified  StoryBlock 컴포넌트 분리
+2024.07.26  임도헌   Create    StoryBlock 컴포넌트 색상 변경
 */
 
-import { IFairyTaleFormInputs } from '@/hooks/useFairytailForm';
 import { UseFormRegister, FieldErrors, FieldError } from 'react-hook-form';
+import { IFairyTaleFormInputs } from '@/hooks/useFairytailForm';
 
 interface StoryBlockProps {
     index: number;
@@ -32,9 +34,14 @@ export default function StoryBlock({
         <div
             key={index}
             className={`m-4 rounded-lg p-4 hover:border hover:bg-green-50 hover:border-green-300 active:bg-green-100
-                ${isClick === index ? 'bg-green-50 border border-green-200' : ''}`}
+        ${isClick === index ? 'bg-green-50 border border-green-200' : ''}`}
             onClick={() => {
                 handleClick(index);
+            }}
+            onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    handleClick(index);
+                }
             }}
         >
             <label
@@ -43,8 +50,9 @@ export default function StoryBlock({
             >
                 {index + 1}
             </label>
-            <div className="w-full my-[1%] border-[1px] border-lightGray-300"></div>
+            <div className="w-full my-[1%] border-[1px] border-lightGray-300" />
             <textarea
+                tabIndex={0} // 요소를 포커스 가능하게 만듭니다.
                 id={`story${index}`}
                 {...register(`storys.${index}`, { required: true })}
                 className={`resize-none h-[200px] w-full overflow-auto focus:outline-none focus:border-none hover:bg-green-50 active:bg-green-100

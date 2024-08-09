@@ -17,8 +17,7 @@ const usePagination = () => {
         setStep,
         handleStartClick,
         nextStep,
-        prevStep,
-        setStep
+        prevStep
     };
 };
 

@@ -27,6 +27,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
@@ -41,6 +42,13 @@ next-env.d.ts
 logs
 **/*.backup.*
 **/*.back.*
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
 node_modules
 bower_components
