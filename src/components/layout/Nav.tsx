@@ -137,7 +137,7 @@ export default function Nav() {
                     height={0}
                 />
             </Link>
-            <div className="space-x-14 pt-1">
+            <div className="space-x-20 pt-1">
                 <Link
                     href="/"
                     className={`hover:text-main cursor-pointer ${isMain ? 'text-main' : ''}`}
@@ -149,9 +149,6 @@ export default function Nav() {
                     className={`hover:text-main cursor-pointer ${isBuild ? 'text-main' : ''}`}
                 >
                     동화 만들기
-                </Link>
-                <Link href="/" className="hover:text-main cursor-pointer">
-                    꿈틀 가이드
                 </Link>
             </div>
             <div className="pt-1 space-x-4">

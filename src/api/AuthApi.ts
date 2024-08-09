@@ -88,8 +88,10 @@ export const patchProfile = async (name: string, url: string) => {
             profileImageURL: url
         })
     });
-    if (!response.ok) {
-        throw new Error('프로필 수정 실패');
+    if (response.status === 400) {
+        alert('기존 닉네임과 동일한 닉네임입니다.');
+    } else {
+        window.location.href = '/mypage';
     }
     return response.json();
 };

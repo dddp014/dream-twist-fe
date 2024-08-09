@@ -20,7 +20,7 @@ interface Comment {
     createdAt: string;
     id: string;
     profileImgURL: string;
-    nickname: string;
+    nickname: string | null;
 }
 
 export default function CommentList({ id }: { id: string }) {
@@ -44,7 +44,7 @@ export default function CommentList({ id }: { id: string }) {
                     createdAt: item.createdAt.split('T')[0],
                     id: item.id,
                     profileImgURL: item.profileImgURL,
-                    nickname: item.nickname
+                    nickname: item.nickname || '탈퇴 회원' // 닉네임이 없으면 '탈퇴 회원'으로 대체
                 }));
 
                 setCommentInfo(comments);

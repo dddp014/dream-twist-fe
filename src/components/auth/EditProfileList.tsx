@@ -82,7 +82,6 @@ export default function EditProfileList() {
     const handleSaveClick = async () => {
         try {
             await patchProfile(nickname, profileImg);
-            window.location.href = '/mypage';
         } catch (error) {
             console.error(error);
         }
