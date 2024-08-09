@@ -13,7 +13,12 @@ Date        Author   Status    Description
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { deleteAuth, postLogout, postUserPresignedURL } from '@/api/AuthApi';
+import {
+    deleteAuth,
+    postUserPresignedURL,
+    patchProfile,
+    postLogout
+} from '@/api/AuthApi';
 import { uploadFileToS3 } from '@/api/BookApi';
 
 export default function EditProfileList() {
@@ -21,7 +26,7 @@ export default function EditProfileList() {
     const [profileImg, setProfileImg] = useState<string>('');
     const [Imgfile, setImgFile] = useState<File | null>(null);
     const [nickname, setNickname] = useState('');
-    const email: string | null = localStorage.getItem('email');
+    const [email, setEmail] = useState<string | null>(null);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {

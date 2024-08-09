@@ -200,7 +200,7 @@ export const useBook = (fairytaleId?: number) => {
                     removeFromLocalStorage('theme');
                     removeFromLocalStorage('storys');
                     removeFromLocalStorage('isPublic');
-                    // router.push('/');
+                    router.push('/');
                 }
             }
         } catch (error) {
