@@ -20,11 +20,7 @@ const LogoutModal: React.FC<LogoutModalProps> = ({
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-<<<<<<< Updated upstream
-            <div className="bg-white p-8 rounded-md shadow-md text-center max-w-[20rem] w-full z-10">
-=======
             <div className="bg-white p-8 rounded-md shadow-md text-center max-w-[20rem] w-full">
->>>>>>> Stashed changes
                 <h2 className="mb-4 text-lg font-semibold">로그아웃</h2>
                 <p className="mb-6">정말 로그아웃 하시겠습니까?</p>
                 <div className="flex justify-center gap-4">
