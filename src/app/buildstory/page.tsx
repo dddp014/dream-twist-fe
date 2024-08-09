@@ -63,7 +63,7 @@ const BuildStoryPage: React.FC = () => {
                         </div>
                         <div className="flex justify-center items-center text-pink-300 text-4xl mb-7">
                             <Image
-                                src="/images/greenAiicon.svg"
+                                src="/images/greenAiIcon.svg"
                                 alt="withAI"
                                 width={100}
                                 height={100}
