@@ -88,8 +88,11 @@ export const patchProfile = async (name: string, url: string) => {
             profileImageURL: url
         })
     });
+
+    console.log('???', name);
     if (response.status === 400) {
-        alert('기존 닉네임과 동일한 닉네임입니다.');
+        const errorData = await response.json();
+        alert(errorData.message);
     } else {
         window.location.href = '/mypage';
     }

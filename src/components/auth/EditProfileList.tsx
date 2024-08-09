@@ -25,8 +25,9 @@ export default function EditProfileList() {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [profileImg, setProfileImg] = useState<string>('');
     const [Imgfile, setImgFile] = useState<File | null>(null);
-    const [nickname, setNickname] = useState('');
+    const [nickname, setNickname] = useState<string>('');
     const [email, setEmail] = useState<string | null>(null);
+    const [storedName, setStoredName] = useState<string>('');
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -34,6 +35,7 @@ export default function EditProfileList() {
             const defaultName = localStorage.getItem('nickname');
             const defaultImg = localStorage.getItem('profileImage');
 
+            setStoredName(defaultName || '');
             setEmail(storedEmail);
             setNickname(defaultName || '');
             setProfileImg(defaultImg || '');
@@ -81,7 +83,11 @@ export default function EditProfileList() {
 
     const handleSaveClick = async () => {
         try {
-            await patchProfile(nickname, profileImg);
+            if (nickname === storedName) {
+                await patchProfile('', profileImg);
+            } else {
+                await patchProfile(nickname, profileImg);
+            }
         } catch (error) {
             console.error(error);
         }
