@@ -44,7 +44,7 @@ export default function CommentBox({
             if (editStatus && commentId) {
                 await putComment(fairytaleId, commentId, content);
             } else {
-                const response = await postComment(fairytaleId, content);
+                await postComment(fairytaleId, content);
             }
 
             setContent('');

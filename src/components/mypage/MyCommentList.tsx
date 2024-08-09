@@ -45,7 +45,7 @@ export default function MyCommentList() {
                         createdAt: item.createdAt.split('T')[0]
                     })
                 );
-                console.log('나의댓글', commentData);
+
                 setCommentInfo(commentData);
             } catch (error) {
                 console.error(error);

@@ -14,20 +14,28 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getMyBookList } from '@/api/MypageApi';
 
+interface BookProps {
+    coverImage: string;
+    createdAt: string;
+    title: string;
+    id: number;
+}
+
 export default function MyBookList() {
     const router = useRouter();
     const [bookCount, setBookCount] = useState(6);
     const [viewClick, setViewClick] = useState(false);
-    const [myBooks, setMyBooks] = useState([]);
+    const [myBooks, setMyBooks] = useState<BookProps[]>([]);
 
     useEffect(() => {
         const fetchMyBook = async () => {
             try {
                 const data = await getMyBookList();
-                const myBookData = data.myFairytales.map((item) => ({
+                const myBookData = data.myFairytales.map((item: BookProps) => ({
                     ...item,
                     createdAt: item.createdAt.split('T')[0]
                 }));
+
                 setMyBooks(myBookData);
             } catch (error) {
                 console.error(error);

@@ -33,9 +33,9 @@ export default function EditProfileList() {
     const UploadImageToS3 = async (file: File) => {
         try {
             const { presignedURL } = await postUserPresignedURL(file.name);
-            console.log(`Presigned URL: ${presignedURL}`);
+            // console.log(`Presigned URL: ${presignedURL}`);
             const fileUrl = await uploadFileToS3(presignedURL, file);
-            console.log(`파일 업로드 성공 -> s3 url: ${fileUrl}`);
+            // console.log(`파일 업로드 성공 -> s3 url: ${fileUrl}`);
             return fileUrl;
         } catch (error) {
             console.error('파일 업로드 에러:', error);

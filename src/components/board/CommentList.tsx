@@ -10,7 +10,7 @@ Date        Author   Status    Description
 
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import EditDeleteBtn from './EditDeleteBtn';
 import CommentBox from './CommentBox';
 import { getComment } from '@/api/BoardApi';
@@ -22,8 +22,6 @@ interface Comment {
     profileImgURL: string;
     nickname: string;
 }
-
-const PAGE_SIZE = 5;
 
 export default function CommentList({ id }: { id: string }) {
     const [editCommentId, setEditCommentId] = useState<string | null>(null);
@@ -53,7 +51,7 @@ export default function CommentList({ id }: { id: string }) {
                 setTotalPages(data.totalPages); // 총 페이지 수 설정
                 setCurrentPage(Number(data.currentPage));
 
-                console.log('댓글', data);
+                // console.log('댓글', data);
             } catch (error) {
                 // console.error(error);
             }
