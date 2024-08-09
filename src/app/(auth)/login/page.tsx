@@ -12,6 +12,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
+import GetToken from '@/components/auth/GetToken';
 
 export const metadata: Metadata = {
     title: '꿈틀 로그인',
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
 export default function Login() {
     return (
         <div className="relative flex flex-col items-center justify-center h-full">
+            <GetToken />
             <div className="flex flex-col items-center justify-center mb-36">
                 <Link href="/" className="cursor-pointer">
                     <Image
@@ -37,6 +39,7 @@ export default function Login() {
                 <p className="text-2xl text-main font-semibold my-10">
                     환영합니다!
                 </p>
+
                 <GoogleLoginButton />
                 <div className="absolute bottom-0 w-full bg-main-100 h-12"></div>
             </div>

@@ -55,6 +55,9 @@ export default function BookViewer({
             [step]
         );
 
+        const titleFontSize =
+            info.title.length > 20 ? 'text-[1.6rem]' : 'text-[1.8rem]';
+
         return (
             <div
                 className={`relative flex felx-row justify-center items-center ${width} h-[33rem] mx-8`}
@@ -69,7 +72,9 @@ export default function BookViewer({
                     <div
                         className={`${step === 0 ? 'display' : 'hidden'} select-none absolute bottom-0 flex flex-col justify-center items-center bg-white w-full h-[7.5rem]`}
                     >
-                        <p className="text-[1.8rem] text-slate-800 font-LaundryGothic mb-0.5">
+                        <p
+                            className={`mb-0.5 ${titleFontSize} text-slate-800 font-LaundryGothic`}
+                        >
                             {info.title}
                         </p>
                         <p className="font-Hyemin text-slate-800 text-[1rem]">

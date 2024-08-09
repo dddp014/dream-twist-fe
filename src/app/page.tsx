@@ -12,13 +12,11 @@ Date        Author   Status    Description
 
 import SearchBook from '@/components/main/SearchBook';
 import ScrollUpButton from '@/components/main/ScrollUpButton';
-import GetToken from '@/components/auth/GetToken';
 import MainBanner from '@/components/main/MainBanner';
 
 export default function Home() {
     return (
         <main className="flex flex-col justify-center items-center mx-24 mt-16">
-            <GetToken />
             <MainBanner />
             <div className="flex flex-col justify-center items-center w-full">
                 <SearchBook />

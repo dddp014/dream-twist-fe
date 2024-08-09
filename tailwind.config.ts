@@ -16,6 +16,7 @@ const config: Config = {
             },
             colors: {
                 main: '#35c16f',
+                'main-300': '#42c87e',
                 'main-200': '#66CF92',
                 'main-100': '#EFFBEE',
                 like: '#ff3672'

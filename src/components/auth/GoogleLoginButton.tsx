@@ -22,18 +22,20 @@ export default function GoogleLoginButton() {
     };
 
     return (
-        <button
-            type="button"
-            onClick={googleLogin}
-            className="flex flex-row items-center justify-center w-72 border border-gray-300 rounded-lg py-3 hover:bg-gray-50"
-        >
-            <Image
-                src="/images/google.svg"
-                alt="google-icon"
-                width={20}
-                height={20}
-            />
-            <span className="ml-4">Google로 시작하기</span>
-        </button>
+        <>
+            <button
+                type="button"
+                onClick={googleLogin}
+                className="flex flex-row items-center justify-center w-72 border border-gray-300 rounded-lg py-3 hover:bg-gray-50"
+            >
+                <Image
+                    src="/images/google.svg"
+                    alt="google-icon"
+                    width={20}
+                    height={20}
+                />
+                <span className="ml-4">Google로 시작하기</span>
+            </button>
+        </>
     );
 }

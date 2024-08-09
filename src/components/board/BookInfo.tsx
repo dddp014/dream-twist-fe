@@ -27,12 +27,14 @@ export default function BookInfo({ id }: { id: string }) {
         nickname: '',
         title: '',
         likes: '',
-        views: ''
+        views: '',
+        privatedAt: ''
     });
     const [bookImages, setBookImages] = useState<string[]>([]);
     const [contents, setContents] = useState<string[]>([]);
     const [myLikeBooks, setMyLikeBooks] = useState<string[]>([]);
     const [userName, setUserName] = useState<string | null>(null);
+    const [isPrivate, setIsPrivate] = useState<string>();
 
     useEffect(() => {
         const storedUserName = localStorage.getItem('nickname');
@@ -55,10 +57,11 @@ export default function BookInfo({ id }: { id: string }) {
                     nickname: data[0].nickname,
                     title: data[0].title,
                     likes: data[0].likes,
-                    views: data[0].views
+                    views: data[0].views,
+                    privatedAt: data[0].privatedAt
                 });
 
-                // console.log('전체', data);
+                console.log('전체', data);
 
                 const coverImg = data[0].coverImage;
                 const images = data[0].images.map((item: string) => item);
@@ -67,6 +70,12 @@ export default function BookInfo({ id }: { id: string }) {
 
                 setBookImages(imageData);
                 setContents(contentData);
+
+                if (data[0].privatedAt === null || data[0].privatedAt === '') {
+                    setIsPrivate('전체 공개');
+                } else {
+                    setIsPrivate('비공개');
+                }
             } catch (error) {
                 console.error(error);
             }
@@ -87,10 +96,20 @@ export default function BookInfo({ id }: { id: string }) {
         fetchMyBook();
     }, [id]);
 
+    const styleClass =
+        isPrivate === '비공개'
+            ? 'text-black bg-gray-300'
+            : 'text-white bg-main-300';
+
     return (
         <>
             <div className="relative flex flex-col w-full mb-4">
                 <div className="flex flex-row justify-center items-center mb-3 m-auto">
+                    <div
+                        className={`absolute left-0 bottom-14 font-Pretendard-100 rounded-[0.55rem] mb-0.5 ${styleClass} text-[0.9rem] px-2 py-[0.2rem]`}
+                    >
+                        <p>{isPrivate}</p>
+                    </div>
                     <p className="text-2xl font-semibold">{bookInfo.title}</p>
                     <p className="text-[17px] ml-5">{bookInfo.nickname} 작가</p>
                     {userName === bookInfo.nickname && (

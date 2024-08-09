@@ -40,7 +40,12 @@ export default function GetToken() {
 
         const fetchUserInfo = async () => {
             try {
-                await getUserInfo();
+                const data = await getUserInfo();
+
+                localStorage.setItem('email', data.email);
+                localStorage.setItem('nickname', data.nickname);
+                localStorage.setItem('profileImage', data.profileImage);
+                console.log('실행되나???');
             } catch (error) {
                 console.error(error);
             }
