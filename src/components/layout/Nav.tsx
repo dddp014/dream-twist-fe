@@ -8,6 +8,7 @@ Date        Author   Status    Description
 2024.07.21  나경윤    Created
 2024.08.07  나경윤    Modified    로그인 연결
 2024.08.10  나경윤    Modified    네브바에서 토큰 처리
+2024.08.10  임도헌    Modified   네브바 fiexd 적용
 */
 
 'use client';
@@ -153,8 +154,9 @@ export default function Nav() {
     }
 
     return (
-        <nav className="flex flex-row items-center justify-between px-24 py-3 text-lg shadow-md shadow-neutral-100">
-            <Link href="/" className="cursor-pointer">
+        <nav className="relative flex items-center justify-between h-[80px] text-lg shadow-md shadow-neutral-100">
+            {/* 로고: 왼쪽 고정 */}
+            <Link href="/" className="absolute left-20 cursor-pointer">
                 <Image
                     src="/images/logo.svg"
                     alt="logo"
@@ -162,21 +164,27 @@ export default function Nav() {
                     height={0}
                 />
             </Link>
-            <div className="space-x-20 pt-1">
-                <Link
-                    href="/"
-                    className={`hover:text-main cursor-pointer ${isMain ? 'text-main' : ''}`}
-                >
-                    동화 갤러리
-                </Link>
-                <Link
-                    href="/buildstory"
-                    className={`hover:text-main cursor-pointer ${isBuild ? 'text-main' : ''}`}
-                >
-                    동화 만들기
-                </Link>
+
+            {/* 중앙의 링크들: 중앙 고정 */}
+            <div className="absolute inset-x-0 flex justify-center">
+                <div className="space-x-20">
+                    <Link
+                        href="/"
+                        className={`hover:text-main cursor-pointer ${isMain ? 'text-main' : ''}`}
+                    >
+                        동화 갤러리
+                    </Link>
+                    <Link
+                        href="/buildstory"
+                        className={`hover:text-main cursor-pointer ${isBuild ? 'text-main' : ''}`}
+                    >
+                        동화 만들기
+                    </Link>
+                </div>
             </div>
-            <div className="pt-1 space-x-4">
+
+            {/* 로그인 버튼 또는 LoginNav: 오른쪽 고정 */}
+            <div className="absolute right-20 space-x-4">
                 {isAuth ? (
                     <LoginNav userInfo={userInfo} />
                 ) : (
