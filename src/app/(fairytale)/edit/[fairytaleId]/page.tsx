@@ -21,19 +21,19 @@ interface IEditParams {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-// 동적 메타데이터 생성 함수
-export async function generateMetadata({
-    params: { fairytaleId }
-}: IEditParams): Promise<Metadata> {
-    const response = await fetch(`${API_BASE_URL}/fairytale/${fairytaleId}`);
-    const data = await response.json();
-    const title = data[0].title;
+// // 동적 메타데이터 생성 함수
+// export async function generateMetadata({
+//     params: { fairytaleId }
+// }: IEditParams): Promise<Metadata> {
+//     const response = await fetch(`${API_BASE_URL}/fairytale/${fairytaleId}`);
+//     const data = await response.json();
+//     const title = data[0].title;
 
-    return {
-        title: `꿈틀 동화 수정 - ${title}`,
-        description: `동화 '${title}'를 수정하세요 - 꿈틀 프로젝트`
-    };
-}
+//     return {
+//         title: `꿈틀 동화 수정 - ${title}`,
+//         description: `동화 '${title}'를 수정하세요 - 꿈틀 프로젝트`
+//     };
+// }
 
 export default function EditPage({ params: { fairytaleId } }: IEditParams) {
     return (
