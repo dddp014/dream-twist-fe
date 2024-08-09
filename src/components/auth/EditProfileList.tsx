@@ -12,9 +12,8 @@ Date        Author   Status    Description
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { postUserPresignedURL } from '@/api/AuthApi';
+import { postUserPresignedURL, patchProfile } from '@/api/AuthApi';
 import { uploadFileToS3 } from '@/api/BookApi';
-import { patchProfile } from '@/api/AuthApi';
 
 export default function EditProfileList() {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -86,12 +85,15 @@ export default function EditProfileList() {
                 onClick={handleImgEditClick}
                 style={{ width: 130, height: 130 }}
             >
-                <Image
-                    src={profileImg}
-                    alt="profile"
-                    className="object-cover rounded-full border border-gray-200"
-                    layout="fill"
-                />
+                {profileImg && (
+                    <Image
+                        src={profileImg}
+                        alt="profile"
+                        className="object-cover rounded-full border border-gray-200"
+                        layout="fill"
+                    />
+                )}
+
                 <div className="absolute inset-0 flex items-center justify-center text-white transition duration-200 opacity-0 hover:opacity-100 hover:bg-black hover:bg-opacity-25 rounded-full z-10 cursor-pointer">
                     편집
                 </div>

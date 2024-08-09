@@ -33,23 +33,25 @@ export default function LoginNav({ userInfo }: { userInfo: UserInfo }) {
     }, [pathname, setIsDropDown]);
 
     return (
-        <div className="relative inline-block mt-2" ref={dropdownRef}>
+        <div className="relative inline-block mt-1" ref={dropdownRef}>
             <div className="flex flex-row items-center">
                 <p className="text-main mr-3 font-medium">
                     {userInfo.nickname}
                 </p>
                 <button
                     type="button"
-                    className="relative"
+                    className="relative inline-block"
                     onClick={handleDropdown}
+                    style={{ width: 52, height: 52 }}
                 >
-                    <Image
-                        src={userInfo.profileImage}
-                        alt="profile"
-                        width={48}
-                        height={48}
-                        className="rounded-full border border-gray-200"
-                    />
+                    {userInfo.profileImage && (
+                        <Image
+                            src={userInfo.profileImage}
+                            alt="profile"
+                            layout="fill"
+                            className="object-cover rounded-full border border-gray-200"
+                        />
+                    )}
                 </button>
             </div>
             {isDropDown && (
