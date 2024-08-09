@@ -31,10 +31,17 @@ const RefundForm: React.FC<RefundFormProps> = ({ Id, onSubmit, onCancel }) => {
     const handleSubmit = () => {
         const reason =
             selectedReason === '기타 사유' ? otherReason : selectedReason;
-        onSubmit(Id, reason);
-        setSelectedReason('');
-        setOtherReason('');
-        onCancel();
+
+        if (!reason) {
+            alert('환불사유를 선택하세요.');
+        } else {
+            onSubmit(Id, reason);
+            setSelectedReason('');
+            setOtherReason('');
+            window.location.href = '/mypage';
+        }
+
+        // onCancel();
     };
 
     return (
