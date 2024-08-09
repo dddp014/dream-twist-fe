@@ -10,10 +10,12 @@ Date        Author   Status    Description
 
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getMyBookList } from '@/api/MypageApi';
 
 export default function MyBookList() {
+    const router = useRouter();
     const [bookCount, setBookCount] = useState(6);
     const [viewClick, setViewClick] = useState(false);
     const [myBooks, setMyBooks] = useState([]);
@@ -53,6 +55,7 @@ export default function MyBookList() {
                             <button
                                 type="button"
                                 key={item.id}
+                                onClick={() => router.push(`/board/${item.id}`)}
                                 className="relative max-w-[15rem] w-full aspect-[4/5] border rounded-lg border-gray-200 overflow-hidden"
                             >
                                 <div

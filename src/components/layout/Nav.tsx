@@ -58,10 +58,12 @@ export default function Nav() {
         const token = localStorage.getItem('accessToken');
         const tokenExpiry = localStorage.getItem('tokenExpiry');
 
+        const tokenExpiryTime = tokenExpiry ? parseInt(tokenExpiry, 10) : 0;
+
         // 토큰 유효성 확인
-        if (token && tokenExpiry && Date.now() < tokenExpiry) {
+        if (token && tokenExpiry && Date.now() < tokenExpiryTime) {
             setIsAuth(true);
-            setTimeout(refreshToken, tokenExpiry - Date.now() - 60000); // 만료 1분 전에 재발급
+            setTimeout(refreshToken, tokenExpiryTime - Date.now() - 60000); // 만료 1분 전에 재발급
         } else {
             setIsAuth(false);
             // localStorage.removeItem('accessToken');
@@ -112,10 +114,10 @@ export default function Nav() {
         }
     };
 
-    const onLoginSuccess = async (token) => {
+    const onLoginSuccess = async (token: string) => {
         const expiryTime = Date.now() + JWT_EXPIRY_TIME;
         localStorage.setItem('accessToken', token);
-        localStorage.setItem('tokenExpiry', expiryTime);
+        localStorage.setItem('tokenExpiry', expiryTime.toString());
         setIsAuth(true);
         setTimeout(refreshToken, JWT_EXPIRY_TIME - 60000); // 만료 1분 전에 재발급
         // console.log('로그인');

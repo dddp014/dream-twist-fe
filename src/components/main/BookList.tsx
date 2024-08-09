@@ -24,31 +24,69 @@ const itemsPerPage: number = 10;
 
 export default function BookList({ fairytaleInfo }: BookListProps) {
     const router = useRouter();
-    const [items, setItems] = useState(fairytaleInfo.slice(0, itemsPerPage));
-    const pageIndexRef = useRef<number>(2);
+    const [items, setItems] = useState<FairytaleInfo[]>([]);
+    const pageIndexRef = useRef<number>(1);
+    const [isEnd, setIsEnd] = useState<boolean>(false);
 
     useEffect(() => {
-        setItems(fairytaleInfo.slice(0, itemsPerPage));
-        pageIndexRef.current = 2;
-    }, [fairytaleInfo]);
+        const savedItems = sessionStorage.getItem('BOOKLIST_ITEMS');
+        const savedPageIndex = sessionStorage.getItem('BOOKLIST_PAGE_INDEX');
+        const savedScrollY = sessionStorage.getItem('BOOKLIST_SCROLL_Y');
+        const isReturningFromBook = sessionStorage.getItem(
+            'IS_RETURNING_FROM_BOOK'
+        );
+
+        if (savedItems && savedPageIndex && isReturningFromBook === 'true') {
+            // 버튼 클릭 후 뒤로가기에서 돌아온 경우에만 복원
+            setItems(JSON.parse(savedItems));
+            pageIndexRef.current = Number(savedPageIndex);
+            setTimeout(() => {
+                window.scrollTo(0, Number(savedScrollY));
+            }, 0);
+            // 복원 후 상태 초기화
+            sessionStorage.removeItem('IS_RETURNING_FROM_BOOK');
+        } else {
+            // 처음 페이지 로드 시
+            setItems(fairytaleInfo.slice(0, itemsPerPage));
+            pageIndexRef.current = 2;
+            setIsEnd(false);
+        }
+    }, []);
 
     const loadItems = () => {
+        if (isEnd) return; // 페이지 끝에 도달한 경우 추가 로드 방지
+
         const newItems = fairytaleInfo.slice(
             (pageIndexRef.current - 1) * itemsPerPage,
             pageIndexRef.current * itemsPerPage
         );
 
         if (newItems.length < itemsPerPage) {
-            setEnd(true);
+            setIsEnd(true); // 데이터가 부족할 경우 페이지 끝 상태 설정
         }
 
         setItems((prev) => [...prev, ...newItems]);
         pageIndexRef.current++;
     };
 
-    const { ref, isPageEnd, setEnd } = useInfiniteScroll({
+    const handleBookClick = (id: number) => {
+        // 현재 상태 저장
+        sessionStorage.setItem('BOOKLIST_ITEMS', JSON.stringify(items));
+        sessionStorage.setItem(
+            'BOOKLIST_PAGE_INDEX',
+            `${pageIndexRef.current}`
+        );
+        sessionStorage.setItem('BOOKLIST_SCROLL_Y', `${window.scrollY}`);
+        sessionStorage.setItem('IS_RETURNING_FROM_BOOK', 'true');
+
+        // 페이지 이동
+        router.push(`/board/${id}`);
+    };
+
+    const { ref } = useInfiniteScroll({
         onLoadMore: loadItems
     });
+
     return (
         <div className="flex flex-col">
             {/* 데이터 없을 때 */}
@@ -66,9 +104,10 @@ export default function BookList({ fairytaleInfo }: BookListProps) {
                     <div className="grid sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-8 gap-y-9 my-10 z-0">
                         {items.map((item) => (
                             <button
+                                type="button"
                                 key={item.fairytaleId}
                                 onClick={() =>
-                                    router.push(`/board/${item.fairytaleId}`)
+                                    handleBookClick(item.fairytaleId)
                                 }
                                 className="relative max-w-[18rem] w-full aspect-[4/5] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
                             >
@@ -97,7 +136,7 @@ export default function BookList({ fairytaleInfo }: BookListProps) {
                             </button>
                         ))}
                     </div>
-                    {!isPageEnd && <div ref={ref} />}
+                    {!isEnd && <div ref={ref} />}
                 </>
             )}
         </div>

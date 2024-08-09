@@ -22,15 +22,21 @@ export const getBookDetail = async (fairytaleId: string) => {
     return response.json();
 };
 
-export const postBookView = async (fairytaleId: string) => {
+export const postBookView = async (id: string) => {
+    const accessToken = localStorage.getItem('accessToken');
+
     const response = await fetch(`${API_BASE_URL}/fairytale/view`, {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+        },
         body: JSON.stringify({
-            fairytaleId: fairytaleId
+            fairytaleId: id
         })
     });
     if (!response.ok) {
-        throw new Error('동화 조회 요청 실패');
+        throw new Error('이미 조회된 동화');
     }
     return response.json();
 };
@@ -87,8 +93,12 @@ export const postComment = async (id: string, text: string) => {
         })
     });
 
-    if (!response.ok) {
-        throw new Error('댓글 생성 실패');
+    // if (!response.ok) {
+    //     throw new Error('댓글 생성 실패');
+    // }
+
+    if (response.status === 400) {
+        alert('댓글은 최대 3개까지 작성이 가능합니다.');
     }
 
     return response.json();

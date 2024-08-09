@@ -48,15 +48,6 @@ export default function BookInfo({ id }: { id: string }) {
             }
         };
 
-        const fetchView = async () => {
-            try {
-                const data = await postBookView(id);
-                console.log('조회요청', data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
         const fetchMyBook = async () => {
             try {
                 const data = await getBookDetail(id);
@@ -81,9 +72,19 @@ export default function BookInfo({ id }: { id: string }) {
             }
         };
 
+        if (storedUserName) {
+            const fetchView = async () => {
+                try {
+                    await postBookView(id);
+                } catch (error) {
+                    // console.error(error);
+                }
+            };
+            fetchView();
+        }
+
         fetchMyLikeBook();
         fetchMyBook();
-        fetchView();
     }, [id]);
 
     return (

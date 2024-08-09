@@ -19,6 +19,8 @@ interface Comment {
     content: string;
     createdAt: string;
     id: string;
+    profileImgURL: string;
+    nickname: string;
 }
 
 const PAGE_SIZE = 5;
@@ -28,50 +30,54 @@ export default function CommentList({ id }: { id: string }) {
     const [commentInfo, setCommentInfo] = useState<Comment[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [userName, setUserName] = useState<string | null>(null);
+    const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
         const storedUserName = localStorage.getItem('nickname');
         setUserName(storedUserName);
 
-        const fetchCommentList = async () => {
+        const fetchCommentList = async (page: number) => {
             try {
-                const data = await getComment(id);
-                const comments: Comment[] = data.map((item: Comment) => ({
+                const data = await getComment(
+                    `${id}?page=${currentPage}&limit=5`
+                );
+                const comments: Comment[] = data.data.map((item: Comment) => ({
                     content: item.content,
                     createdAt: item.createdAt.split('T')[0],
-                    id: item.id
+                    id: item.id,
+                    profileImgURL: item.profileImgURL,
+                    nickname: item.nickname
                 }));
+
                 setCommentInfo(comments);
-                console.log('댓글조회', comments);
+                setTotalPages(data.totalPages); // 총 페이지 수 설정
+                setCurrentPage(Number(data.currentPage));
+
+                console.log('댓글', data);
             } catch (error) {
-                console.error(error);
+                // console.error(error);
             }
         };
 
-        fetchCommentList();
-    }, [id]);
-
-    const totalPages = useMemo(
-        () => Math.ceil(commentInfo.length / PAGE_SIZE),
-        [commentInfo]
-    );
-
-    const paginatedComments = useMemo(() => {
-        const start = (currentPage - 1) * PAGE_SIZE;
-        const end = start + PAGE_SIZE;
-        return commentInfo.slice(start, end);
-    }, [commentInfo, currentPage]);
+        fetchCommentList(currentPage);
+    }, [id, currentPage]);
 
     const handlePageChange = (page: number) => {
-        setCurrentPage(page);
+        if (page !== currentPage) {
+            setCurrentPage(page);
+        }
     };
 
     const handleNextPage = () => {
-        setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
     };
 
     const handlePrevPage = () => {
-        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
     };
 
     const handleEditClick = (id: string) => {
@@ -92,27 +98,31 @@ export default function CommentList({ id }: { id: string }) {
                     fairytaleId={id}
                 />
                 <div className="mt-16">
-                    {paginatedComments.map((item, index) => (
+                    {commentInfo.map((item, index) => (
                         <div key={item.id}>
                             <div className="flex flex-row justify-between items-center">
                                 <div className="flex flex-row items-center">
                                     <div
-                                        className="border rounded-full w-5 h-5 overflow-hidden mr-2"
+                                        className="border rounded-full w-6 h-6 overflow-hidden mr-2"
                                         style={{
-                                            backgroundImage: `url(${item.id})`,
+                                            backgroundImage: `url(${item.profileImgURL})`,
                                             backgroundSize: 'cover'
                                         }}
                                     />
-                                    <p className="text-base">{item.id}</p>
+                                    <p className="text-[1.05rem] font-medium">
+                                        {item.nickname}
+                                    </p>
                                 </div>
                                 <div className="flex flex-row items-end -mb-2">
-                                    <EditDeleteBtn
-                                        id={item.id}
-                                        modalType="comment"
-                                        onEditClick={() =>
-                                            handleEditClick(item.id)
-                                        }
-                                    />
+                                    {userName === item.nickname && (
+                                        <EditDeleteBtn
+                                            id={item.id}
+                                            modalType="comment"
+                                            onEditClick={() =>
+                                                handleEditClick(item.id)
+                                            }
+                                        />
+                                    )}
                                 </div>
                             </div>
                             {editCommentId === item.id ? (
@@ -129,7 +139,7 @@ export default function CommentList({ id }: { id: string }) {
                                 <div className="flex flex-row justify-between items-center mt-3">
                                     <p>{item.content}</p>
                                     <p className="text-xs text-gray-500">
-                                        {item.id}
+                                        {item.createdAt}
                                     </p>
                                 </div>
                             )}
@@ -170,7 +180,11 @@ export default function CommentList({ id }: { id: string }) {
                                     type="button"
                                     key={page}
                                     onClick={() => handlePageChange(page)}
-                                    className={`px-3 text-[0.9rem] mx-1 rounded-full ${page === currentPage ? 'bg-main text-white' : 'bg-white'}`}
+                                    className={`px-3 text-[0.9rem] mx-1 rounded-full ${
+                                        page === currentPage
+                                            ? 'bg-main text-white border-main' // 현재 페이지인 경우
+                                            : 'bg-white text-black border-gray-200' // 다른 페이지인 경우
+                                    }`}
                                 >
                                     {page}
                                 </button>

@@ -78,7 +78,10 @@ export default function PreviewBlank({
                 : '';
 
             return (
-                <div className="flex flex-col text-center mb-9 mt-4">
+                <div
+                    key={`preview-${index}`}
+                    className="flex flex-col text-center mb-9 mt-4"
+                >
                     <div>
                         <button
                             type="button"
@@ -92,7 +95,7 @@ export default function PreviewBlank({
                             }}
                         >
                             <div
-                                key={index}
+                                key={info.title}
                                 className={`flex flex-row ${width} h-32 overflow-hidden`}
                             >
                                 <div
