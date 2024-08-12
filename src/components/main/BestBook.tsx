@@ -61,8 +61,8 @@ export default function BestBook() {
 
             {/* 데이터 있을 때 */}
             {bestBooks.length > 0 && (
-                <div className="flex flex row">
-                    <div className="flex flex-row space-x-6 -ml-4">
+                <div className="flex flex-row">
+                    <div className="flex flex-row space-x-6">
                         {bestBooks.map((item) => (
                             <button
                                 type="button"
@@ -70,7 +70,7 @@ export default function BestBook() {
                                 onClick={() =>
                                     handleBookClick(item.fairytaleId)
                                 }
-                                className="relative w-[13rem] w-full aspect-[6/7] border border-gray-200 overflow-hidden rounded-xl bg-white transition-transform animate-scaleIn"
+                                className="relative w-[13rem] aspect-[6/7] border border-gray-200 overflow-hidden rounded-xl bg-white transition-transform animate-scaleIn"
                             >
                                 <div
                                     className="absolute top-0 w-full h-full overflow-hidden"
