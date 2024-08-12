@@ -61,7 +61,7 @@ export default function BookInfo({ id }: { id: string }) {
                     privatedAt: data[0].privatedAt
                 });
 
-                console.log('전체', data);
+                // console.log('전체', data);
 
                 const coverImg = data[0].coverImage;
                 const images = data[0].images.map((item: string) => item);

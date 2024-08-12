@@ -15,4 +15,6 @@ export interface FairytaleInfo {
     nickname: string;
     coverImage: string;
     createdAt: string;
+    views: number;
+    likes: number;
 }

@@ -60,16 +60,16 @@ const Page: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col items-center p-8">
-            <h1 className="text-3xl font-bold text-main mt-10">
+        <div className="flex flex-col justify-center items-center p-8 w-full">
+            <h1 className="text-3xl font-bold text-main mt-20">
                 꿈틀 포인트 구매
             </h1>
             <p className="mt-2 mb-10 text-gray-600">
                 나뭇잎을 구매하고 꿈틀의 AI 동화 생성 서비스를 마음껏
                 즐겨보세요!
             </p>
-            <div className="flex justify-between flex-wrap gap-4 mt-6 w-full max-w-6xl">
-                <div className="border border-gray-200 rounded-lg p-6 w-full flex-1 max-w-sm shadow-lg">
+            <div className="grid grid-cols-2 mt-6 gap-9 gap-y-9">
+                <div className="border border-gray-200 rounded-lg shadow-lg p-6 py-8 aspect-[2/1]">
                     <div className="flex flex-col items-center">
                         <h2 className="text-xl font-semibold mb-3 flex items-center">
                             100 나뭇잎
@@ -91,7 +91,7 @@ const Page: React.FC = () => {
                         </button>
                     </div>
                 </div>
-                <div className="border border-gray-200 rounded-lg p-6 w-full flex-1 max-w-sm shadow-lg">
+                <div className="border border-gray-200 rounded-lg p-6 py-8 shadow-lg">
                     <div className="flex flex-col items-center">
                         <h2 className="text-xl font-semibold mb-3 flex items-center">
                             300 나뭇잎
@@ -113,7 +113,7 @@ const Page: React.FC = () => {
                         </button>
                     </div>
                 </div>
-                <div className="border border-gray-200 rounded-lg p-6 w-full flex-1 max-w-sm shadow-lg">
+                <div className="border border-gray-200 rounded-lg p-6 py-8 shadow-lg">
                     <div className="flex flex-col items-center">
                         <h2 className="text-xl font-semibold mb-3 flex items-center">
                             700 나뭇잎
@@ -137,7 +137,7 @@ const Page: React.FC = () => {
                         </button>
                     </div>
                 </div>
-                <div className="border border-gray-200 rounded-lg p-6 w-full flex-1 max-w-sm shadow-lg">
+                <div className="border border-gray-200 rounded-lg p-6 py-8 shadow-lg">
                     <div className="flex flex-col items-center">
                         <h2 className="text-xl font-semibold mb-3 flex items-center">
                             1200 나뭇잎

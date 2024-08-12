@@ -10,14 +10,32 @@ Date        Author   Status    Description
 2024.08.09  나경윤    Modified  배너 추가
 */
 
+import Image from 'next/image';
 import SearchBook from '@/components/main/SearchBook';
 import ScrollUpButton from '@/components/main/ScrollUpButton';
 import MainBanner from '@/components/main/MainBanner';
+import BestBook from '@/components/main/BestBook';
 
 export default function Home() {
     return (
         <main className="flex flex-col justify-center items-center mx-24 mt-16">
             <MainBanner />
+            <div className="flex flex-col justify-center items-center w-full -mb-5">
+                <div className="flex flex-row justify-center items-center text-[1.45rem] bg-white px-6 z-20">
+                    <Image
+                        src={'/images/star.svg'}
+                        alt="star-icon"
+                        width={30}
+                        height={0}
+                        className="mr-1.5"
+                    />
+                    <p className="font-LaundryGothic mt-1">명예의 전당</p>
+                </div>
+            </div>
+            <div className="flex flex-row justify-center items-center w-full">
+                <BestBook />
+            </div>
+
             <div className="flex flex-col justify-center items-center w-full">
                 <SearchBook />
             </div>

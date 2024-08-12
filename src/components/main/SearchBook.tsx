@@ -38,7 +38,6 @@ const options: string[] = ['최신순', '인기순', '조회순'];
 export default function SearchBook() {
     const [selectedTag, setSelectedTag] = useState<string>('모든 주제');
     const [searchResults, setSearchResults] = useState<FairytaleInfo[]>([]);
-    const [initData, setInitData] = useState<FairytaleInfo[]>([]);
     const [searchInputValue, setSearchInputValue] = useState<string>('');
     const [loading, setLoading] = useState(true);
     const [label, setLabel] = useState<string>(options[0]);
@@ -70,9 +69,7 @@ export default function SearchBook() {
                 }));
                 setSearchResults(formattedResult);
 
-                if (selectedTag === '모든 주제' && debouncedInputValue === '') {
-                    setInitData(formattedResult);
-                }
+                // console.log('전체조회', result);
             } catch (error) {
                 console.error(error);
                 setSearchResults([]);

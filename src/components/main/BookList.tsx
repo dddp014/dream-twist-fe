@@ -11,10 +11,12 @@ Date        Author   Status    Description
 
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState, useEffect } from 'react';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { FairytaleInfo } from '@/types/fairytale';
+import LikeIcon from '../icons/LikeIcon';
 
 interface BookListProps {
     fairytaleInfo: FairytaleInfo[];
@@ -123,9 +125,30 @@ export default function BookList({ fairytaleInfo }: BookListProps) {
                                         backgroundImage: `url(${item.coverImage})`,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'top',
-                                        height: '78%'
+                                        height: '80%'
                                     }}
                                 />
+                                <div className="flex justify-start absolute top-0 text-[0.8rem] text-gray-700 z-1 w-full pl-3 py-0.5">
+                                    <div className="absolute top-0 left-0 w-full h-full bg-white opacity-100 z-0"></div>
+                                    <div className="flex flex-row relative justify-center items-center z-2">
+                                        <Image
+                                            src={'/images/view.svg'}
+                                            alt="view-icon"
+                                            width={16}
+                                            height={0}
+                                            className="opacity-70 mr-1"
+                                        />
+                                        <p className="mr-2">{item.views}</p>
+                                        <Image
+                                            src={'/images/mainLike.svg'}
+                                            alt="like-icon"
+                                            width={14}
+                                            height={0}
+                                            className="opacity-70 mr-1"
+                                        />
+                                        <p className="relative">{item.likes}</p>
+                                    </div>
+                                </div>
                                 <div className="absolute bg-white bottom-0 w-full text-left py-3 pl-4">
                                     <p className="text-[1.15rem] font-semibold truncate">
                                         {item.title}

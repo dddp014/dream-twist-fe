@@ -17,7 +17,7 @@ export default function MainBannero() {
     const [imageUrl, setImageUrl] = useState('/images/main1.png');
     return (
         <div
-            className="flex items-center justify-center relative bg-main-100 h-80 w-full mb-16 rounded-xl overflow-hidden"
+            className="flex items-center justify-center relative bg-main-100 h-80 w-full mb-7 rounded-xl overflow-hidden"
             onMouseEnter={() => setImageUrl('/images/main2.png')}
             onMouseLeave={() => setImageUrl('/images/main1.png')}
         >
