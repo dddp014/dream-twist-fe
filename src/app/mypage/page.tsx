@@ -45,7 +45,7 @@ export default async function Mypage() {
                                 </p>
                             </div>
                         </Link>
-                        <Link href={'/payments'}>
+                        <Link href={'/pay'}>
                             <div className="flex flex-row">
                                 <Image
                                     src={'/images/credit.svg'}
