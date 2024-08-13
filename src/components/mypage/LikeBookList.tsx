@@ -25,7 +25,7 @@ interface BookProps {
 
 export default function LikeBookList() {
     const router = useRouter();
-    const [bookCount, setBookCount] = useState(6);
+    const [bookCount, setBookCount] = useState(5);
     const [viewClick, setViewClick] = useState(false);
     const [myBooks, setMyBooks] = useState<BookProps[]>([]);
 
@@ -59,7 +59,7 @@ export default function LikeBookList() {
                 </p>
             ) : (
                 <>
-                    <div className="grid md:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-6 gap-6">
+                    <div className="grid md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-8 w-full">
                         {myBooks.slice(0, bookCount).map((item) => (
                             <button
                                 type="button"
@@ -71,7 +71,7 @@ export default function LikeBookList() {
                                         alert('비공개 동화입니다.');
                                     }
                                 }}
-                                className="relative max-w-[15rem] w-full aspect-[4/5] border rounded-lg border-gray-200 overflow-hidden"
+                                className="relative w-full aspect-[4/5] border rounded-lg border-gray-200 overflow-hidden"
                             >
                                 <div
                                     className="absolute top-0 w-full h-full overflow-hidden"

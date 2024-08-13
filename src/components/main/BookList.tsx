@@ -16,13 +16,12 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState, useEffect } from 'react';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { FairytaleInfo } from '@/types/fairytale';
-import LikeIcon from '../icons/LikeIcon';
 
 interface BookListProps {
     fairytaleInfo: FairytaleInfo[];
 }
 
-const itemsPerPage: number = 10;
+const itemsPerPage: number = 8;
 
 export default function BookList({ fairytaleInfo }: BookListProps) {
     const router = useRouter();
@@ -109,7 +108,7 @@ export default function BookList({ fairytaleInfo }: BookListProps) {
             {/* 데이터 있을 때 */}
             {fairytaleInfo.length > 0 && (
                 <>
-                    <div className="grid sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-8 gap-y-9 my-10 z-0">
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-y-12 gap-x-8 my-10 z-0">
                         {items.map((item) => (
                             <button
                                 type="button"
@@ -117,7 +116,7 @@ export default function BookList({ fairytaleInfo }: BookListProps) {
                                 onClick={() =>
                                     handleBookClick(item.fairytaleId)
                                 }
-                                className="relative max-w-[18rem] w-full aspect-[4/5] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
+                                className="relative max-w-[20rem] w-full aspect-[4/5] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
                             >
                                 <div
                                     className="absolute top-0 w-full h-full overflow-hidden"

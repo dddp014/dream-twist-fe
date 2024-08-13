@@ -45,7 +45,7 @@ export default async function Mypage() {
                                 </p>
                             </div>
                         </Link>
-                        <Link href={'/pay'}>
+                        <Link href={'/payments'}>
                             <div className="flex flex-row">
                                 <Image
                                     src={'/images/credit.svg'}
@@ -62,23 +62,23 @@ export default async function Mypage() {
                 </div>
             </div>
             <div className="flex flex-col self-start mb-16 w-full">
-                <p className="text-[1.3rem] font-semibold">나의 동화</p>
+                <p className="text-[1.4rem] font-semibold">나의 동화</p>
                 <MyBookList />
-                <hr className="border-[0.5px] border-main opacity-30 w-full mt-12 -mb-4" />
-                <p className="text-[1.3rem] font-semibold mt-16">
+                <hr className="border-[0.5px] border-gray-300 opacity-30 w-full mt-12 -mb-4" />
+                <p className="text-[1.4rem] font-semibold mt-16">
                     좋아요한 동화
                 </p>
                 <LikeBookList />
-                <hr className="border-[0.5px] border-main opacity-30 w-full mt-12 -mb-4" />
+                <hr className="border-[0.5px] border-gray-300 opacity-30 w-full mt-12 -mb-4" />
                 <div className="flex flex-row w-full space-x-20 mt-6">
                     <div className="flex flex-col flex-1">
-                        <p className="text-[1.3rem] font-semibold mt-16">
+                        <p className="text-[1.4rem] font-semibold mt-16">
                             나의 댓글
                         </p>
                         <MyCommentList />
                     </div>
                     <div className="flex flex-col flex-1">
-                        <p className="text-[1.3rem] font-semibold mt-16">
+                        <p className="text-[1.4rem] font-semibold mt-16">
                             나의 결제 내역
                         </p>
                         <MyPayList />

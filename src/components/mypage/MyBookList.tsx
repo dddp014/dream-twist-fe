@@ -23,7 +23,7 @@ interface BookProps {
 
 export default function MyBookList() {
     const router = useRouter();
-    const [bookCount, setBookCount] = useState(6);
+    const [bookCount, setBookCount] = useState(5);
     const [viewClick, setViewClick] = useState(false);
     const [myBooks, setMyBooks] = useState<BookProps[]>([]);
 
@@ -58,13 +58,13 @@ export default function MyBookList() {
                 </p>
             ) : (
                 <>
-                    <div className="grid md:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-6 gap-6">
+                    <div className="grid md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-8 w-full">
                         {myBooks.slice(0, bookCount).map((item) => (
                             <button
                                 type="button"
                                 key={item.id}
                                 onClick={() => router.push(`/board/${item.id}`)}
-                                className="relative max-w-[15rem] w-full aspect-[4/5] border rounded-lg border-gray-200 overflow-hidden"
+                                className="relative w-full aspect-[4/5] border rounded-lg border-gray-200 overflow-hidden"
                             >
                                 <div
                                     className="absolute top-0 w-full h-full overflow-hidden"
@@ -72,12 +72,12 @@ export default function MyBookList() {
                                         backgroundImage: `url(${item.coverImage})`,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'top',
-                                        height: '80%'
+                                        height: '82%'
                                     }}
                                 />
                                 <div className="absolute bg-white bottom-0 w-full py-2 text-left pl-4">
                                     <div className="flex flex-col">
-                                        <p className="text-[1.1rem] font-medium -mb-0.5 truncate">
+                                        <p className="text-[1.2rem] font-medium mb-0.5 truncate">
                                             {item.title}
                                         </p>
                                         <p className="text-[0.7rem] text-gray-400">
