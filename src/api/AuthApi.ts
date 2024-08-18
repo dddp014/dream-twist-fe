@@ -95,6 +95,8 @@ export const patchProfile = async (name: string, url: string) => {
     } else if (response.status === 409) {
         const errorData = await response.json();
         alert(errorData.message);
+    } else if (response.status === 500) {
+        alert('이미 사용 중인 닉네임입니다.');
     } else {
         window.location.href = '/mypage';
     }
