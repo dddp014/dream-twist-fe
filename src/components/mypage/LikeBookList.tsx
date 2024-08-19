@@ -98,7 +98,7 @@ export default function LikeBookList() {
                             </button>
                         ))}
                     </div>
-                    {myBooks.length > 6 && (
+                    {myBooks.length > 5 && (
                         <div className="text-center">
                             <button
                                 type="button"

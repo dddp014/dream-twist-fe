@@ -102,13 +102,17 @@ export default function EditProfileList() {
         try {
             // 유저 삭제
             await deleteAuth(email);
-            // 유저 로그아웃
-            await postLogout();
+            // 유저 정보 삭제
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('tokenExpiry');
+            localStorage.removeItem('nickname');
+            localStorage.removeItem('email');
+            localStorage.removeItem('profileImage');
             alert('회원 탈퇴가 완료되었습니다.');
             window.location.href = '/'; // 회원 탈퇴 후 메인 페이지로 리디렉션
         } catch (error) {
             console.error('회원 탈퇴 중 오류 발생:', error);
-            alert('회원 탈퇴 중 오류가 발생했습니다. 다시 시도해주세요.');
         }
     };
 

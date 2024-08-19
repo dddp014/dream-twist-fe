@@ -135,7 +135,7 @@ export default function Nav() {
             }
 
             onLoginSuccess(data.accessToken);
-            console.info('silent-success');
+            // console.info('silent-success');
         } catch (error) {
             console.error(error);
         }
