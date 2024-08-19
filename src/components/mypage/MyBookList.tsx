@@ -46,7 +46,7 @@ export default function MyBookList() {
     }, []);
 
     const handleLoadMore = () => {
-        viewClick ? setBookCount(6) : setBookCount(myBooks.length);
+        viewClick ? setBookCount(5) : setBookCount(myBooks.length);
         setViewClick(!viewClick);
     };
 
