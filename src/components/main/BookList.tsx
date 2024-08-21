@@ -11,6 +11,7 @@ Date        Author   Status    Description
 
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState, useEffect } from 'react';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
@@ -20,13 +21,19 @@ interface BookListProps {
     fairytaleInfo: FairytaleInfo[];
 }
 
-const itemsPerPage: number = 10;
+const itemsPerPage: number = 8;
 
 export default function BookList({ fairytaleInfo }: BookListProps) {
     const router = useRouter();
     const [items, setItems] = useState<FairytaleInfo[]>([]);
     const pageIndexRef = useRef<number>(1);
     const [isEnd, setIsEnd] = useState<boolean>(false);
+
+    useEffect(() => {
+        setItems(fairytaleInfo.slice(0, itemsPerPage));
+        pageIndexRef.current = 2;
+        setIsEnd(false);
+    }, [fairytaleInfo]);
 
     useEffect(() => {
         const savedItems = sessionStorage.getItem('BOOKLIST_ITEMS');
@@ -101,7 +108,7 @@ export default function BookList({ fairytaleInfo }: BookListProps) {
             {/* 데이터 있을 때 */}
             {fairytaleInfo.length > 0 && (
                 <>
-                    <div className="grid sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-8 gap-y-9 my-10 z-0">
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-y-12 gap-x-8 my-10 z-0">
                         {items.map((item) => (
                             <button
                                 type="button"
@@ -109,7 +116,7 @@ export default function BookList({ fairytaleInfo }: BookListProps) {
                                 onClick={() =>
                                     handleBookClick(item.fairytaleId)
                                 }
-                                className="relative max-w-[18rem] w-full aspect-[4/5] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
+                                className="relative max-w-[20rem] w-full aspect-[4/5] border border-gray-200 rounded-xl bg-white overflow-hidden transition-transform animate-scaleIn"
                             >
                                 <div
                                     className="absolute top-0 w-full h-full overflow-hidden"
@@ -117,9 +124,30 @@ export default function BookList({ fairytaleInfo }: BookListProps) {
                                         backgroundImage: `url(${item.coverImage})`,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'top',
-                                        height: '78%'
+                                        height: '80%'
                                     }}
                                 />
+                                <div className="flex justify-start absolute top-0 text-[0.8rem] text-gray-700 z-1 w-full pl-3 py-0.5">
+                                    <div className="absolute top-0 left-0 w-full h-full bg-white opacity-100 z-0"></div>
+                                    <div className="flex flex-row relative justify-center items-center z-2">
+                                        <Image
+                                            src={'/images/view.svg'}
+                                            alt="view-icon"
+                                            width={16}
+                                            height={0}
+                                            className="opacity-70 mr-1"
+                                        />
+                                        <p className="mr-2">{item.views}</p>
+                                        <Image
+                                            src={'/images/mainLike.svg'}
+                                            alt="like-icon"
+                                            width={14}
+                                            height={0}
+                                            className="opacity-70 mr-1"
+                                        />
+                                        <p className="relative">{item.likes}</p>
+                                    </div>
+                                </div>
                                 <div className="absolute bg-white bottom-0 w-full text-left py-3 pl-4">
                                     <p className="text-[1.15rem] font-semibold truncate">
                                         {item.title}

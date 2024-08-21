@@ -26,6 +26,8 @@ import { getMyPayList } from '@/api/MypageApi';
 import Modal from '@/components/mypage/Modal';
 import RefundForm from '@/components/mypage/RefundForm';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export default function MyPayList() {
     const [payInfo, setPayInfo] = useState<PayInfo[]>([]); // payInfo는 PayInfo 타입의 배열
     const [showForm, setShowForm] = useState<string | null>(null);
@@ -50,20 +52,17 @@ export default function MyPayList() {
         const accessToken = localStorage.getItem('accessToken');
         // console.log(`환불 상품 ID: ${paymentId} 환불 사유 : ${cancelReason}`);
         try {
-            const response = await fetch(
-                'http://localhost:4000/billing/cancel',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${accessToken}`
-                    },
-                    body: JSON.stringify({
-                        id: paymentId,
-                        cancelReason: cancelReason
-                    })
-                }
-            );
+            const response = await fetch(`${API_BASE_URL}/billing/cancel`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`
+                },
+                body: JSON.stringify({
+                    id: paymentId,
+                    cancelReason: cancelReason
+                })
+            });
 
             if (!response.ok) {
                 throw new Error('서버 응답 오류');

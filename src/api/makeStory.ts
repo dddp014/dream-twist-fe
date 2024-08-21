@@ -9,6 +9,7 @@ Date        Author   Status    Description
 2024.08.07  임도헌   Modified  storyResponse에 제목과 주제 추가
 
 */
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export interface StoryResponse {
     title: string;
@@ -16,13 +17,11 @@ export interface StoryResponse {
     story: string[];
 }
 
-const accessToken = localStorage.getItem('accessToken');
-
 export const generatePlot = async (
     storyInput: string
 ): Promise<StoryResponse> => {
     const accessToken = localStorage.getItem('accessToken');
-    const response = await fetch('http://localhost:4000/ai-fairytale/story', {
+    const response = await fetch(`${API_BASE_URL}/ai-fairytale/story`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

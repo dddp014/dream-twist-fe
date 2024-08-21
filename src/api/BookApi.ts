@@ -12,10 +12,10 @@ Date        Author   Status    Description
 2024.08.07  임도헌   Modified   금지어 json으로 반환
 */
 
-const API_BASE_URL = 'http://localhost:4000/fairytale';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const fetchPresignedURL = async (userId: number, fileName: string) => {
-    const response = await fetch(`${API_BASE_URL}/presigned-url`, {
+    const response = await fetch(`${API_BASE_URL}/fairytale/presigned-url`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ export const submitBookForm = async (
     formdata: FormData,
     accessToken: string | null
 ) => {
-    const response = await fetch(API_BASE_URL, {
+    const response = await fetch(`${API_BASE_URL}/fairytale`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${accessToken}`
@@ -69,7 +69,7 @@ export const updateBookForm = async (
     fairytailId: number,
     accessToken: string | null
 ) => {
-    const response = await fetch(`${API_BASE_URL}/${fairytailId}`, {
+    const response = await fetch(`${API_BASE_URL}/fairytale/${fairytailId}`, {
         method: 'PUT',
         headers: {
             Authorization: `Bearer ${accessToken}`
@@ -89,7 +89,7 @@ export const fetchAiImage = async (
     prompt: string,
     accessToken: string | null
 ): Promise<string> => {
-    const response = await fetch(`http://localhost:4000/ai-fairytale/image`, {
+    const response = await fetch(`${API_BASE_URL}/ai-fairytale/image`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

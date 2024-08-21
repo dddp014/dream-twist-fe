@@ -76,7 +76,7 @@ export default function Book({ fairytaleId = 0 }: FairytailFormProps) {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center mb-10">
                 <div className="relative w-[1260px] flex items-center justify-between">
                     <div className="absolute left-[260px]">
                         <DropIcon rotate="" />
@@ -303,7 +303,7 @@ export default function Book({ fairytaleId = 0 }: FairytailFormProps) {
                                         클릭하면 이미지 생성이 가능합니다.
                                     </div>
                                 </button>
-                                <p className="text-3xl font-bold mt-2">
+                                <p className="text-2xl font-bold mt-2">
                                     {title}
                                 </p>
                                 <p className="text-sm mt-4">{nickname} 지음</p>

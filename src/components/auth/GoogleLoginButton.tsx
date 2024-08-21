@@ -14,24 +14,28 @@ Date        Author   Status     Description
 
 import Image from 'next/image';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export default function GoogleLoginButton() {
     const googleLogin = () => {
-        window.location.href = `http://localhost:4000/auth/google/login`;
+        window.location.href = `${API_BASE_URL}/auth/google/login`;
     };
 
     return (
-        <button
-            type="button"
-            onClick={googleLogin}
-            className="flex flex-row items-center justify-center w-72 border border-gray-300 rounded-lg py-3 hover:bg-gray-50"
-        >
-            <Image
-                src="/images/google.svg"
-                alt="google-icon"
-                width={20}
-                height={20}
-            />
-            <span className="ml-4">Google로 시작하기</span>
-        </button>
+        <>
+            <button
+                type="button"
+                onClick={googleLogin}
+                className="flex flex-row items-center justify-center w-72 border border-gray-300 rounded-lg py-3 hover:bg-gray-50"
+            >
+                <Image
+                    src="/images/google.svg"
+                    alt="google-icon"
+                    width={20}
+                    height={20}
+                />
+                <span className="ml-4">Google로 시작하기</span>
+            </button>
+        </>
     );
 }

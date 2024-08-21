@@ -14,7 +14,7 @@ Date        Author   Status    Description
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // App Router 환경에서의 라우터를 사용
 import Loading from '@/components/bulidstory/Loading';
 import { generatePlot, StoryResponse } from '@/api/makeStory';
@@ -36,7 +36,6 @@ const SummeryPage: React.FC = () => {
             console.log(result); // 서버 응답 확인
 
             // 로컬 스토리지에 데이터 저장
-            // 클라이언트 사이드에서만 실행됨
             saveToLocalStorage('title', result.title);
             saveToLocalStorage('theme', result.theme);
             saveToLocalStorage('storys', result.story);
@@ -77,18 +76,22 @@ const SummeryPage: React.FC = () => {
                             placeholder="동화의 첫 문장을 적어주세요"
                         ></textarea>
                         <p className="mt-4 text-gray-700">
-                            Tips!! 동화의 내용을 구체적으로 적을 수록 더 멋진
-                            동화를 만들어줘요!
+                            **팁!** 이야기를 더 구체적으로 적을수록 꿈틀이가 더
+                            흥미진진한 이야기를 만들어줄 수 있어요!
                             <br />
                             <br />
-                            예시1) 소피아가 신비로운 마법의 숲을 탐험하며
-                            친구들과 함께 숲을 지켜내는 이야기
+                            예시1) "옛날에 민규라는 한 아이가 살았어요. 민규는
+                            자전거를 타는 걸 너무 좋아했어요."
                             <br />
-                            예시2) 동물친구들 - 꼬마거북 핀과 친구들이 연이 친구
-                            코아와 함께 온갖 모험을 떠난다.
+                            예시2) "마법의 숲에서 경윤이는 친구들과 함께
+                            신비로운 모험을 떠나기로 결심했어요."
                             <br />
-                            예시3) 최선임양을 주인공과 고양이를 주인공으로 그린
-                            이야기나 인형의 무한모험의 줄거리
+                            예시3) "도헌이와 친구들은 세상을 탐험하며 다양한
+                            동물 친구들을 만났어요."
+                            <br />
+                            <br />
+                            이런 식으로 이야기를 시작하면, 꿈틀이가 여러분의
+                            상상력을 더욱 확장해줄 거예요!
                         </p>
                         <div className="flex justify-center">
                             <button

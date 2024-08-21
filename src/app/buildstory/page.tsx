@@ -25,16 +25,16 @@ const BuildStoryPage: React.FC = () => {
                 backgroundRepeat: 'no-repeat'
             }}
         >
-            <div className="text-center w-full max-w-4xl">
-                <h1 className="text-2xl font-bold mb-8">
+            <div className="text-center w-full max-w-4xl mb-32">
+                <h1 className="text-2xl font-bold mb-6">
                     이야기를 어떻게 쓸까요?
                 </h1>
-                <p className="mb-10">
+                <p className="mb-12">
                     AI를 활용해서 글을 쓰거나 도움없이 직접 쓸 수 있어요.
                 </p>
 
                 <div className="flex gap-12 items-center mb-10">
-                    <div className="relative bg-white p-8 rounded-lg shadow-md shadow-neutral-200 w-full max-w-md h-auto text-center border border-gray-200 flex flex-col items-center justify-center">
+                    <div className="relative bg-white p-8 rounded-lg shadow-md shadow-neutral-200 w-full max-w-md h-fit text-center border border-gray-200 flex flex-col items-center justify-center">
                         <div className="flex justify-center items-center text-green-500 text-4xl mb-7">
                             <Image
                                 src="/images/pencil.svg"
@@ -57,16 +57,16 @@ const BuildStoryPage: React.FC = () => {
                         </Link>
                     </div>
 
-                    <div className="relative bg-white p-8 rounded-lg shadow-md shadow-neutral-200 w-full max-w-md h-auto text-center border border-gray-200 flex flex-col items-center justify-center">
-                        <div className="absolute top-4 right-4 bg-yellow-400 text-black py-3 px-2 rounded-lg text-sm">
+                    <div className="relative bg-white p-8 rounded-lg shadow-md shadow-neutral-200 w-full max-w-md h-fit text-center border border-gray-200 flex flex-col items-center justify-center">
+                        <div className="absolute top-0 right-6 bg-yellow-400 text-black py-3 px-2 rounded-b-lg text-sm">
                             추천
                         </div>
-                        <div className="flex justify-center items-center text-pink-300 text-4xl mb-7">
+                        <div className="flex justify-center items-center text-pink-300 text-4xl mb-4 -mt-2">
                             <Image
-                                src="/images/aiicon.svg"
+                                src="/images/greenAiIcon.svg"
                                 alt="withAI"
-                                width={80}
-                                height={80}
+                                width={100}
+                                height={100}
                             />
                         </div>
 

@@ -15,6 +15,7 @@ Date        Author   Status    Description
 2024.08.08  임도헌   Modified  isPublic에서 privatedAt으로 바껴서 로직이 반대로 작동해서 !로 true false 반대로 변경
 2024.08.08  임도헌   Modified  보유 크레딧 기능 추가
 2024.08.08  임도헌   Modified  eslint 에러 처리
+2024.08.10  임도헌   Modified   유저 접근 권한 코드 추가
 */
 
 import { useEffect, useState } from 'react';
@@ -35,11 +36,19 @@ export type CreationMethod = 'default' | 'upload' | 'ai' | 'palette';
 export const useBook = (fairytaleId?: number) => {
     // 페이지 이동(메인페이지)
     const router = useRouter();
-    // 임시 유저아이디 1
-    const userId: number = 1;
-    // 임시 작가 이름
     // 모달 상태
     const { setImageModalOpen, setStoryModalOpen } = useBookModal();
+
+    const [localstorageNickName, setLocalstorageNickName] =
+        useState<string>('');
+
+    useEffect(() => {
+        // 페이지 로드 시 로컬 스토리지에서 닉네임 가져오기
+        const storedNickName = localStorage.getItem('nickname');
+        if (storedNickName) {
+            setLocalstorageNickName(storedNickName);
+        }
+    }, []); // 초기 렌더링 시에만 실행
 
     // react hook form 분리
     const {
@@ -51,9 +60,17 @@ export const useBook = (fairytaleId?: number) => {
         cover,
         title,
         theme,
+        userId,
         nickname,
         loading
     } = useBookForm(fairytaleId);
+
+    useEffect(() => {
+        if (localstorageNickName && nickname !== localstorageNickName) {
+            alert('허용되지 않은 권한입니다.');
+            router.push(`/board/${fairytaleId}`);
+        }
+    }, [nickname]);
 
     // 현재 페이지 상태
     const [currentPage, setCurrentPage] = useState<number>(0);

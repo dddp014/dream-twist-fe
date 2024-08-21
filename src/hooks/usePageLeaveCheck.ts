@@ -21,8 +21,7 @@ const usePageLeaveCheck = () => {
     useEffect(() => {
         const handleBeforeUnload = (e: BeforeUnloadEvent) => {
             e.preventDefault();
-            e.returnValue =
-                '작성하던 내용이 모두 사라집니다. 계속하시겠습니까?';
+            e.returnValue = ''; // 대부분의 브라우저에서 작동하는 방식
         };
 
         const handlePopState = (e: PopStateEvent) => {
@@ -45,7 +44,12 @@ const usePageLeaveCheck = () => {
 
         // 특정 URL 경로에서만 경고창을 띄우도록 설정
         const path = window.location.pathname;
-        if (path.startsWith('/edit/') || path.startsWith('/final-edit/')) {
+        if (
+            path.startsWith('/edit') ||
+            path.startsWith('/final-edit') ||
+            path.startsWith('/edit/') ||
+            path.startsWith('/final-edit/')
+        ) {
             window.addEventListener('beforeunload', handleBeforeUnload);
             window.addEventListener('popstate', handlePopState);
         }

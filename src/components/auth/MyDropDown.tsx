@@ -7,30 +7,44 @@ History
 Date        Author   Status    Description
 2024.08.06  나경윤    Created
 2024.08.07  나경윤    Modified   로그아웃 연결
+2024.08.10  임도헌    Modified  로그아웃 모달 추가
 */
 
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { postLogout } from '@/api/AuthApi';
+import LogoutModal from '@/components/auth/LogoutModal';
 
 const options = ['마이페이지', '로그아웃'];
 
 export default function MyDropdown() {
     const router = useRouter();
+    const [showModal, setShowModal] = useState(false);
 
-    const handleOptionClick = async (index: number) => {
+    const handleOptionClick = (index: number) => {
         if (index === 0) {
             router.push('/mypage');
         }
         if (index === 1) {
-            try {
-                await postLogout();
-                window.location.href = '/';
-            } catch (error) {
-                console.error(error);
-            }
+            setShowModal(true);
         }
+    };
+
+    const handleLogoutConfirm = async () => {
+        try {
+            await postLogout();
+            window.location.href = '/';
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setShowModal(false);
+        }
+    };
+
+    const handleCancel = () => {
+        setShowModal(false);
     };
 
     return (
@@ -55,6 +69,13 @@ export default function MyDropdown() {
                     </li>
                 ))}
             </ul>
+
+            {/* 로그아웃 확인 모달 */}
+            <LogoutModal
+                isOpen={showModal}
+                onConfirm={handleLogoutConfirm}
+                onCancel={handleCancel}
+            />
         </div>
     );
 }

@@ -50,14 +50,18 @@ export default function BookViewer({
         const [view, width] = useMemo(
             () =>
                 step === 0 || step === pageCount - 1
-                    ? ['hidden', 'w-4/12']
-                    : ['display', 'w-8/12'],
+                    ? ['hidden', 'w-[530px]']
+                    : ['display', 'w-[1050px]'],
             [step]
         );
 
+        const titleFontSize =
+            info.title.length > 20 ? 'text-[1.6rem]' : 'text-[1.8rem]';
+
         return (
             <div
-                className={`relative flex felx-row justify-center items-center ${width} h-[33rem] mx-8`}
+                className={`relative flex felx-row justify-center h-[520px] items-center ${width} mx-8`}
+                style={{ margin: 'auto' }}
             >
                 <div
                     className="relative border-solid border border-gray-100 bg-[length:100%_100%] w-full h-full bg-cover bg-center bg-no-repeat shadow-lg"
@@ -69,7 +73,9 @@ export default function BookViewer({
                     <div
                         className={`${step === 0 ? 'display' : 'hidden'} select-none absolute bottom-0 flex flex-col justify-center items-center bg-white w-full h-[7.5rem]`}
                     >
-                        <p className="text-[1.8rem] text-slate-800 font-LaundryGothic mb-0.5">
+                        <p
+                            className={`mb-0.5 ${titleFontSize} text-slate-800 font-LaundryGothic`}
+                        >
                             {info.title}
                         </p>
                         <p className="font-Hyemin text-slate-800 text-[1rem]">

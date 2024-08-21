@@ -87,7 +87,7 @@ export default function PalleteModal({
                                 />
                             ) : (
                                 <Image
-                                    src="/images/paint.svg"
+                                    src="/images/Paint.svg"
                                     width={36}
                                     height={36}
                                     alt="paint"

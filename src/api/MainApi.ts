@@ -8,10 +8,10 @@ Date        Author   Status    Description
 2024.07.31  나경윤    Created
 */
 
-const API_BASE_URL = 'http://localhost:4000/fairytale';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const getBookList = async () => {
-    const response = await fetch(`${API_BASE_URL}`, {
+    const response = await fetch(`${API_BASE_URL}/fairytale`, {
         cache: 'reload'
     });
 
@@ -23,7 +23,7 @@ export const getBookList = async () => {
 };
 
 export const getSearchBook = async (value: string) => {
-    const response = await fetch(`${API_BASE_URL}/byTitle/${value}`, {
+    const response = await fetch(`${API_BASE_URL}/fairytale/byTitle/${value}`, {
         cache: 'reload'
     });
 

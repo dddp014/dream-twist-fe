@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getUserInfo } from '@/api/AuthApi';
 import { LoadingIcon } from '../icons/LoadingIcon';
+import { removeFromLocalStorage } from '@/utils/localStorage';
 
 export default function MyInfoList() {
     const [loading, setLoading] = useState(true);
@@ -24,6 +25,13 @@ export default function MyInfoList() {
         getLikesCount: '',
         points: ''
     });
+
+    useEffect(() => {
+        removeFromLocalStorage('title');
+        removeFromLocalStorage('theme');
+        removeFromLocalStorage('storys');
+        removeFromLocalStorage('isPublic');
+    }, []);
 
     useEffect(() => {
         const fetchUserInfo = async () => {

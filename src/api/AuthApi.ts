@@ -10,7 +10,7 @@ Date        Author   Status    Description
 2024.08.09  임도헌   Modified  탈퇴 기능 수정
 */
 
-const API_BASE_URL = 'http://localhost:4000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const getUserInfo = async () => {
     const accessToken = localStorage.getItem('accessToken');
@@ -88,8 +88,17 @@ export const patchProfile = async (name: string, url: string) => {
             profileImageURL: url
         })
     });
-    if (!response.ok) {
-        throw new Error('프로필 수정 실패');
+
+    if (response.status === 400) {
+        const errorData = await response.json();
+        alert(errorData.message);
+    } else if (response.status === 409) {
+        const errorData = await response.json();
+        alert(errorData.message);
+    } else if (response.status === 500) {
+        alert('이미 사용 중인 닉네임입니다.');
+    } else {
+        window.location.href = '/mypage';
     }
     return response.json();
 };
@@ -111,6 +120,7 @@ export const deleteAuth = async (email: string | null): Promise<void> => {
     });
 
     if (!response.ok) {
+        alert('회원 탈퇴 중 오류가 발생했습니다. 다시 시도해주세요.');
         throw new Error('회원 탈퇴 실패');
     }
 };

@@ -10,13 +10,13 @@ Date        Author   Status    Description
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { postComment, putComment } from '@/api/BoardApi';
 
 interface CommentBoxProps {
     editStatus: boolean;
     initialContent: string;
-    commentId?: string;  // editStatus가 true일 때만 필요한 속성
+    commentId?: string; // editStatus가 true일 때만 필요한 속성
     fairytaleId: string;
     onCancel?: () => void;
 }
@@ -29,6 +29,12 @@ export default function CommentBox({
     onCancel
 }: CommentBoxProps) {
     const [content, setContent] = useState(initialContent);
+    const [userName, setUserName] = useState<string | null>(null);
+
+    useEffect(() => {
+        const storedUserName = localStorage.getItem('nickname');
+        setUserName(storedUserName);
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContent(e.target.value);
@@ -36,8 +42,13 @@ export default function CommentBox({
 
     const handleSubmit = async () => {
         try {
-            if (!content.trim()) {
+            if (!content.trim() && userName) {
                 alert('내용을 입력하세요.');
+                return;
+            }
+
+            if (!userName) {
+                window.location.href = '/login';
                 return;
             }
 

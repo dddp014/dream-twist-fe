@@ -25,8 +25,10 @@ export default function EditProfileList() {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [profileImg, setProfileImg] = useState<string>('');
     const [Imgfile, setImgFile] = useState<File | null>(null);
-    const [nickname, setNickname] = useState('');
+    const [nickname, setNickname] = useState<string>('');
     const [email, setEmail] = useState<string | null>(null);
+    const [storedName, setStoredName] = useState<string>('');
+    const [storedImg, setStoredImg] = useState<string>('');
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -34,6 +36,8 @@ export default function EditProfileList() {
             const defaultName = localStorage.getItem('nickname');
             const defaultImg = localStorage.getItem('profileImage');
 
+            setStoredImg(defaultImg || '');
+            setStoredName(defaultName || '');
             setEmail(storedEmail);
             setNickname(defaultName || '');
             setProfileImg(defaultImg || '');
@@ -81,8 +85,13 @@ export default function EditProfileList() {
 
     const handleSaveClick = async () => {
         try {
-            await patchProfile(nickname, profileImg);
-            window.location.href = '/mypage';
+            if (nickname === storedName && profileImg !== storedImg) {
+                await patchProfile('', profileImg);
+            } else if (nickname === '') {
+                alert('변경할 닉네임을 입력하세요.');
+            } else {
+                await patchProfile(nickname, profileImg);
+            }
         } catch (error) {
             console.error(error);
         }
@@ -93,13 +102,17 @@ export default function EditProfileList() {
         try {
             // 유저 삭제
             await deleteAuth(email);
-            // 유저 로그아웃
-            await postLogout();
+            // 유저 정보 삭제
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('tokenExpiry');
+            localStorage.removeItem('nickname');
+            localStorage.removeItem('email');
+            localStorage.removeItem('profileImage');
             alert('회원 탈퇴가 완료되었습니다.');
             window.location.href = '/'; // 회원 탈퇴 후 메인 페이지로 리디렉션
         } catch (error) {
             console.error('회원 탈퇴 중 오류 발생:', error);
-            alert('회원 탈퇴 중 오류가 발생했습니다. 다시 시도해주세요.');
         }
     };
 

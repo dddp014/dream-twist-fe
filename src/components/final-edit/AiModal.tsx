@@ -18,7 +18,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Portal from '../common/Portal';
 import LoadingSpinner from '../common/LoadingSpinner';
-import useAiImage from '@/hooks/useAiImage'; // 훅 가져오기
+import useAiImage from '@/hooks/useAiImage';
 
 interface AiModalProps {
     onClose: () => void;
@@ -38,31 +38,31 @@ export default function AiModal({
     initialText
 }: AiModalProps) {
     const [prompt, setPrompt] = useState('');
-    const { loading, imageUrl, generateImage } = useAiImage(); // 훅 사용
+    const { loading, imageUrl, generateImage } = useAiImage();
 
     const handlePromptChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPrompt(e.target.value);
     };
 
     const handleSubmit = async () => {
-        await generateImage(prompt); // API 호출
+        await generateImage(prompt);
     };
 
     const handleConfirm = () => {
         if (imageUrl) {
-            handleAiUpload(imageUrl); // 상위 컴포넌트로 이미지 URL 전달
-            onClose(); // 모달 닫기
+            handleAiUpload(imageUrl);
+            onClose();
         }
     };
 
     return (
         <Portal>
-            <div className="fixed left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-dark/90 z-10 bg-black bg-opacity-50">
-                <div className="w-full max-w-[900px] rounded-lg bg-white text-center first-line: border-[1px] border-main px-8">
+            <div className="fixed left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-dark/90 z-50 bg-black bg-opacity-50">
+                <div className="w-full max-w-[900px] rounded-lg bg-white border-[1px] border-main px-8 py-8">
                     <button
                         type="button"
                         onClick={onClose}
-                        className="ml-[800px] mt-[20px]"
+                        className="ml-auto block mb-4"
                     >
                         <Image
                             src="/images/cancleIcon.svg"
@@ -72,38 +72,44 @@ export default function AiModal({
                         />
                     </button>
 
-                    <div className="font-bold text-xl mb-4">
-                        <p>
-                            제목 또는 줄거리를 참고하여 원하는 장면을
-                            적어주세요.
-                        </p>
-                        <p>AI가 그림을 생성합니다.</p>
-                    </div>
+                    {/* 메인 컨테이너를 flex로 변경하여 div, input, 이미지가 가로로 정렬되도록 설정 */}
+                    <div className="flex items-start">
+                        <div className="flex-grow">
+                            <div className="font-bold text-xl mb-4 text-center">
+                                <p>
+                                    제목 또는 줄거리를 참고하여 원하는 장면을
+                                    적어주세요.
+                                </p>
+                                <p>AI가 그림을 생성합니다.</p>
+                            </div>
+                            <div className="bg-green-200 w-full h-[300px] rounded-xl justify-between items-center p-8 mb-4 font-bold resize-none overflow-auto">
+                                {currentPage === 0 ? title : initialText}
+                            </div>
 
-                    <div className="flex bg-green-200 w-full h-[300px] rounded-xl justify-between items-center p-8 mb-8 font-bold resize-none overflow-auto focus:outline-none focus:border-none">
-                        {currentPage === 0 ? title : initialText}
-                    </div>
-
-                    <input
-                        placeholder="여기에 원하는 장면들을 묘사해주세요(예시: 강아지가 헤엄치는 모습)"
-                        value={prompt}
-                        onChange={handlePromptChange}
-                        className="bg-yellow-200 w-full h-[40px] rounded-lg mb-4 p-4"
-                        disabled={loading || imageUrl !== null}
-                    />
-
-                    {imageUrl && (
-                        <div className="flex flex-col items-center mb-4">
-                            <p className="font-bold text-lg mb-2">미리보기</p>
-                            <Image
-                                src={imageUrl}
-                                alt="AI Generated Preview"
-                                width={300}
-                                height={300}
-                                className="rounded-lg"
+                            <input
+                                placeholder="여기에 원하는 장면들을 묘사해주세요(예시: 강아지가 헤엄치는 모습)"
+                                value={prompt}
+                                onChange={handlePromptChange}
+                                className="bg-yellow-200 w-full h-[40px] rounded-lg mb-4 p-4"
+                                disabled={loading || imageUrl !== null}
                             />
                         </div>
-                    )}
+
+                        {imageUrl && (
+                            <div className="flex-shrink-0 ml-4">
+                                <p className="flex justify-center font-bold text-lg mb-12">
+                                    미리보기
+                                </p>
+                                <Image
+                                    src={imageUrl}
+                                    alt="AI Generated Preview"
+                                    width={300}
+                                    height={300}
+                                    className="rounded-lg"
+                                />
+                            </div>
+                        )}
+                    </div>
 
                     <div className="flex justify-end items-center mb-10">
                         <p className="font-bold text-lg mr-4 text-gray-600">
