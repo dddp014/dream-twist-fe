@@ -32,6 +32,7 @@ export default function Nav() {
     });
     const [isAuth, setIsAuth] = useState(false);
 
+    const isPay = pathname.startsWith('/pay');
     const isBuild = pathname.startsWith('/buildstory');
     const isMain = pathname === '/';
 
@@ -179,6 +180,12 @@ export default function Nav() {
                         className={`hover:text-main cursor-pointer ${isBuild ? 'text-main' : ''}`}
                     >
                         동화 만들기
+                    </Link>
+                    <Link
+                        href="/pay"
+                        className={`hover:text-main cursor-pointer ${isPay ? 'text-main' : ''}`}
+                    >
+                        나뭇잎 충전
                     </Link>
                 </div>
             </div>

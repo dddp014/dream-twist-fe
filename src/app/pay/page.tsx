@@ -11,7 +11,7 @@ Date        Author   Status    Description
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 
 // 결제 요청 옵션 타입을 정의한다
@@ -29,12 +29,22 @@ interface TossPayments {
 
 const Page: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const [userName, setUserName] = useState<string | null>(null);
+
+    useEffect(() => {
+        const storedUserName = localStorage.getItem('nickname');
+        setUserName(storedUserName);
+    }, []);
 
     const handleClick = async (
         amount: number,
         orderName: string,
         addPoint: number
     ) => {
+        if (!userName) {
+            window.location.href = '/login';
+            return;
+        }
         if (isLoading) return; // 중복 요청 방지
         try {
             setIsLoading(true);
